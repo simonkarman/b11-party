@@ -10,6 +10,7 @@ namespace KarmanProtocol {
         private Client client;
 
         public readonly Guid id;
+        public readonly Guid gameId;
         public readonly Guid secret;
         private IPEndPoint endpoint;
         private bool hasJoined = false;
@@ -22,10 +23,10 @@ namespace KarmanProtocol {
         public Action OnLeftCallback;
         public Action<Packet> OnPacketReceivedCallback;
 
-        public KarmanClient(): this(Guid.NewGuid()) {}
-        public KarmanClient(Guid id) {
+        public KarmanClient(Guid id, Guid gameId, Guid secret) {
             this.id = id;
-            secret = Guid.NewGuid();
+            this.gameId = gameId;
+            this.secret = secret;
             SetupClient();
         }
 
@@ -89,8 +90,14 @@ namespace KarmanProtocol {
                 );
                 if (KarmanServer.PROTOCOL_VERSION != serverInformationPacket.GetProtocolVersion()) {
                     log.Warning(
-                        "Leaving server since it uses a different protocol version ({0}) than the client ({1}) is using",
-                        KarmanServer.PROTOCOL_VERSION, serverInformationPacket.GetProtocolVersion()
+                        "Leaving server since it uses a different protocol version ({0}) than the client ({1})",
+                        serverInformationPacket.GetProtocolVersion(), KarmanServer.PROTOCOL_VERSION
+                    );
+                    Leave();
+                } else if (!gameId.Equals(serverInformationPacket.GetGameId())) {
+                    log.Warning(
+                        "Leaving server since server is build for a different game id ({0}) than the client ({1})",
+                        serverInformationPacket.GetGameId(), gameId
                     );
                     Leave();
                 } else {

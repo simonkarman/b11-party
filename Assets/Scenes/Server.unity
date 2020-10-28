@@ -728,7 +728,7 @@ MonoBehaviour:
   logUIPrefab: {fileID: 779267612141905579, guid: 950330e3b7d9d9f4ebd8cd5c107ff599, type: 3}
   body: {fileID: 637364505}
   logLevel: 1
-  maxLogCount: 15
+  maxLogCount: 8
 --- !u!1 &518156948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,6 +1246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupDelay: 0.2
+  pingInterval: 2.5
   lobbyPhase: {fileID: 996734063}
   miniGameLoadingPhase: {fileID: 865517445}
   miniGameReadyUpPhase: {fileID: 518156950}
@@ -1255,16 +1256,22 @@ MonoBehaviour:
   clients:
   - name: Pablo
     clientId: ff6c4d90-773f-49e4-967f-a17dcdf9737f
+    sprite: {fileID: 21300000, guid: b46f8e498a1652f4397288ce5b0525c5, type: 3}
   - name: Thomas
     clientId: 023740e7-18a0-4a0c-94b3-8e097f8f1c61
+    sprite: {fileID: 21300000, guid: 672702d940004b849b06bc26020e6b0b, type: 3}
   - name: Yorick
     clientId: e87f27d5-f70c-4e77-8a0e-90af24281676
+    sprite: {fileID: 21300000, guid: 3a7e94cf5e76c814cb94c52967fd20a0, type: 3}
   - name: Robin
     clientId: 27217ae2-d954-4189-a3e9-bf7a462528b4
+    sprite: {fileID: 21300000, guid: bcd8939be1bf327499068fb1c74ff80f, type: 3}
   - name: Simon
     clientId: 6e6f2e4a-9447-4168-8788-0acdf76eb660
+    sprite: {fileID: 21300000, guid: e856f8456e41a904880abea72dbfd8bb, type: 3}
   - name: Rogier
     clientId: 1cdd21f3-cfcc-4071-b168-93489fd5b3d4
+    sprite: {fileID: 21300000, guid: f97441bae1557de49b6541358a55fac9, type: 3}
   miniGames:
   - name: Example
     isCompleted: 0

@@ -10,9 +10,9 @@ public class JoinUI : MonoBehaviour {
     [Serializable]
     public class Passcode {
         [SerializeField]
-        private string passcode;
+        private string passcode = default;
         [SerializeField]
-        private string clientId;
+        private string clientId = default;
 
         public string GetPasscode() {
             return passcode;
@@ -31,6 +31,8 @@ public class JoinUI : MonoBehaviour {
     private InputField passcodeInput = default;
     [SerializeField]
     private Passcode[] passcodes = default;
+    [SerializeField]
+    private B11PartyClient b11PartyClient = default;
 
     private KarmanClient karmanClient;
 
@@ -55,7 +57,7 @@ public class JoinUI : MonoBehaviour {
         Guid clientId = passcodes.FirstOrDefault(passcode => passcode.GetPasscode().ToLower().Equals(passcodeInput.text.ToLower())).GetClientId();
         Debug.LogFormat("Provided passcode resulted in the following client id: {0}", clientId);
         connectButton.GetComponentInChildren<Text>().text = "Trying to connect...";
-        karmanClient = new KarmanClient(clientId);
+        karmanClient = new KarmanClient(clientId, B11PartyServer.GAME_ID, clientId);
         karmanClient.OnJoinedCallback += OnJoined;
         karmanClient.OnConnectedCallback += () => { };
         karmanClient.OnDisconnectedCallback += () => { };
@@ -74,6 +76,7 @@ public class JoinUI : MonoBehaviour {
 
     private void OnJoined() {
         gameObject.SetActive(false);
+        b11PartyClient.StartWith(karmanClient);
     }
 
     protected void OnDestroy() {

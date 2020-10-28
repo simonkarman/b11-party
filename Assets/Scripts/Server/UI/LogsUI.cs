@@ -13,6 +13,7 @@ public class LogsUI : MonoBehaviour, ILogAppender {
 
     protected void Awake() {
         Logging.Logger.AddAppender(this);
+        Logging.Logger.AddAppender(new UnityDebugAppender(LogLevel.INFO));
     }
 
     public void Append(LogLevel logLevel, LogMetaData logMetaData, string message, params object[] args) {
