@@ -39,13 +39,24 @@ public class JoinUI : MonoBehaviour {
     private KarmanClient karmanClient;
 
     protected void Awake() {
+        Logging.Logger.ClearAppenders();
         Logging.Logger.AddAppender(new Logging.UnityDebugAppender(Logging.LogLevel.INFO));
+    }
+
+    protected void Start() {
         OnLeft();
+        connectionStringInput.text = "localhost"; // TODO: remove localhost set
         connectButton.interactable = false;
     }
 
     public void OnInputChanged() {
-        connectButton.interactable = passcodeInput.text.Equals("se-rver") || passcodeInput.text.Length == 7 && connectionStringInput.text.Length > 3 && passcodes.Any(passcode => passcode.GetPasscode().ToLower().Equals(passcodeInput.text.ToLower()));
+        // TODO: remove 1 length hack (and change go-r to ro-g)
+        connectButton.interactable = passcodeInput.text.Equals("se-rver") ||
+            (
+                (passcodeInput.text.Length == 7 || passcodeInput.text.Length == 1)
+                && connectionStringInput.text.Length > 3
+                && passcodes.Any(passcode => passcode.GetPasscode().ToLower().StartsWith(passcodeInput.text.ToLower()))
+            );
     }
 
     public void OnConnectButtonClicked() {
@@ -56,14 +67,17 @@ public class JoinUI : MonoBehaviour {
         passcodeInput.interactable = false;
         connectionStringInput.interactable = false;
         connectButton.interactable = false;
-        Guid clientId = passcodes.FirstOrDefault(passcode => passcode.GetPasscode().ToLower().Equals(passcodeInput.text.ToLower())).GetClientId();
+        Guid clientId = passcodes.FirstOrDefault(passcode => passcode.GetPasscode().ToLower().StartsWith(passcodeInput.text.ToLower())).GetClientId();
         Debug.LogFormat("Provided passcode resulted in the following client id: {0}", clientId);
         connectButton.GetComponentInChildren<Text>().text = "Trying to connect...";
         karmanClient = new KarmanClient(clientId, B11PartyServer.GAME_ID, clientId);
         karmanClient.OnJoinedCallback += OnJoined;
         karmanClient.OnConnectedCallback += () => { };
         karmanClient.OnDisconnectedCallback += () => { };
-        karmanClient.OnLeftCallback += OnLeft;
+        karmanClient.OnLeftCallback += () => {
+            OnLeft();
+            SceneManager.LoadScene("Client");
+        };
         karmanClient.Start(connectionStringInput.text, B11PartyServer.DEFAULT_PORT);
     }
 
@@ -83,6 +97,8 @@ public class JoinUI : MonoBehaviour {
     }
 
     protected void OnDestroy() {
-        karmanClient.Leave();
+        if (karmanClient != null) {
+            karmanClient.Leave();
+        }
     }
 }

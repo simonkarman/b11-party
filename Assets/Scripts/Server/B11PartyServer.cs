@@ -5,14 +5,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class B11PartyServer : MonoBehaviour {
     public static readonly int DEFAULT_PORT = 14641;
     public static readonly Guid GAME_ID = Guid.Parse("11117d77-6145-4732-b30a-fd6f4812e251");
     private static readonly Logging.Logger log = Logging.Logger.For<B11PartyServer>();
+    private static readonly string PLAYER_PREFS_MINIGAMES = "b11-minigames";
+    private static readonly string PLAYER_PREFS_CLIENT = "b11-client";
 
     private bool serverStarted = false;
     private KarmanServer karmanServer;
+
+    public KarmanServer GetKarmanServer() {
+        return karmanServer;
+    }
 
     [SerializeField]
     private float startupDelay = 0.2f;
@@ -61,8 +68,9 @@ public class B11PartyServer : MonoBehaviour {
         private int score;
         private bool connected = false;
 
-        public void SetB11PartyServer(B11PartyServer b11PartyServer) {
+        public void SetB11PartyServer(B11PartyServer b11PartyServer, int score) {
             this.b11PartyServer = b11PartyServer;
+            this.score = score;
         }
 
         public Guid GetClientId() {
@@ -136,8 +144,21 @@ public class B11PartyServer : MonoBehaviour {
     }
 
     protected void Awake() {
+        if (PlayerPrefs.HasKey(PLAYER_PREFS_MINIGAMES)) {
+            string miniGameReloadString = PlayerPrefs.GetString(PLAYER_PREFS_MINIGAMES);
+            log.Info("Reloading from player prefs: {0}", miniGameReloadString);
+            string[] miniGamesThatAreNotCompleted = miniGameReloadString.Split(',');
+            foreach (var miniGameInfo in miniGames) {
+                if (!miniGamesThatAreNotCompleted.Contains(miniGameInfo.GetName())) {
+                    miniGameInfo.MarkAsCompleted();
+                }
+            }
+        }
+
         foreach (var client in clients) {
-            client.SetB11PartyServer(this);
+            string clientPlayerPrefsString = string.Format("{0}-{1}", PLAYER_PREFS_CLIENT, client.GetClientId());
+            int score = PlayerPrefs.GetInt(clientPlayerPrefsString, 0);
+            client.SetB11PartyServer(this, 0);
             clientsById.Add(client.GetClientId(), client);
         }
 
@@ -151,8 +172,13 @@ public class B11PartyServer : MonoBehaviour {
                 log.Warning("A client with id {0} tried to connect, however that is not a known client id.", clientId);
                 ThreadManager.ExecuteOnMainThread(() => karmanServer.Kick(clientId));
             }
+            if (!lobbyPhase.gameObject.activeSelf) {
+                log.Warning("A client with id {0} tried to connect, however the server is currently not in the LobbyPhases.", clientId);
+                ThreadManager.ExecuteOnMainThread(() => karmanServer.Kick(clientId));
+            }
             log.Warning("{0} joined!", client.GetName());
             client.MarkConnected();
+            karmanServer.Send(client.GetClientId(), new LobbyStartedPacket(GetAvailableMiniGames()));
         };
         karmanServer.OnClientDisconnectedCallback += (Guid clientId) => {
             B11Client client = clients.FirstOrDefault(c => c.GetClientId().Equals(clientId));
@@ -185,6 +211,10 @@ public class B11PartyServer : MonoBehaviour {
         karmanServer.Shutdown();
     }
 
+    private string[] GetAvailableMiniGames() {
+        return miniGames.Where(mg => !mg.IsCompleted()).Select(mg => mg.GetName()).ToArray();
+    }
+
     protected IEnumerator Start() {
         log.Info("Starting server in {0} second(s).", startupDelay);
         yield return new WaitForSeconds(startupDelay);
@@ -197,38 +227,41 @@ public class B11PartyServer : MonoBehaviour {
 
         OnMiniGamesChangedCallback(miniGames);
 
+        // TODO: be able to jump back to lobby at any point in time
+
         while (HasMiniGamesLeft()) {
 
             // Lobby Phase
+            OnPhaseChangedCallback(Phase.LOBBY, lobbyPhase);
             log.Info("Moving to LobbyPhase.");
             lobbyPhase.gameObject.SetActive(true);
-            lobbyPhase.Begin(miniGames.Where(mg => !mg.IsCompleted()).Select(mg => mg.GetName()).ToArray());
-            OnPhaseChangedCallback(Phase.LOBBY, lobbyPhase);
+            lobbyPhase.Begin(GetAvailableMiniGames());
             while (lobbyPhase.IsChoosingMiniGameInProgress()) { yield return null; }
             lobbyPhase.gameObject.SetActive(false);
-            MiniGameInfo chosenMiniGame = miniGames.First(mg => mg.GetName().Equals(lobbyPhase.GetChosenMiniGameName()));
+            string chosenMiniGameName = lobbyPhase.GetChosenMiniGameName();
+            MiniGameInfo chosenMiniGame = miniGames.First(mg => mg.GetName().Equals(chosenMiniGameName));
 
             // Mini Game Loading Phase
+            OnPhaseChangedCallback(Phase.MINI_GAME_LOADING, miniGameLoadingPhase);
             log.Info("Moving to MiniGameLoadingPhase, since the '{0}' minigame was chosen.", chosenMiniGame.GetName());
             miniGameLoadingPhase.gameObject.SetActive(true);
             MiniGame miniGame = miniGameLoadingPhase.Load(chosenMiniGame.GetName());
-            OnPhaseChangedCallback(Phase.MINI_GAME_LOADING, miniGameLoadingPhase);
             while (miniGameLoadingPhase.HasClientsLoading()) { yield return null; }
             miniGameLoadingPhase.gameObject.SetActive(false);
 
             // Mini Game Ready Up Phase
+            OnPhaseChangedCallback(Phase.MINI_GAME_READY_UP, miniGameReadyUpPhase);
             log.Info("Moving to MiniGameReadyUpPhase.");
             miniGameReadyUpPhase.gameObject.SetActive(true);
             miniGameReadyUpPhase.BeginReadyUpFor(miniGame);
-            OnPhaseChangedCallback(Phase.MINI_GAME_READY_UP, miniGameReadyUpPhase);
             while (!miniGameReadyUpPhase.IsDone()) { yield return null; }
             miniGameReadyUpPhase.gameObject.SetActive(false);
 
             // Mini Game Playing Phase
+            OnPhaseChangedCallback(Phase.MINI_GAME_PLAYING, miniGamePlayingPhase);
             log.Info("Moving to MiniGamePlayingPhase.");
             miniGamePlayingPhase.gameObject.SetActive(true);
             miniGamePlayingPhase.BeginPlayingFor(miniGame);
-            OnPhaseChangedCallback(Phase.MINI_GAME_PLAYING, miniGamePlayingPhase);
             while (!miniGamePlayingPhase.IsDone()) { yield return null; }
             foreach (var client in clients) {
                 client.AddScore(miniGamePlayingPhase.GetScore(client.GetClientId()));
@@ -241,9 +274,9 @@ public class B11PartyServer : MonoBehaviour {
             // Score Overview Phase
             if (HasMiniGamesLeft()) {
                 log.Info("Moving to ScoreOverviewPhase.");
+                OnPhaseChangedCallback(Phase.SCORE_OVERVIEW, scoreOverviewPhase);
                 scoreOverviewPhase.gameObject.SetActive(true);
                 scoreOverviewPhase.Show(clients);
-                OnPhaseChangedCallback(Phase.SCORE_OVERVIEW, scoreOverviewPhase);
                 while (!scoreOverviewPhase.IsDone()) { yield return null; }
                 scoreOverviewPhase.gameObject.SetActive(false);
             }
@@ -251,6 +284,7 @@ public class B11PartyServer : MonoBehaviour {
 
         // Trophy Room Phase
         log.Info("Moving to TrophyRoomPhase, since all minigames are done.");
+        OnPhaseChangedCallback(Phase.TROPHY_ROOM, trophyRoomPhase);
         trophyRoomPhase.gameObject.SetActive(true);
         trophyRoomPhase.Begin();
     }
@@ -312,5 +346,39 @@ public class B11PartyServer : MonoBehaviour {
         }
         log.Trace("Client {0} has a latency with the server of {1} milliseconds.", clientId, ping);
         clientsById[clientId].SetPing(ping);
+    }
+
+    private float saveTime = 5f;
+    private float escapeTime = 1.2f;
+    protected void Update() {
+        if (Input.GetKey(KeyCode.Escape)) {
+            escapeTime -= Time.deltaTime;
+            if (escapeTime < 0f) {
+                ServerReload(Input.GetKey(KeyCode.R));
+            }
+        } else {
+            escapeTime = 1.2f;
+        }
+        saveTime -= Time.deltaTime;
+        if (saveTime < 0f) {
+            saveTime += 5f;
+            SaveToPlayerPrefs();
+        }
+    }
+
+    private void ServerReload(bool reset = false) {
+        SaveToPlayerPrefs();
+        if (reset) {
+            PlayerPrefs.DeleteAll();
+        }
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Server");
+    }
+
+    private void SaveToPlayerPrefs() {
+        PlayerPrefs.SetString(PLAYER_PREFS_MINIGAMES, string.Join(",", GetAvailableMiniGames()));
+        foreach (var client in clients) {
+            PlayerPrefs.SetInt(string.Format("{0}-{1}", PLAYER_PREFS_CLIENT, client.GetClientId()), client.GetScore());
+        }
     }
 }

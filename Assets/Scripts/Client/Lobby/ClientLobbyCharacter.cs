@@ -5,8 +5,11 @@ public class ClientLobbyCharacter : MonoBehaviour {
     [SerializeField]
     private Rigidbody2D rigidbody2d = default;
     [SerializeField]
+    private SpriteRenderer spriteRenderer = default;
+    [SerializeField]
     private float moveSpeed = 3f;
 
+    private Guid clientId;
     private bool chosen = false;
     private string closestMiniGame = null;
 
@@ -19,6 +22,7 @@ public class ClientLobbyCharacter : MonoBehaviour {
     public void Reset() {
         chosen = false;
         closestMiniGame = null;
+        transform.localPosition = Vector3.zero;
     }
 
     protected void FixedUpdate() {
@@ -41,5 +45,17 @@ public class ClientLobbyCharacter : MonoBehaviour {
 
     public void SetClosestMiniGame(string closestMiniGame) {
         this.closestMiniGame = closestMiniGame;
+    }
+
+    public void SetSprite(Sprite sprite) {
+        spriteRenderer.sprite = sprite;
+    }
+
+    public void SetClientId(Guid clientId) {
+        this.clientId = clientId;
+    }
+
+    public Guid GetClientId() {
+        return clientId;
     }
 }

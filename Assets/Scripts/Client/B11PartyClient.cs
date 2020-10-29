@@ -70,8 +70,6 @@ public class B11PartyClient : MonoBehaviour {
         karmanClient.OnDisconnectedCallback += () => { };
         karmanClient.OnLeftCallback += () => { };
         OnStartedWithCallback(me);
-
-        OnLobbyStartedCallback(new string[] { "a", "b", "c", "d" });
     }
 
     public void Stop() {
@@ -83,6 +81,8 @@ public class B11PartyClient : MonoBehaviour {
         if (packet is PingPacket pingPacket) {
             PingResponsePacket pingResponsePacket = new PingResponsePacket(pingPacket.GetPingId());
             karmanClient.Send(pingResponsePacket);
+        } else if (packet is LobbyStartedPacket lobbyStartedPacket) {
+            OnLobbyStartedCallback(lobbyStartedPacket.GetAvailableMiniGames());
         }
     }
 

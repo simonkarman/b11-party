@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class LobbyCharacter : MonoBehaviour {
     [SerializeField]
-    private bool hasChosen = false;
-    [SerializeField]
     private SpriteRenderer spriteRenderer = default;
     [SerializeField]
     private Sprite pabloSprite = default;
@@ -19,8 +17,25 @@ public class LobbyCharacter : MonoBehaviour {
     [SerializeField]
     private Sprite rogierSprite = default;
 
+    private string miniGame;
+    private bool hasChosen = false;
+
     public bool HasChosen() {
         return hasChosen;
+    }
+
+    public void SetNotChosen() {
+        miniGame = null;
+        hasChosen = false;
+    }
+
+    public void SetChosen(string miniGame) {
+        this.miniGame = miniGame;
+        hasChosen = true;
+    }
+
+    public string GetChosen() {
+        return miniGame;
     }
 
     private Sprite GetSprite(string clientName) {
@@ -39,7 +54,7 @@ public class LobbyCharacter : MonoBehaviour {
             return rogierSprite;
         }
         return null;
-}
+    }
 
     public void Setup(string clientName) {
         spriteRenderer.sprite = GetSprite(clientName);

@@ -12,6 +12,7 @@ public class LogsUI : MonoBehaviour, ILogAppender {
     private int maxLogCount = 15;
 
     protected void Awake() {
+        Logging.Logger.ClearAppenders();
         Logging.Logger.AddAppender(this);
         Logging.Logger.AddAppender(new UnityDebugAppender(LogLevel.INFO));
     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KarmanProtocol;
+using Networking;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,13 +20,20 @@ public class ClientLobbyPhase : MonoBehaviour {
     [SerializeField]
     private string[] miniGameNames = default;
 
+    private KarmanClient client;
+    private bool inLobby = false;
     private ClientLobbyCharacter me;
     private readonly Dictionary<Guid, SpriteRenderer> otherClients = new Dictionary<Guid, SpriteRenderer>();
     private readonly Dictionary<string, ClientMiniGameChoosePoint> miniGames = new Dictionary<string, ClientMiniGameChoosePoint>();
 
     protected void Awake() {
+        inLobby = false;
         root.SetActive(false);
         b11PartyClient.OnStartedWithCallback += (B11PartyClient.B11Client meInfo) => {
+            // Get the karman client
+            client = b11PartyClient.GetKarmanClient();
+            client.OnPacketReceivedCallback += OnPacket;
+
             // Create a character for each client that is not me
             foreach (var client in b11PartyClient.GetClients()) {
                 if (client.GetClientId().Equals(meInfo.GetClientId())) {
@@ -46,6 +55,8 @@ public class ClientLobbyPhase : MonoBehaviour {
             me = meObject.GetComponent<ClientLobbyCharacter>();
             me.name = meInfo.GetName();
             me.OnChosenMiniGameCallback += OnChosenMiniGame;
+            me.SetClientId(meInfo.GetClientId());
+            me.SetSprite(meInfo.GetSprite());
 
             // Create all minigames
             if (miniGameRoot.childCount != miniGameNames.Length) {
@@ -63,7 +74,6 @@ public class ClientLobbyPhase : MonoBehaviour {
             }
         };
         b11PartyClient.OnLobbyStartedCallback += (string[] miniGameNames) => {
-            root.SetActive(true);
             me.Reset();
             foreach (var miniGame in miniGames.Values) {
                 miniGame.DisableForChoosing();
@@ -71,15 +81,28 @@ public class ClientLobbyPhase : MonoBehaviour {
             foreach (var miniGameName in miniGameNames) {
                 miniGames[miniGameName].EnableForChoosing();
             }
+            inLobby = true;
+            root.SetActive(true);
         };
         b11PartyClient.OnLobbyEndedCallback += () => {
+            inLobby = false;
             root.SetActive(false);
         };
     }
 
+    private void OnPacket(Packet packet) {
+        if (!inLobby) {
+            return;
+        }
+        
+        if (packet is LobbyCharacterUpdatedPacket updatePacket) {
+            otherClients[updatePacket.GetClientId()].transform.localPosition = updatePacket.GetPosition();
+        }
+    }
+
     protected void LateUpdate() {
-        if (me.isActiveAndEnabled) {
-            b11PartyClient.GetKarmanClient().Send(new LobbyCharacterUpdatedPacket(me.transform.localPosition));
+        if (inLobby) {
+            b11PartyClient.GetKarmanClient().Send(new LobbyCharacterUpdatedPacket(me.GetClientId(), me.transform.localPosition));
         }
     }
 

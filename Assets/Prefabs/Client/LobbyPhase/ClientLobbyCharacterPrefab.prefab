@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2d: {fileID: 1936353337958627839}
+  spriteRenderer: {fileID: 1936353337958627824}
   moveSpeed: 30
 --- !u!212 &1936353337958627824
 SpriteRenderer:

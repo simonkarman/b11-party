@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KarmanProtocol;
+using Networking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,44 +13,65 @@ public class LobbyPhase : MonoBehaviour {
     [SerializeField]
     private GameObject lobbyCharacterPrefab = default;
 
-    private readonly List<LobbyCharacter> characters = new List<LobbyCharacter>();
+    private readonly Dictionary<Guid, LobbyCharacter> characters = new Dictionary<Guid, LobbyCharacter>();
+    private KarmanServer server;
+
+    private void OnDisconnect(Guid clientId) {
+        characters[clientId].SetNotChosen();
+    }
+
+    private void OnPacket(Guid clientId, Packet packet) {
+        if (!gameObject.activeInHierarchy) {
+            return;
+        }
+
+        if (packet is LobbyCharacterUpdatedPacket updatePacket) {
+            if (updatePacket.GetClientId().Equals(clientId)) {
+                characters[clientId].transform.position = updatePacket.GetPosition();
+                server.Broadcast(updatePacket, clientId);
+            }
+
+        } else if (packet is LobbyCharacterChosenMiniGamePacket chosenPacket) {
+            log.Info(characters[clientId].name + " has chosen " + chosenPacket.GetMiniGameName());
+            characters[clientId].SetChosen(chosenPacket.GetMiniGameName());
+        }
+    }
 
     public void Begin(string[] miniGameNames) {
-        MiniGameChoosePoint[] choosePoints = GetComponentsInChildren<MiniGameChoosePoint>();
-        int count = 0;
-        foreach (var point in choosePoints) {
-            point.ResetPicks();
-            bool canBeChosen = miniGameNames.Any(name => name.Equals(point.name));
-            if (!canBeChosen) {
-                point.MarkAsCompleted();
-            } else {
-                count++;
-            }
-        }
-        if (count != miniGameNames.Length) {
-            log.Error("One or more miniGameNames that should be able to get chosen are not possible to be chosen in the LobbyPhase.");
-        }
-
         foreach (var client in b11PartyServer.GetClients()) {
             Transform characterObject = Instantiate(lobbyCharacterPrefab, transform).transform;
             characterObject.name = client.GetName();
             characterObject.position = UnityEngine.Random.insideUnitCircle * 5f;
             LobbyCharacter character = characterObject.GetComponent<LobbyCharacter>();
             character.Setup(client.GetName());
-            characters.Add(character);
+            characters.Add(client.GetClientId(), character);
         }
+
+        server = b11PartyServer.GetKarmanServer();
+        server.OnClientDisconnectedCallback += OnDisconnect;
+        server.OnClientPackedReceivedCallback += OnPacket;
+        server.Broadcast(new LobbyStartedPacket(miniGameNames));
     }
 
     public bool IsChoosingMiniGameInProgress() {
-        int characterThatHaveNotChosen = characters.Count(character => !character.HasChosen());
+        int characterThatHaveNotChosen = characters.Values.Count(character => !character.HasChosen());
         return characters.Count == 0 || characterThatHaveNotChosen > 0;
     }
 
     public string GetChosenMiniGameName() {
+        Dictionary<string, int> numberOfVotesPerMiniGame = new Dictionary<string, int>();
         foreach (var character in characters) {
-            Destroy(character);
+            string chosenMiniGame = character.Value.GetChosen();
+            if (!numberOfVotesPerMiniGame.ContainsKey(chosenMiniGame)) {
+                numberOfVotesPerMiniGame.Add(chosenMiniGame, 0);
+            }
+            numberOfVotesPerMiniGame[chosenMiniGame]++;
+            Destroy(character.Value.gameObject);
         }
+        log.Info("Votes: {0}", string.Join(", ", numberOfVotesPerMiniGame.Select(miniGameAndVotes => string.Format("{0}: {1}", miniGameAndVotes.Key, miniGameAndVotes.Value))));
         characters.Clear();
-        return GetComponentsInChildren<MiniGameChoosePoint>().OrderByDescending(point => point.GetPicks()).FirstOrDefault().name;
+        server.OnClientDisconnectedCallback -= OnDisconnect;
+        server.OnClientPackedReceivedCallback -= OnPacket;
+        return numberOfVotesPerMiniGame.OrderByDescending(miniGameAndVotes => miniGameAndVotes.Value).First().Key;
     }
 }

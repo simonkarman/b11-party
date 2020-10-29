@@ -386,7 +386,7 @@ MonoBehaviour:
     clientId: 27217ae2-d954-4189-a3e9-bf7a462528b4
   - passcode: si-te35
     clientId: 6e6f2e4a-9447-4168-8788-0acdf76eb660
-  - passcode: ro-g7ac
+  - passcode: go-r7ac
     clientId: 1cdd21f3-cfcc-4071-b168-93489fd5b3d4
   b11PartyClient: {fileID: 1980380590}
 --- !u!1 &197021192
@@ -3671,17 +3671,17 @@ MonoBehaviour:
   clientLobbyCharacterPrefab: {fileID: 1936353337958627837, guid: cb1ee876020d19745919b13797a981d1, type: 3}
   miniGameChoosePointPrefab: {fileID: 884630001292267699, guid: 8ff9e1f3df4df2b40b24c7b5f9b09466, type: 3}
   miniGameNames:
-  - a
-  - b
-  - c
-  - d
-  - e
-  - f
-  - g
-  - h
-  - i
-  - j
-  - k
+  - B11 Balloon
+  - Red Cup
+  - Bussen
+  - Ketel Vangen
+  - Kelder Racen
+  - Stickies
+  - Kamerdienst
+  - Consti
+  - Batavieren
+  - Borrel
+  - Fiets
 --- !u!1 &1307166135
 GameObject:
   m_ObjectHideFlags: 0
@@ -5965,6 +5965,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1980380589}
   - component: {fileID: 1980380590}
+  - component: {fileID: 1980380591}
   m_Layer: 0
   m_Name: B11PartyClient
   m_TagString: Untagged
@@ -6018,6 +6019,18 @@ MonoBehaviour:
   - name: Rogier
     clientId: 1cdd21f3-cfcc-4071-b168-93489fd5b3d4
     sprite: {fileID: 21300000, guid: f97441bae1557de49b6541358a55fac9, type: 3}
+--- !u!114 &1980380591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980380588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6b77810bdd76c43b70ef432b49338e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2005580288
 GameObject:
   m_ObjectHideFlags: 0
