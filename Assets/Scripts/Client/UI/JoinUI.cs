@@ -24,6 +24,8 @@ public class JoinUI : MonoBehaviour {
     }
 
     [SerializeField]
+    private Transform root = default;
+    [SerializeField]
     private Button connectButton = default;
     [SerializeField]
     private InputField connectionStringInput = default;
@@ -66,16 +68,17 @@ public class JoinUI : MonoBehaviour {
     }
 
     private void OnLeft() {
-        gameObject.SetActive(true);
+        root.gameObject.SetActive(true);
         karmanClient = null;
         passcodeInput.interactable = true;
         connectionStringInput.interactable = true;
         connectButton.interactable = true;
         connectButton.GetComponentInChildren<Text>().text = "Connect!";
+        b11PartyClient.Stop();
     }
 
     private void OnJoined() {
-        gameObject.SetActive(false);
+        root.gameObject.SetActive(false);
         b11PartyClient.StartWith(karmanClient);
     }
 
