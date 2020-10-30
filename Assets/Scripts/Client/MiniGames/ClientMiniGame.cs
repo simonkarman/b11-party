@@ -49,7 +49,7 @@ public abstract class ClientMiniGame : MonoBehaviour {
     protected abstract void OnPlayingImpl();
 
     private IEnumerator LoadingSequence() {
-        yield return new WaitForSeconds(Random.value * 4f + 2f);
+        yield return new WaitForSeconds(Random.value * 2.5f + 1.5f);
         KarmanClient client = b11PartyClient.GetKarmanClient();
         client.Send(new MiniGameLoadingDonePacket(client.id));
     }

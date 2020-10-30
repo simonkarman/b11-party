@@ -47,7 +47,7 @@ MonoBehaviour:
   startSpeed: 4
   acceleration: 0.1
   airChance: 0.2
-  startSpawnInterval: 2.2
+  startSpawnInterval: 2.5
   spawnIntervalRandomness: 0.4
   spawnIntervalChangeRate: -0.1
 --- !u!1 &2545615812299585826

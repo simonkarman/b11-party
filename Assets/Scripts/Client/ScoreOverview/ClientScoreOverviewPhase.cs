@@ -56,7 +56,7 @@ public class ClientScoreOverviewPhase : MonoBehaviour {
     protected void Update() {
         if (isWatching) {
             timeWatching += Time.deltaTime;
-            float timeT = Mathf.Clamp01((timeWatching - 2) / Mathf.Max(0.01f, watchDuration - 8));
+            float timeT = Mathf.Clamp01((timeWatching - 2) / Mathf.Max(0.01f, watchDuration - 6));
             float currentScore = maxScore * timeT;
             foreach (var clientUI in scoreOverviewClientUIs.Values) {
                 clientUI.SetCurrent(currentScore);

@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 8469609854710268728}
-  growSpeed: 0.2
+  growSpeed: 0.1
   startSize: 0.6
   balloonParent: {fileID: 6416750070052336080}
   balloonLeftPosition: {fileID: 872106587616794437}

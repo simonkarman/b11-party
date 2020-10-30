@@ -20,6 +20,7 @@ public class B11BalloonClientMiniGame : ClientMiniGame {
     [SerializeField]
     private GameObject balloonPrefab = default;
 
+    private bool growingStarted;
     private bool stillGrowing;
     private bool balloonPopped;
     private float currentSize;
@@ -103,7 +104,11 @@ public class B11BalloonClientMiniGame : ClientMiniGame {
     protected override void Update() {
         base.Update();
         if (GetMode() == Mode.PLAYING) {
-            if (stillGrowing && (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))) {
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) {
+                growingStarted = true;
+            }
+
+            if (stillGrowing && growingStarted) {
                 currentSize += Time.deltaTime * growSpeed;
                 meBalloon.SetSize(currentSize);
                 if (currentSize >= maxSize) {
