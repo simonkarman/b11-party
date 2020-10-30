@@ -63,11 +63,12 @@ public class B11PartyClient : MonoBehaviour {
     public Action OnMiniGameReadyUpStartedCallback;
     public Action<Guid> OnMiniGameReadyUpReadyCallback;
     public Action OnMiniGameReadyUpEndedCallback;
-
     public Action OnMiniGamePlayingStartedCallback;
     public Action<Guid> OnMiniGamePlayingFinishedCallback;
     public Action<Guid, int> OnMiniGamePlayingScoreCallback;
     public Action OnMiniGamePlayingEndedCallback;
+    public Action<ScoreOverviewStartedPacket.ScoreOverviewInformation[]> OnScoreOverviewStartedCallback;
+    public Action OnScoreOverviewEndedCallback;
     public Action<Packet> OnOtherPacket;
 
     public void StartWith(KarmanClient karmanClient) {
@@ -86,7 +87,7 @@ public class B11PartyClient : MonoBehaviour {
         OnOtherPacket += (Packet packet) => {};
     }
 
-    private B11Client GetClient(Guid clientId) {
+    public B11Client GetClient(Guid clientId) {
         return clients.First(client => client.GetClientId().Equals(clientId));
     }
 
@@ -138,6 +139,12 @@ public class B11PartyClient : MonoBehaviour {
             OnMiniGamePlayingScoreCallback(miniGamePlayingScorePacket.GetClientId(), miniGamePlayingScorePacket.GetScore());
         } else if (packet is MiniGamePlayingEndedPacket) {
             OnMiniGamePlayingEndedCallback();
+        }
+        // Score Overview
+        else if (packet is ScoreOverviewStartedPacket scoreOverviewStartedPacket) {
+            OnScoreOverviewStartedCallback(scoreOverviewStartedPacket.GetScoreOverviews());
+        } else if (packet is ScoreOverviewEndedPacket scoreOverviewEndedPacket) {
+            OnScoreOverviewEndedCallback();
         }
 
         // Other Packets

@@ -764,7 +764,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
+  m_BackGroundColor: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1257,7 +1257,7 @@ MonoBehaviour:
   - name: B11 Balloon
     isCompleted: 0
   - name: Red Cup
-    isCompleted: 1
+    isCompleted: 0
   - name: Bussen
     isCompleted: 1
   - name: Ketel Vangen
@@ -1749,6 +1749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f24bc368f9923bd42980ba170ed181bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreOverviewPhaseText: {fileID: 307100890}
 --- !u!1 &1264623203
 GameObject:
   m_ObjectHideFlags: 0
@@ -2500,7 +2501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.177, g: 0.177, b: 0.177, a: 1}
+  m_Color: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

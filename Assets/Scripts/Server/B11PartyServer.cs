@@ -296,7 +296,8 @@ public class B11PartyServer : MonoBehaviour {
             karmanServer.Broadcast(new MiniGamePlayingEndedPacket());
             yield return new WaitForSeconds(1.0f);
             foreach (var client in clients) {
-                client.AddScore(miniGamePlayingPhase.GetScore(client.GetClientId()));
+                int score = miniGamePlayingPhase.GetScore(client.GetClientId());
+                client.AddScore(score);
                 OnClientScoreChangedCallback(client.GetClientId(), client.GetScore());
             }
             chosenMiniGame.MarkAsCompleted();
@@ -308,18 +309,16 @@ public class B11PartyServer : MonoBehaviour {
             Destroy(miniGame.gameObject);
 
             // Score Overview Phase
-            if (HasMiniGamesLeft()) {
-                log.Info("Moving to ScoreOverviewPhase.");
-                OnPhaseChangedCallback(Phase.SCORE_OVERVIEW, scoreOverviewPhase);
-                scoreOverviewPhase.gameObject.SetActive(true);
-                scoreOverviewPhase.Show(clients);
-                karmanServer.Broadcast(new ScoreOverviewStartedPacket(GetScoreOverviewInformation()));
-                while (!scoreOverviewPhase.IsDone()) { yield return null; }
-                karmanServer.Broadcast(new ScoreOverviewEndedPacket());
-                yield return new WaitForSeconds(0.5f);
-                scoreOverviewPhase.End();
-                scoreOverviewPhase.gameObject.SetActive(false);
-            }
+            log.Info("Moving to ScoreOverviewPhase.");
+            OnPhaseChangedCallback(Phase.SCORE_OVERVIEW, scoreOverviewPhase);
+            scoreOverviewPhase.gameObject.SetActive(true);
+            scoreOverviewPhase.Begin(clients);
+            karmanServer.Broadcast(new ScoreOverviewStartedPacket(GetScoreOverviewInformation()));
+            while (scoreOverviewPhase.InProgress()) { yield return null; }
+            karmanServer.Broadcast(new ScoreOverviewEndedPacket());
+            yield return new WaitForSeconds(0.5f);
+            scoreOverviewPhase.End();
+            scoreOverviewPhase.gameObject.SetActive(false);
         }
 
         // Trophy Room Phase
