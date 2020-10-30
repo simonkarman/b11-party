@@ -726,6 +726,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af816fe7ff330e14c9f48de23f50750c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  readyUpPhaseText: {fileID: 1264623205}
+  b11PartyServer: {fileID: 906587526}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,7 +1593,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &1085936620
 RectTransform:
@@ -2455,7 +2457,7 @@ GameObject:
   - component: {fileID: 1671046589}
   - component: {fileID: 1671046588}
   m_Layer: 5
-  m_Name: Background
+  m_Name: ServerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

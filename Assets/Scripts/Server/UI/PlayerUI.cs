@@ -29,4 +29,10 @@ public class PlayerUI : MonoBehaviour {
     public void SetScore(int score) {
         scoreText.text = score.ToString();
     }
+
+    protected void Update() {
+        if (Input.GetKeyDown(KeyCode.S)) {
+            scoreText.gameObject.SetActive(!scoreText.gameObject.activeSelf);
+        }
+    }
 }

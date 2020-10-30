@@ -60,6 +60,10 @@ public class B11PartyClient : MonoBehaviour {
     public Action<string> OnMiniGameLoadingStartedCallback;
     public Action<Guid> OnMiniGameLoadingDoneCallback;
     public Action OnMiniGameLoadingEndedCallback;
+    public Action OnMiniGameReadyUpStartedCallback;
+    public Action<Guid> OnMiniGameReadyUpReadyCallback;
+    public Action OnMiniGameReadyUpEndedCallback;
+    public Action<Packet> OnOtherPacket;
 
     public void StartWith(KarmanClient karmanClient) {
         foreach (var client in clients) {
@@ -82,10 +86,12 @@ public class B11PartyClient : MonoBehaviour {
     }
 
     private void OnPacketReceived(Packet packet) {
+        // Ping
         if (packet is PingPacket pingPacket) {
             PingResponsePacket pingResponsePacket = new PingResponsePacket(pingPacket.GetPingId());
             karmanClient.Send(pingResponsePacket);
         }
+
         // Lobby
         else if (packet is LobbyStartedPacket lobbyStartedPacket) {
             OnLobbyStartedCallback(lobbyStartedPacket.GetAvailableMiniGames());
@@ -99,6 +105,19 @@ public class B11PartyClient : MonoBehaviour {
             OnMiniGameLoadingDoneCallback(miniGameLoadingDonePacket.GetClientId());
         } else if (packet is MiniGameLoadingEndedPacket) {
             OnMiniGameLoadingEndedCallback();
+        }
+        // Mini Game Ready Up
+        else if (packet is MiniGameReadyUpStartedPacket miniGameReadyUpStartedPacket) {
+            OnMiniGameReadyUpStartedCallback();
+        } else if (packet is MiniGameReadyUpReadyPacket miniGameReadyUpReadyPacket) {
+            OnMiniGameReadyUpReadyCallback(miniGameReadyUpReadyPacket.GetClientId());
+        } else if (packet is MiniGameReadyUpEndedPacket) {
+            OnMiniGameReadyUpEndedCallback();
+        }
+
+        // Other Packets
+        else {
+            OnOtherPacket?.Invoke(packet);
         }
     }
 

@@ -58,7 +58,9 @@ public class ClientMiniGameLoadingPhase : MonoBehaviour {
         MiniGameLoadingInformation loadingInformation = miniGames.First(miniGame => miniGame.GetName().Equals(miniGameName));
         Transform miniGameObject = Instantiate(loadingInformation.GetPrefab()).transform;
         miniGameObject.localPosition = Vector3.zero;
+        miniGameObject.name = miniGameName;
         ClientMiniGame clientMiniGame = miniGameObject.GetComponent<ClientMiniGame>();
+        clientMiniGame.SetMiniGameName(miniGameName);
         clientMiniGame.OnLoad(b11PartyClient);
         b11PartyClient.SetCurrentMiniGame(clientMiniGame);
     }

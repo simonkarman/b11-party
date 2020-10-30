@@ -30,7 +30,7 @@ public class MiniGameLoadingPhase : MonoBehaviour {
     [SerializeField]
     private MiniGameLoadingInformation[] miniGames = default;
 
-    private Dictionary<Guid, bool> clientLoadStatusses = new Dictionary<Guid, bool>();
+    private readonly Dictionary<Guid, bool> clientLoadStatusses = new Dictionary<Guid, bool>();
     private ServerMiniGame miniGame;
     private KarmanServer server;
 

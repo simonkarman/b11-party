@@ -266,7 +266,7 @@ public class B11PartyServer : MonoBehaviour {
             miniGameReadyUpPhase.gameObject.SetActive(true);
             miniGameReadyUpPhase.BeginReadyUpFor(miniGame);
             karmanServer.Broadcast(new MiniGameReadyUpStartedPacket());
-            while (!miniGameReadyUpPhase.IsDone()) { yield return null; }
+            while (miniGameReadyUpPhase.IsWaitingForReadyUp()) { yield return null; }
             karmanServer.Broadcast(new MiniGameReadyUpEndedPacket());
             yield return new WaitForSeconds(0.5f);
             miniGameReadyUpPhase.End();
