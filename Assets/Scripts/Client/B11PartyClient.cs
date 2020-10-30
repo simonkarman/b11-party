@@ -69,6 +69,7 @@ public class B11PartyClient : MonoBehaviour {
     public Action OnMiniGamePlayingEndedCallback;
     public Action<ScoreOverviewStartedPacket.ScoreOverviewInformation[]> OnScoreOverviewStartedCallback;
     public Action OnScoreOverviewEndedCallback;
+    public Action<TrophyRoomStartedPacket.TrophyRoomInformation[]> OnTrophyRoomStartedCallback;
     public Action<Packet> OnOtherPacket;
 
     public void StartWith(KarmanClient karmanClient) {
@@ -145,6 +146,10 @@ public class B11PartyClient : MonoBehaviour {
             OnScoreOverviewStartedCallback(scoreOverviewStartedPacket.GetScoreOverviews());
         } else if (packet is ScoreOverviewEndedPacket scoreOverviewEndedPacket) {
             OnScoreOverviewEndedCallback();
+        }
+        // Trophy Room
+        else if (packet is TrophyRoomStartedPacket trophyRoomStartedPacket) {
+            OnTrophyRoomStartedCallback(trophyRoomStartedPacket.GetTrophyRooms());
         }
 
         // Other Packets

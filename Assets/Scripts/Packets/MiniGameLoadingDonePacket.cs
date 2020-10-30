@@ -1,6 +1,5 @@
 ﻿using Networking;
 using System;
-using UnityEngine;
 
 public class MiniGameLoadingDonePacket : Packet {
     private readonly Guid clientId;

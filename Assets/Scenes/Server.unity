@@ -1257,7 +1257,7 @@ MonoBehaviour:
   - name: B11 Balloon
     isCompleted: 0
   - name: Red Cup
-    isCompleted: 0
+    isCompleted: 1
   - name: Bussen
     isCompleted: 1
   - name: Ketel Vangen
