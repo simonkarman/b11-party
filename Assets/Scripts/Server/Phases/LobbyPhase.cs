@@ -50,7 +50,6 @@ public class LobbyPhase : MonoBehaviour {
         server = b11PartyServer.GetKarmanServer();
         server.OnClientDisconnectedCallback += OnDisconnect;
         server.OnClientPackedReceivedCallback += OnPacket;
-        server.Broadcast(new LobbyStartedPacket(miniGameNames));
     }
 
     public bool IsChoosingMiniGameInProgress() {

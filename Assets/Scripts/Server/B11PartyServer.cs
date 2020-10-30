@@ -65,6 +65,7 @@ public class B11PartyServer : MonoBehaviour {
         [SerializeField]
         private Sprite sprite = default;
 
+        private int lastAddedScore;
         private int score;
         private bool connected = false;
 
@@ -82,8 +83,13 @@ public class B11PartyServer : MonoBehaviour {
         }
 
         public void AddScore(int amount) {
+            lastAddedScore = amount;
             score += amount;
             b11PartyServer.OnClientScoreChangedCallback(GetClientId(), score);
+        }
+
+        public int GetLastAddedScore() {
+            return lastAddedScore;
         }
 
         public int GetScore() {
@@ -227,8 +233,6 @@ public class B11PartyServer : MonoBehaviour {
 
         OnMiniGamesChangedCallback(miniGames);
 
-        // TODO: be able to jump back to lobby at any point in time
-
         while (HasMiniGamesLeft()) {
 
             // Lobby Phase
@@ -236,7 +240,10 @@ public class B11PartyServer : MonoBehaviour {
             log.Info("Moving to LobbyPhase.");
             lobbyPhase.gameObject.SetActive(true);
             lobbyPhase.Begin(GetAvailableMiniGames());
+            karmanServer.Broadcast(new LobbyStartedPacket(GetAvailableMiniGames()));
             while (lobbyPhase.IsChoosingMiniGameInProgress()) { yield return null; }
+            karmanServer.Broadcast(new LobbyEndedPacket());
+            yield return new WaitForSeconds(0.5f);
             lobbyPhase.gameObject.SetActive(false);
             string chosenMiniGameName = lobbyPhase.GetChosenMiniGameName();
             MiniGameInfo chosenMiniGame = miniGames.First(mg => mg.GetName().Equals(chosenMiniGameName));
@@ -245,8 +252,12 @@ public class B11PartyServer : MonoBehaviour {
             OnPhaseChangedCallback(Phase.MINI_GAME_LOADING, miniGameLoadingPhase);
             log.Info("Moving to MiniGameLoadingPhase, since the '{0}' minigame was chosen.", chosenMiniGame.GetName());
             miniGameLoadingPhase.gameObject.SetActive(true);
-            MiniGame miniGame = miniGameLoadingPhase.Load(chosenMiniGame.GetName());
+            ServerMiniGame miniGame = miniGameLoadingPhase.Load(chosenMiniGame.GetName());
+            karmanServer.Broadcast(new MiniGameLoadingStartedPacket(chosenMiniGame.GetName()));
             while (miniGameLoadingPhase.HasClientsLoading()) { yield return null; }
+            karmanServer.Broadcast(new MiniGameLoadingEndedPacket());
+            yield return new WaitForSeconds(0.5f);
+            miniGameLoadingPhase.End();
             miniGameLoadingPhase.gameObject.SetActive(false);
 
             // Mini Game Ready Up Phase
@@ -254,7 +265,11 @@ public class B11PartyServer : MonoBehaviour {
             log.Info("Moving to MiniGameReadyUpPhase.");
             miniGameReadyUpPhase.gameObject.SetActive(true);
             miniGameReadyUpPhase.BeginReadyUpFor(miniGame);
+            karmanServer.Broadcast(new MiniGameReadyUpStartedPacket());
             while (!miniGameReadyUpPhase.IsDone()) { yield return null; }
+            karmanServer.Broadcast(new MiniGameReadyUpEndedPacket());
+            yield return new WaitForSeconds(0.5f);
+            miniGameReadyUpPhase.End();
             miniGameReadyUpPhase.gameObject.SetActive(false);
 
             // Mini Game Playing Phase
@@ -262,14 +277,20 @@ public class B11PartyServer : MonoBehaviour {
             log.Info("Moving to MiniGamePlayingPhase.");
             miniGamePlayingPhase.gameObject.SetActive(true);
             miniGamePlayingPhase.BeginPlayingFor(miniGame);
+            karmanServer.Broadcast(new MiniGamePlayingStartedPacket());
             while (!miniGamePlayingPhase.IsDone()) { yield return null; }
             foreach (var client in clients) {
                 client.AddScore(miniGamePlayingPhase.GetScore(client.GetClientId()));
                 OnClientScoreChangedCallback(client.GetClientId(), client.GetScore());
             }
             chosenMiniGame.MarkAsCompleted();
+            karmanServer.Broadcast(new MiniGamePlayingEndedPacket());
+            yield return new WaitForSeconds(1.0f);
+            miniGamePlayingPhase.End();
             OnMiniGamesChangedCallback(miniGames);
             miniGamePlayingPhase.gameObject.SetActive(false);
+            miniGame.OnUnload();
+            Destroy(miniGame.gameObject);
 
             // Score Overview Phase
             if (HasMiniGamesLeft()) {
@@ -277,7 +298,11 @@ public class B11PartyServer : MonoBehaviour {
                 OnPhaseChangedCallback(Phase.SCORE_OVERVIEW, scoreOverviewPhase);
                 scoreOverviewPhase.gameObject.SetActive(true);
                 scoreOverviewPhase.Show(clients);
+                karmanServer.Broadcast(new ScoreOverviewStartedPacket(GetScoreOverviewInformation()));
                 while (!scoreOverviewPhase.IsDone()) { yield return null; }
+                karmanServer.Broadcast(new ScoreOverviewEndedPacket());
+                yield return new WaitForSeconds(0.5f);
+                scoreOverviewPhase.End();
                 scoreOverviewPhase.gameObject.SetActive(false);
             }
         }
@@ -286,7 +311,26 @@ public class B11PartyServer : MonoBehaviour {
         log.Info("Moving to TrophyRoomPhase, since all minigames are done.");
         OnPhaseChangedCallback(Phase.TROPHY_ROOM, trophyRoomPhase);
         trophyRoomPhase.gameObject.SetActive(true);
-        trophyRoomPhase.Begin();
+        trophyRoomPhase.Begin(clients);
+        karmanServer.Broadcast(new TrophyRoomStartedPacket(GetTrophyRoomInformation()));
+    }
+
+    private ScoreOverviewStartedPacket.ScoreOverviewInformation[] GetScoreOverviewInformation() {
+        return clients
+            .Select(client => new ScoreOverviewStartedPacket.ScoreOverviewInformation(
+                client.GetClientId(),
+                client.GetLastAddedScore()
+            ))
+            .ToArray();
+    }
+
+    private TrophyRoomStartedPacket.TrophyRoomInformation[] GetTrophyRoomInformation() {
+        return clients
+            .Select(client => new TrophyRoomStartedPacket.TrophyRoomInformation(
+                client.GetClientId(),
+                client.GetScore()
+            ))
+            .ToArray();
     }
 
     public class PingMoment {

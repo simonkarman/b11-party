@@ -1102,6 +1102,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1e667a316914049bb14d3c58776e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingPhaseText: {fileID: 1575611780}
+  b11PartyServer: {fileID: 906587526}
+  miniGames:
+  - name: B11 Balloon
+    prefab: {fileID: 1999918899779883704, guid: cc7e9415e9d06ec4ba35f25ccf4b7e9d, type: 3}
+  - name: Red Cup
+    prefab: {fileID: 0}
+  - name: Bussen
+    prefab: {fileID: 0}
+  - name: Ketel Vangen
+    prefab: {fileID: 0}
+  - name: Kelder Racen
+    prefab: {fileID: 0}
+  - name: Stickies
+    prefab: {fileID: 0}
+  - name: Kamerdienst
+    prefab: {fileID: 0}
+  - name: Consti
+    prefab: {fileID: 0}
+  - name: Batavieren
+    prefab: {fileID: 0}
+  - name: Borrel
+    prefab: {fileID: 0}
+  - name: Fiets
+    prefab: {fileID: 0}
 --- !u!1 &897166469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,7 +1253,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: f97441bae1557de49b6541358a55fac9, type: 3}
   miniGames:
   - name: B11 Balloon
-    isCompleted: 1
+    isCompleted: 0
   - name: Red Cup
     isCompleted: 1
   - name: Bussen
@@ -1238,17 +1263,17 @@ MonoBehaviour:
   - name: Kelder Racen
     isCompleted: 1
   - name: Stickies
-    isCompleted: 0
+    isCompleted: 1
   - name: Kamerdienst
-    isCompleted: 0
+    isCompleted: 1
   - name: Consti
-    isCompleted: 0
+    isCompleted: 1
   - name: Batavieren
-    isCompleted: 0
+    isCompleted: 1
   - name: Borrel
-    isCompleted: 0
+    isCompleted: 1
   - name: Fiets
-    isCompleted: 0
+    isCompleted: 1
 --- !u!4 &906587527
 Transform:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class MiniGamePlayingPhase : MonoBehaviour {
-    public void BeginPlayingFor(MiniGame miniGame) {
+    public void BeginPlayingFor(ServerMiniGame miniGame) {
         throw new NotImplementedException();
     }
 
@@ -11,6 +11,10 @@ public class MiniGamePlayingPhase : MonoBehaviour {
     }
 
     public int GetScore(Guid clientId) {
+        throw new NotImplementedException();
+    }
+
+    public void End() {
         throw new NotImplementedException();
     }
 }

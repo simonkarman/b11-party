@@ -50,12 +50,16 @@ public class B11PartyClient : MonoBehaviour {
     [SerializeField]
     private List<B11Client> clients = default;
     private B11Client me;
+    private ClientMiniGame currentMiniGame;
 
     public Action<B11Client> OnStartedWithCallback;
     public Action OnStoppedCallback;
     public Action<Guid, int> OnScoreChangedCallback;
     public Action<string[]> OnLobbyStartedCallback;
     public Action OnLobbyEndedCallback;
+    public Action<string> OnMiniGameLoadingStartedCallback;
+    public Action<Guid> OnMiniGameLoadingDoneCallback;
+    public Action OnMiniGameLoadingEndedCallback;
 
     public void StartWith(KarmanClient karmanClient) {
         foreach (var client in clients) {
@@ -81,8 +85,20 @@ public class B11PartyClient : MonoBehaviour {
         if (packet is PingPacket pingPacket) {
             PingResponsePacket pingResponsePacket = new PingResponsePacket(pingPacket.GetPingId());
             karmanClient.Send(pingResponsePacket);
-        } else if (packet is LobbyStartedPacket lobbyStartedPacket) {
+        }
+        // Lobby
+        else if (packet is LobbyStartedPacket lobbyStartedPacket) {
             OnLobbyStartedCallback(lobbyStartedPacket.GetAvailableMiniGames());
+        } else if (packet is LobbyEndedPacket) {
+            OnLobbyEndedCallback();
+        }
+        // Mini Game Loading
+        else if (packet is MiniGameLoadingStartedPacket miniGameLoadingStartedPacket) {
+            OnMiniGameLoadingStartedCallback(miniGameLoadingStartedPacket.GetMiniGameName());
+        } else if (packet is MiniGameLoadingDonePacket miniGameLoadingDonePacket) {
+            OnMiniGameLoadingDoneCallback(miniGameLoadingDonePacket.GetClientId());
+        } else if (packet is MiniGameLoadingEndedPacket) {
+            OnMiniGameLoadingEndedCallback();
         }
     }
 
@@ -96,5 +112,13 @@ public class B11PartyClient : MonoBehaviour {
 
     public KarmanClient GetKarmanClient() {
         return karmanClient;
+    }
+
+    public void SetCurrentMiniGame(ClientMiniGame currentMiniGame) {
+        this.currentMiniGame = currentMiniGame;
+    }
+
+    public ClientMiniGame GetCurrentMiniGame() {
+        return currentMiniGame;
     }
 }
