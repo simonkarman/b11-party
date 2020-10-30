@@ -28,6 +28,8 @@ public class PlayingClientUI : MonoBehaviour {
     }
 
     public void SetScore(int score) {
-        scoreText.text = score.ToString();
+        if (scoreText) {
+            scoreText.text = score.ToString();
+        }
     }
 }

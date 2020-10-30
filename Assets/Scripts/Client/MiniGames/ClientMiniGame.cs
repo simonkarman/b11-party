@@ -31,6 +31,7 @@ public abstract class ClientMiniGame : MonoBehaviour {
     public void OnLoad(B11PartyClient b11PartyClient) {
         mode = Mode.LOADING;
         this.b11PartyClient = b11PartyClient;
+        OnLoadImpl();
         StartCoroutine(LoadingSequence());
     }
     protected abstract void OnLoadImpl();
@@ -53,7 +54,7 @@ public abstract class ClientMiniGame : MonoBehaviour {
         client.Send(new MiniGameLoadingDonePacket(client.id));
     }
 
-    protected void Update() {
+    protected virtual void Update() {
         if (mode == Mode.READY_UP && !ready && Input.GetKeyDown(KeyCode.Space)) {
             KarmanClient client = b11PartyClient.GetKarmanClient();
             client.Send(new MiniGameReadyUpReadyPacket(client.id));
@@ -61,5 +62,10 @@ public abstract class ClientMiniGame : MonoBehaviour {
         }
     }
 
-    public abstract void OnPlayingEndedImpl();
+    public void OnPlayingEnded() {
+        mode = Mode.PLAYING;
+        OnPlayingEndedImpl();
+        Destroy(gameObject);
+    }
+    protected abstract void OnPlayingEndedImpl();
 }

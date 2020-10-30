@@ -76,13 +76,18 @@ public class B11PartyClient : MonoBehaviour {
         }
         enabled = true;
         this.karmanClient = karmanClient;
-        me = clients.First(client => karmanClient.id.Equals(client.GetClientId()));
+        me = GetClient(karmanClient.id);
         karmanClient.OnPacketReceivedCallback += OnPacketReceived;
         karmanClient.OnJoinedCallback += () => { };
         karmanClient.OnConnectedCallback += () => { };
         karmanClient.OnDisconnectedCallback += () => { };
         karmanClient.OnLeftCallback += () => { };
         OnStartedWithCallback(me);
+        OnOtherPacket += (Packet packet) => {};
+    }
+
+    private B11Client GetClient(Guid clientId) {
+        return clients.First(client => client.GetClientId().Equals(clientId));
     }
 
     public void Stop() {
@@ -95,6 +100,11 @@ public class B11PartyClient : MonoBehaviour {
         if (packet is PingPacket pingPacket) {
             PingResponsePacket pingResponsePacket = new PingResponsePacket(pingPacket.GetPingId());
             karmanClient.Send(pingResponsePacket);
+        }
+
+        // Score
+        else if (packet is ClientScoreChangedPacket clientScoreChangedPacket) {
+            GetClient(clientScoreChangedPacket.GetClientId()).SetScore(clientScoreChangedPacket.GetScore());
         }
 
         // Lobby
@@ -132,7 +142,7 @@ public class B11PartyClient : MonoBehaviour {
 
         // Other Packets
         else {
-            OnOtherPacket?.Invoke(packet);
+            OnOtherPacket(packet);
         }
     }
 

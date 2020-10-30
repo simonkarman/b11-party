@@ -22,7 +22,7 @@ public class ClientUI : MonoBehaviour {
         b11PartyClient.OnStartedWithCallback += (B11PartyClient.B11Client me) => {
             meClientId = me.GetClientId();
             image.sprite = me.GetSprite();
-            nameText.text = me.GetName();
+            nameText.text = string.Format("{0} (you)", me.GetName());
             scoreText.text = me.GetScore().ToString();
             root.SetActive(true);
         };

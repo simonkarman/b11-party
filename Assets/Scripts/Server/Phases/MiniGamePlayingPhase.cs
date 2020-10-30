@@ -36,12 +36,12 @@ public class MiniGamePlayingPhase : MonoBehaviour {
             if (finishedPacket.GetClientId().Equals(clientId)) {
                 clientPlayingStatusses[clientId] = true;
                 UpdateText();
-                server.Broadcast(finishedPacket, clientId);
+                server.Broadcast(finishedPacket);
             }
         } else if (packet is MiniGamePlayingScorePacket scorePacket) {
             if (scorePacket.GetClientId().Equals(clientId)) {
                 clientPlayingScores[clientId] = scorePacket.GetScore();
-                server.Broadcast(scorePacket, clientId);
+                server.Broadcast(scorePacket);
             }
         }
     }

@@ -36,7 +36,7 @@ public class ClientMiniGamePlayingPhase : MonoBehaviour {
             playingClientUIs.Add(client.GetClientId(), playingClientUI);
         }
         ClientMiniGame currentMiniGame = b11PartyClient.GetCurrentMiniGame();
-        titleText.text = currentMiniGame.GetMiniGameName();
+        titleText.text = string.Format("{0} MiniGame!", currentMiniGame.GetMiniGameName());
         currentMiniGame.OnPlaying();
     }
 
@@ -53,6 +53,6 @@ public class ClientMiniGamePlayingPhase : MonoBehaviour {
         foreach (Transform child in playingClientsUIRoot.transform) {
             Destroy(child.gameObject);
         }
-        b11PartyClient.GetCurrentMiniGame().OnPlayingEndedImpl();
+        b11PartyClient.GetCurrentMiniGame().OnPlayingEnded();
     }
 }

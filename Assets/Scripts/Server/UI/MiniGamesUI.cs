@@ -23,6 +23,7 @@ public class MiniGamesUI : MonoBehaviour {
                 miniGameUIObject.name = miniGameUIPrefab.name + " " + miniGameInfo.GetName();
                 miniGameUIObject.SetAsLastSibling();
                 miniGameUI = miniGameUIObject.GetComponent<MiniGameUI>();
+                miniGameUIs.Add(miniGameInfo.GetName(), miniGameUI);
             }
             miniGameUI.SetFromInfo(miniGameInfo);
         }

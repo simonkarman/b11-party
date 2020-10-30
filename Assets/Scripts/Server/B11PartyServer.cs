@@ -11,8 +11,6 @@ public class B11PartyServer : MonoBehaviour {
     public static readonly int DEFAULT_PORT = 14641;
     public static readonly Guid GAME_ID = Guid.Parse("11117d77-6145-4732-b30a-fd6f4812e251");
     private static readonly Logging.Logger log = Logging.Logger.For<B11PartyServer>();
-    private static readonly string PLAYER_PREFS_MINIGAMES = "b11-minigames";
-    private static readonly string PLAYER_PREFS_CLIENT = "b11-client";
 
     private bool serverStarted = false;
     private KarmanServer karmanServer;
@@ -86,6 +84,13 @@ public class B11PartyServer : MonoBehaviour {
             lastAddedScore = amount;
             score += amount;
             b11PartyServer.OnClientScoreChangedCallback(GetClientId(), score);
+            BroadcastScoreToClients();
+        }
+
+        public void BroadcastScoreToClients() {
+            if (connected) {
+                b11PartyServer.GetKarmanServer().Broadcast(new ClientScoreChangedPacket(GetClientId(), score));
+            }
         }
 
         public int GetLastAddedScore() {
@@ -162,9 +167,9 @@ public class B11PartyServer : MonoBehaviour {
         }
 
         foreach (var client in clients) {
-            string clientPlayerPrefsString = string.Format("{0}-{1}", PLAYER_PREFS_CLIENT, client.GetClientId());
-            int score = PlayerPrefs.GetInt(clientPlayerPrefsString, 0);
-            client.SetB11PartyServer(this, 0);
+            string key = GetClientScorePlayerPrefKey(client.GetClientId());
+            int score = int.Parse(PlayerPrefs.GetString(GetClientScorePlayerPrefKey(client.GetClientId()), "0"));
+            client.SetB11PartyServer(this, score);
             clientsById.Add(client.GetClientId(), client);
         }
 
@@ -185,6 +190,7 @@ public class B11PartyServer : MonoBehaviour {
             log.Warning("{0} joined!", client.GetName());
             client.MarkConnected();
             karmanServer.Send(client.GetClientId(), new LobbyStartedPacket(GetAvailableMiniGames()));
+            client.BroadcastScoreToClients();
         };
         karmanServer.OnClientDisconnectedCallback += (Guid clientId) => {
             B11Client client = clients.FirstOrDefault(c => c.GetClientId().Equals(clientId));
@@ -231,6 +237,9 @@ public class B11PartyServer : MonoBehaviour {
         while (!serverStarted) { yield return null; }
         log.Info("Server is up and running!");
 
+        foreach (var client in clients) {
+            OnClientScoreChangedCallback(client.GetClientId(), client.GetScore());
+        }
         OnMiniGamesChangedCallback(miniGames);
 
         while (HasMiniGamesLeft()) {
@@ -247,6 +256,11 @@ public class B11PartyServer : MonoBehaviour {
             lobbyPhase.gameObject.SetActive(false);
             string chosenMiniGameName = lobbyPhase.GetChosenMiniGameName();
             MiniGameInfo chosenMiniGame = miniGames.First(mg => mg.GetName().Equals(chosenMiniGameName));
+
+            // Sync scores after leaving the lobby
+            foreach (var client in clients) {
+                client.BroadcastScoreToClients();
+            }
 
             // Mini Game Loading Phase
             OnPhaseChangedCallback(Phase.MINI_GAME_LOADING, miniGameLoadingPhase);
@@ -285,6 +299,9 @@ public class B11PartyServer : MonoBehaviour {
                 client.AddScore(miniGamePlayingPhase.GetScore(client.GetClientId()));
                 OnClientScoreChangedCallback(client.GetClientId(), client.GetScore());
             }
+            chosenMiniGame.MarkAsCompleted();
+            OnMiniGamesChangedCallback(miniGames);
+            SaveStateToPlayerPrefs();
             miniGamePlayingPhase.End();
             miniGamePlayingPhase.gameObject.SetActive(false);
             miniGame.OnUnload();
@@ -303,11 +320,6 @@ public class B11PartyServer : MonoBehaviour {
                 scoreOverviewPhase.End();
                 scoreOverviewPhase.gameObject.SetActive(false);
             }
-
-            // Mark mini game as done and continue
-            chosenMiniGame.MarkAsCompleted();
-            OnMiniGamesChangedCallback(miniGames);
-            SaveToPlayerPrefs();
         }
 
         // Trophy Room Phase
@@ -395,6 +407,8 @@ public class B11PartyServer : MonoBehaviour {
         clientsById[clientId].SetPing(ping);
     }
 
+    private static readonly string PLAYER_PREFS_MINIGAMES = "b11-minigames";
+    private static readonly string PLAYER_PREFS_CLIENT = "b11-client";
     private float saveTime = 5f;
     private float escapeTime = 1.2f;
     protected void Update() {
@@ -409,23 +423,34 @@ public class B11PartyServer : MonoBehaviour {
         saveTime -= Time.deltaTime;
         if (saveTime < 0f) {
             saveTime += 5f;
-            SaveToPlayerPrefs();
+            SaveStateToPlayerPrefs();
+        }
+        if (Input.GetKeyDown(KeyCode.I)) {
+            foreach (var client in clients) {
+                client.AddScore(1);
+            }
         }
     }
 
     private void ServerReload(bool reset = false) {
-        SaveToPlayerPrefs();
+        SaveStateToPlayerPrefs();
         if (reset) {
             PlayerPrefs.DeleteAll();
         }
-        PlayerPrefs.Save();
         SceneManager.LoadScene("Server");
     }
 
-    private void SaveToPlayerPrefs() {
+    private void SaveStateToPlayerPrefs() {
         PlayerPrefs.SetString(PLAYER_PREFS_MINIGAMES, string.Join(",", GetAvailableMiniGames()));
         foreach (var client in clients) {
-            PlayerPrefs.SetInt(string.Format("{0}-{1}", PLAYER_PREFS_CLIENT, client.GetClientId()), client.GetScore());
+            string key = GetClientScorePlayerPrefKey(client.GetClientId());
+            string value = client.GetScore().ToString();
+            PlayerPrefs.SetString(key, value);
         }
+        PlayerPrefs.Save();
+    }
+
+    private static string GetClientScorePlayerPrefKey(Guid clientId) {
+        return string.Format("{0}-{1}", PLAYER_PREFS_CLIENT, clientId.ToString().Substring(4));
     }
 }
