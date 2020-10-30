@@ -2895,6 +2895,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682c6b6034000654f9630075b6f2c586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playingPhaseText: {fileID: 933511238}
+  b11PartyServer: {fileID: 906587526}
 --- !u!1 &1862449022
 GameObject:
   m_ObjectHideFlags: 0

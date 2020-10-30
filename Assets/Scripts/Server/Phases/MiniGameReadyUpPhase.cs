@@ -53,6 +53,7 @@ public class MiniGameReadyUpPhase : MonoBehaviour {
     }
 
     public void End() {
+        miniGame.EndReadyUp();
         miniGame = null;
         readyUpPhaseText.text = "Mini Game Ready Up";
         clientReadyStatusses.Clear();

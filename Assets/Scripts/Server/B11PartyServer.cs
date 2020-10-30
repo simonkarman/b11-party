@@ -278,16 +278,14 @@ public class B11PartyServer : MonoBehaviour {
             miniGamePlayingPhase.gameObject.SetActive(true);
             miniGamePlayingPhase.BeginPlayingFor(miniGame);
             karmanServer.Broadcast(new MiniGamePlayingStartedPacket());
-            while (!miniGamePlayingPhase.IsDone()) { yield return null; }
+            while (miniGamePlayingPhase.IsAClientStillPlaying()) { yield return null; }
+            karmanServer.Broadcast(new MiniGamePlayingEndedPacket());
+            yield return new WaitForSeconds(1.0f);
             foreach (var client in clients) {
                 client.AddScore(miniGamePlayingPhase.GetScore(client.GetClientId()));
                 OnClientScoreChangedCallback(client.GetClientId(), client.GetScore());
             }
-            chosenMiniGame.MarkAsCompleted();
-            karmanServer.Broadcast(new MiniGamePlayingEndedPacket());
-            yield return new WaitForSeconds(1.0f);
             miniGamePlayingPhase.End();
-            OnMiniGamesChangedCallback(miniGames);
             miniGamePlayingPhase.gameObject.SetActive(false);
             miniGame.OnUnload();
             Destroy(miniGame.gameObject);
@@ -305,6 +303,11 @@ public class B11PartyServer : MonoBehaviour {
                 scoreOverviewPhase.End();
                 scoreOverviewPhase.gameObject.SetActive(false);
             }
+
+            // Mark mini game as done and continue
+            chosenMiniGame.MarkAsCompleted();
+            OnMiniGamesChangedCallback(miniGames);
+            SaveToPlayerPrefs();
         }
 
         // Trophy Room Phase

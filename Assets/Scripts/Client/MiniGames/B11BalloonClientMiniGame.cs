@@ -1,6 +1,4 @@
-﻿using KarmanProtocol;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class B11BalloonClientMiniGame : ClientMiniGame {
     protected override void OnLoadImpl() {
@@ -13,5 +11,9 @@ public class B11BalloonClientMiniGame : ClientMiniGame {
 
     protected override void OnPlayingImpl() {
         Debug.LogWarning("Not Yet Implemented - B11BalloonClientMiniGame - OnPlayingImpl");
+    }
+
+    public override void OnPlayingEndedImpl() {
+        Debug.LogWarning("Not Yet Implemented - B11BalloonClientMiniGame - OnPlayingEndedImpl");
     }
 }

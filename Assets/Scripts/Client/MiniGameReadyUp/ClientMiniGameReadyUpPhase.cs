@@ -46,7 +46,7 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
     [SerializeField]
     private MiniGameReadyUpInformation[] miniGames = default;
 
-    private readonly Dictionary<Guid, ReadyUpClientUI> loadingClientUIs = new Dictionary<Guid, ReadyUpClientUI>();
+    private readonly Dictionary<Guid, ReadyUpClientUI> readyUpClientUIs = new Dictionary<Guid, ReadyUpClientUI>();
 
     protected void Awake() {
         root.SetActive(false);
@@ -62,7 +62,7 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
             clientObject.name = client.GetName();
             ReadyUpClientUI readyUpClientUI = clientObject.GetComponent<ReadyUpClientUI>();
             readyUpClientUI.SetFrom(client);
-            loadingClientUIs.Add(client.GetClientId(), readyUpClientUI);
+            readyUpClientUIs.Add(client.GetClientId(), readyUpClientUI);
         }
         ClientMiniGame currentMiniGame = b11PartyClient.GetCurrentMiniGame();
         string miniGameName = currentMiniGame.GetMiniGameName();
@@ -74,7 +74,7 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
     }
 
     private void OnDone(Guid clientId) {
-        loadingClientUIs[clientId].SetReady();
+        readyUpClientUIs[clientId].SetReady();
     }
 
     private void OnEnded() {

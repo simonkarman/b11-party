@@ -60,4 +60,6 @@ public abstract class ClientMiniGame : MonoBehaviour {
             ready = true;
         }
     }
+
+    public abstract void OnPlayingEndedImpl();
 }

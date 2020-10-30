@@ -41,7 +41,7 @@ public class LobbyPhase : MonoBehaviour {
         foreach (var client in b11PartyServer.GetClients()) {
             Transform characterObject = Instantiate(lobbyCharacterPrefab, transform).transform;
             characterObject.name = client.GetName();
-            characterObject.position = UnityEngine.Random.insideUnitCircle * 5f;
+            characterObject.position = UnityEngine.Random.insideUnitCircle;
             LobbyCharacter character = characterObject.GetComponent<LobbyCharacter>();
             character.Setup(client.GetName());
             characters.Add(client.GetClientId(), character);
