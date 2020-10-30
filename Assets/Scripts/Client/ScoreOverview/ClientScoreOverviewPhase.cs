@@ -15,6 +15,7 @@ public class ClientScoreOverviewPhase : MonoBehaviour {
     [SerializeField]
     private GameObject scoreOverviewClientUIPrefab = default;
 
+    private int watchDuration;
     private bool isWatching;
     private float timeWatching;
     private int maxScore;
@@ -27,9 +28,10 @@ public class ClientScoreOverviewPhase : MonoBehaviour {
         b11PartyClient.OnScoreOverviewEndedCallback += OnEnded;
     }
 
-    private void OnStarted(ScoreOverviewStartedPacket.ScoreOverviewInformation[] scoreInformation) {
+    private void OnStarted(int watchDuration, ScoreOverviewStartedPacket.Score[] scoreInformation) {
         root.SetActive(true);
         timeLeftText.gameObject.SetActive(true);
+        this.watchDuration = watchDuration;
         isWatching = true;
         timeWatching = 0f;
         maxScore = int.MinValue;
@@ -54,12 +56,12 @@ public class ClientScoreOverviewPhase : MonoBehaviour {
     protected void Update() {
         if (isWatching) {
             timeWatching += Time.deltaTime;
-            float timeT = Mathf.Clamp01((timeWatching - 2) / (ScoreOverviewPhase.WATCH_DURATION - 5));
+            float timeT = Mathf.Clamp01((timeWatching - 2) / Mathf.Max(0.01f, watchDuration - 8));
             float currentScore = maxScore * timeT;
             foreach (var clientUI in scoreOverviewClientUIs.Values) {
                 clientUI.SetCurrent(currentScore);
             }
-            float timeLeft = ScoreOverviewPhase.WATCH_DURATION - timeWatching;
+            float timeLeft = watchDuration - timeWatching;
             if (timeLeft < 0f) {
                 timeLeft = 0f;
                 isWatching = false;
@@ -76,5 +78,6 @@ public class ClientScoreOverviewPhase : MonoBehaviour {
         }
         isWatching = false;
         timeLeftText.gameObject.SetActive(false);
+        scoreOverviewClientUIs.Clear();
     }
 }

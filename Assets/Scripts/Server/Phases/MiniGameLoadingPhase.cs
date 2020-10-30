@@ -41,6 +41,9 @@ public class MiniGameLoadingPhase : MonoBehaviour {
         miniGameObject.localPosition = Vector3.zero;
 
         foreach (var client in b11PartyServer.GetClients()) {
+            if (!client.IsConnected()) {
+                continue;
+            }
             clientLoadStatusses.Add(client.GetClientId(), false);
         }
         server = b11PartyServer.GetKarmanServer();
@@ -67,7 +70,7 @@ public class MiniGameLoadingPhase : MonoBehaviour {
             if (miniGameLoadingDonePacket.GetClientId().Equals(clientId)) {
                 clientLoadStatusses[clientId] = true;
                 UpdateText();
-                server.Broadcast(miniGameLoadingDonePacket, clientId);
+                server.Broadcast(miniGameLoadingDonePacket);
             }
         }
     }

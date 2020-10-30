@@ -1151,7 +1151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &195010227
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2770,8 +2770,8 @@ MonoBehaviour:
 
       Het
       doel van deze minigame is om een zo groot mogelijke ballon vol te blazen met
-      lucht. De gene die de grootste ballon heeft wint het spel! Maar pas op, want
-      je ballon kan knappen.'
+      lucht. De gene die de grootste ballon heeft krijgt de meeste punten! Maar pas
+      op, want je ballon kan knappen.'
     preview: {fileID: 21300000, guid: d658bafb162f4544798148b77c934fa8, type: 3}
   - name: Red Cup
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -2830,12 +2830,16 @@ MonoBehaviour:
       sunt in culpa qui officia deserunt mollit anim id est laborum.
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Batavieren
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-      dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-      sunt in culpa qui officia deserunt mollit anim id est laborum.
+    description: 'Tijdens het bestuursjaar van B11 zijn heel wat hordes overwonnen.
+      Het prachtige WISO bezocht en sommige bestuurders zijn zelfs thuis gekomen,
+      de leden zijn vermaakt met het organiseren van prachtige activiteiten, en nog
+      veel meer. Maar een van de zwaarste hindernissen was wel de Batavierenrace.
+
+
+      In
+      deze mini game gaan we nogmaals op Batavierenrace, en hebben we onderweg nog
+      wat extra hindernissen. De gene die het het lanste volhoudt om overeind te
+      blijven scoort de meesten punten!'
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Borrel
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -3266,7 +3270,7 @@ MonoBehaviour:
   - name: Consti
     prefab: {fileID: 0}
   - name: Batavieren
-    prefab: {fileID: 0}
+    prefab: {fileID: 268728378981782175, guid: a2e198feab02c4643afa9cb7a84c2e63, type: 3}
   - name: Borrel
     prefab: {fileID: 0}
   - name: Fiets

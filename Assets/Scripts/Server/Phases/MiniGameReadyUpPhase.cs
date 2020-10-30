@@ -18,6 +18,9 @@ public class MiniGameReadyUpPhase : MonoBehaviour {
 
     public void BeginReadyUpFor(ServerMiniGame miniGame) {
         foreach (var client in b11PartyServer.GetClients()) {
+            if (!client.IsConnected()) {
+                continue;
+            }
             clientReadyStatusses.Add(client.GetClientId(), false);
         }
         server = b11PartyServer.GetKarmanServer();

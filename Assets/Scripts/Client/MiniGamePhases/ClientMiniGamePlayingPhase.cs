@@ -53,6 +53,7 @@ public class ClientMiniGamePlayingPhase : MonoBehaviour {
         foreach (Transform child in playingClientsUIRoot.transform) {
             Destroy(child.gameObject);
         }
+        playingClientUIs.Clear();
         b11PartyClient.GetCurrentMiniGame().OnPlayingEnded();
     }
 }

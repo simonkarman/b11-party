@@ -5,11 +5,11 @@ using System.Linq;
 
 public class ScoreOverviewStartedPacket : Packet {
 
-    public class ScoreOverviewInformation {
+    public class Score {
         private readonly Guid clientId;
         private readonly int lastAddedScore;
 
-        public ScoreOverviewInformation(Guid clientId, int lastAddedScore) {
+        public Score(Guid clientId, int lastAddedScore) {
             this.clientId = clientId;
             this.lastAddedScore = lastAddedScore;
         }
@@ -22,35 +22,43 @@ public class ScoreOverviewStartedPacket : Packet {
             return lastAddedScore;
         }
     }
-    private ScoreOverviewInformation[] scoreOverviews;
+
+    private int duration;
+    private Score[] scores;
 
     public ScoreOverviewStartedPacket(byte[] bytes) : base(bytes) {
-        List<ScoreOverviewInformation> scoreOverviews = new List<ScoreOverviewInformation>();
+        duration = ReadInt();
+        List<Score> scores = new List<Score>();
         while (!IsDone()) {
             Guid clientId = ReadGuid();
             int lastAddedScore = ReadInt();
-            scoreOverviews.Add(new ScoreOverviewInformation(clientId, lastAddedScore));
+            scores.Add(new Score(clientId, lastAddedScore));
         }
-        this.scoreOverviews = scoreOverviews.ToArray();
+        this.scores = scores.ToArray();
     }
 
-    public ScoreOverviewStartedPacket(ScoreOverviewInformation[] scoreOverviews) : base(AsBytes(scoreOverviews)) {
-        this.scoreOverviews = scoreOverviews;
+    public ScoreOverviewStartedPacket(int duration, Score[] scores) : base(AsBytes(duration, scores)) {
+        this.duration = duration;
+        this.scores = scores;
     }
 
     public override void Validate() { }
 
-    private static byte[] AsBytes(ScoreOverviewInformation[] scoreOverviews) {
-        byte[][] scoreOverviewsAsBytes = scoreOverviews
+    private static byte[] AsBytes(int duration, Score[] scores) {
+        byte[][] scoresAsBytes = scores
             .Select(so => Bytes.Pack(
                 Bytes.Of(so.GetClientId()),
                 Bytes.Of(so.GetLastAddedScore())
             ))
             .ToArray();
-        return Bytes.Pack(scoreOverviewsAsBytes);
+        return Bytes.Pack(Bytes.Of(duration), Bytes.Pack(scoresAsBytes));
     }
 
-    public ScoreOverviewInformation[] GetScoreOverviews() {
-        return scoreOverviews;
+    public int GetDuration() {
+        return duration;
+    }
+
+    public Score[] GetScores() {
+        return scores;
     }
 }

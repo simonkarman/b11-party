@@ -1124,7 +1124,7 @@ MonoBehaviour:
   - name: Consti
     prefab: {fileID: 0}
   - name: Batavieren
-    prefab: {fileID: 0}
+    prefab: {fileID: 1999918899779883704, guid: 10237257e843c4f45b3bc178432a2a64, type: 3}
   - name: Borrel
     prefab: {fileID: 0}
   - name: Fiets
@@ -1228,6 +1228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startupDelay: 0.2
   pingInterval: 2.5
+  scoreWatchDuration: 10
   lobbyPhase: {fileID: 996734063}
   miniGameLoadingPhase: {fileID: 865517445}
   miniGameReadyUpPhase: {fileID: 518156950}
@@ -1271,7 +1272,7 @@ MonoBehaviour:
   - name: Consti
     isCompleted: 1
   - name: Batavieren
-    isCompleted: 1
+    isCompleted: 0
   - name: Borrel
     isCompleted: 1
   - name: Fiets

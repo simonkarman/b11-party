@@ -23,6 +23,8 @@ public class B11PartyServer : MonoBehaviour {
     private float startupDelay = 0.2f;
     [SerializeField]
     private float pingInterval = 2.5f;
+    [SerializeField]
+    private int scoreWatchDuration = 20;
 
     [SerializeField] private LobbyPhase lobbyPhase = default;
     [SerializeField] private MiniGameLoadingPhase miniGameLoadingPhase = default;
@@ -293,8 +295,9 @@ public class B11PartyServer : MonoBehaviour {
             miniGamePlayingPhase.BeginPlayingFor(miniGame);
             karmanServer.Broadcast(new MiniGamePlayingStartedPacket());
             while (miniGamePlayingPhase.IsAClientStillPlaying()) { yield return null; }
+            yield return new WaitForSeconds(2f);
             karmanServer.Broadcast(new MiniGamePlayingEndedPacket());
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.5f);
             foreach (var client in clients) {
                 int score = miniGamePlayingPhase.GetScore(client.GetClientId());
                 client.AddScore(score);
@@ -312,8 +315,8 @@ public class B11PartyServer : MonoBehaviour {
             log.Info("Moving to ScoreOverviewPhase.");
             OnPhaseChangedCallback(Phase.SCORE_OVERVIEW, scoreOverviewPhase);
             scoreOverviewPhase.gameObject.SetActive(true);
-            scoreOverviewPhase.Begin(clients);
-            karmanServer.Broadcast(new ScoreOverviewStartedPacket(GetScoreOverviewInformation()));
+            scoreOverviewPhase.Begin(scoreWatchDuration, clients);
+            karmanServer.Broadcast(new ScoreOverviewStartedPacket(scoreWatchDuration, GetScoresForScoreOverview()));
             while (scoreOverviewPhase.InProgress()) { yield return null; }
             karmanServer.Broadcast(new ScoreOverviewEndedPacket());
             yield return new WaitForSeconds(0.5f);
@@ -326,21 +329,21 @@ public class B11PartyServer : MonoBehaviour {
         OnPhaseChangedCallback(Phase.TROPHY_ROOM, trophyRoomPhase);
         trophyRoomPhase.gameObject.SetActive(true);
         trophyRoomPhase.Begin(clients);
-        karmanServer.Broadcast(new TrophyRoomStartedPacket(GetTrophyRoomInformation()));
+        karmanServer.Broadcast(new TrophyRoomStartedPacket(scoreWatchDuration * 2, GetScoresForTrophyRoom()));
     }
 
-    private ScoreOverviewStartedPacket.ScoreOverviewInformation[] GetScoreOverviewInformation() {
+    private ScoreOverviewStartedPacket.Score[] GetScoresForScoreOverview() {
         return clients
-            .Select(client => new ScoreOverviewStartedPacket.ScoreOverviewInformation(
+            .Select(client => new ScoreOverviewStartedPacket.Score(
                 client.GetClientId(),
                 client.GetLastAddedScore()
             ))
             .ToArray();
     }
 
-    private TrophyRoomStartedPacket.TrophyRoomInformation[] GetTrophyRoomInformation() {
+    private TrophyRoomStartedPacket.Score[] GetScoresForTrophyRoom() {
         return clients
-            .Select(client => new TrophyRoomStartedPacket.TrophyRoomInformation(
+            .Select(client => new TrophyRoomStartedPacket.Score(
                 client.GetClientId(),
                 client.GetScore()
             ))

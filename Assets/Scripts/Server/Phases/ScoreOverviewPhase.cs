@@ -3,17 +3,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreOverviewPhase : MonoBehaviour {
-    public const int WATCH_DURATION = 20;
     [SerializeField]
     private Text scoreOverviewPhaseText = default;
-    
 
+    private int watchDuration;
     private bool isWatching = false;
     private float watchTimeLeft;
 
-    public void Begin(IReadOnlyList<B11PartyServer.B11Client> clients) {
+    public void Begin(int watchDuration, IReadOnlyList<B11PartyServer.B11Client> clients) {
+        this.watchDuration = watchDuration;
         isWatching = true;
-        watchTimeLeft = WATCH_DURATION;
+        watchTimeLeft = watchDuration;
     }
 
     public bool InProgress() {
@@ -24,7 +24,7 @@ public class ScoreOverviewPhase : MonoBehaviour {
         scoreOverviewPhaseText.text = string.Format(
             "Score Overview {0}/{1}",
             watchTimeLeft.ToString("0"),
-            WATCH_DURATION
+            watchDuration
         );
     }
 

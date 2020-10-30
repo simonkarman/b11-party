@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1999918899779883706}
   - component: {fileID: 1999918899779883707}
   m_Layer: 0
-  m_Name: B11BalloonMiniGame
+  m_Name: B11BalloonServerMiniGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c604a4adf252db541ac20c8656ffb952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSizeBase: 1.2
+  maxRandomOffset: 0.5
 --- !u!1 &2545615812299585826
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,4 +223,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: B11 Balloon Mini Game!
+  m_Text: B11 Balloon MiniGame

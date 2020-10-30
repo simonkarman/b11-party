@@ -12,14 +12,15 @@ public class MiniGamePlayingPhase : MonoBehaviour {
     [SerializeField]
     private B11PartyServer b11PartyServer = default;
 
-    private readonly Dictionary<Guid, bool> clientPlayingStatusses = new Dictionary<Guid, bool>();
+    private readonly Dictionary<Guid, bool> clientFinishedPlayingStatusses = new Dictionary<Guid, bool>();
     private readonly Dictionary<Guid, int> clientPlayingScores = new Dictionary<Guid, int>();
     private ServerMiniGame miniGame;
     private KarmanServer server;
 
     public void BeginPlayingFor(ServerMiniGame miniGame) {
         foreach (var client in b11PartyServer.GetClients()) {
-            clientPlayingStatusses.Add(client.GetClientId(), false);
+            bool isFinishedPlaying = !client.IsConnected();
+            clientFinishedPlayingStatusses.Add(client.GetClientId(), isFinishedPlaying);
             clientPlayingScores.Add(client.GetClientId(), 0);
         }
         server = b11PartyServer.GetKarmanServer();
@@ -34,7 +35,7 @@ public class MiniGamePlayingPhase : MonoBehaviour {
     private void OnPacket(Guid clientId, Packet packet) {
         if (packet is MiniGamePlayingFinishedPacket finishedPacket) {
             if (finishedPacket.GetClientId().Equals(clientId)) {
-                clientPlayingStatusses[clientId] = true;
+                clientFinishedPlayingStatusses[clientId] = true;
                 UpdateText();
                 server.Broadcast(finishedPacket);
             }
@@ -50,14 +51,14 @@ public class MiniGamePlayingPhase : MonoBehaviour {
         playingPhaseText.text = string.Format(
             "Playing {0}... {1}/{2} (scores={3})",
             miniGame.name,
-            clientPlayingStatusses.Values.Count(status => status == false),
-            clientPlayingStatusses.Count,
+            clientFinishedPlayingStatusses.Values.Count(status => status == false),
+            clientFinishedPlayingStatusses.Count,
             string.Join(", ", clientPlayingScores.Values)
         );
     }
 
     public bool IsAClientStillPlaying() {
-        return clientPlayingStatusses.Values.Any(status => status == false);
+        return clientFinishedPlayingStatusses.Values.Any(status => status == false);
     }
 
     public int GetScore(Guid clientId) {
@@ -68,7 +69,7 @@ public class MiniGamePlayingPhase : MonoBehaviour {
         miniGame.EndPlaying();
         miniGame = null;
         playingPhaseText.text = "Mini Game Playing";
-        clientPlayingStatusses.Clear();
+        clientFinishedPlayingStatusses.Clear();
         clientPlayingScores.Clear();
         server.OnClientPackedReceivedCallback -= OnPacket;
         server = null;

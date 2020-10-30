@@ -72,5 +72,6 @@ public class ClientMiniGameLoadingPhase : MonoBehaviour {
         foreach (Transform child in loadingClientsUIRoot.transform) {
             Destroy(child.gameObject);
         }
+        loadingClientUIs.Clear();
     }
 }

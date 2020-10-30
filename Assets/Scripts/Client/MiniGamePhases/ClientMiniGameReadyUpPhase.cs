@@ -82,6 +82,7 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
         foreach (Transform child in readyUpClientsUIRoot.transform) {
             Destroy(child.gameObject);
         }
+        readyUpClientUIs.Clear();
     }
 
 

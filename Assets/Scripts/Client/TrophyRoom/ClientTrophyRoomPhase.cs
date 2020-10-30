@@ -12,6 +12,7 @@ public class ClientTrophyRoomPhase : MonoBehaviour {
     [SerializeField]
     private GameObject trophyRoomClientUIPrefab = default;
 
+    private int watchDuration;
     private bool isWatching;
     private float timeWatching;
     private int maxScore;
@@ -22,8 +23,9 @@ public class ClientTrophyRoomPhase : MonoBehaviour {
         b11PartyClient.OnTrophyRoomStartedCallback += OnStarted;
     }
 
-    private void OnStarted(TrophyRoomStartedPacket.TrophyRoomInformation[] totalScoreInformation) {
+    private void OnStarted(int watchDuration, TrophyRoomStartedPacket.Score[] totalScoreInformation) {
         root.SetActive(true);
+        this.watchDuration = watchDuration;
         isWatching = true;
         timeWatching = 0f;
         maxScore = int.MinValue;
@@ -48,7 +50,7 @@ public class ClientTrophyRoomPhase : MonoBehaviour {
     protected void Update() {
         if (isWatching) {
             timeWatching += Time.deltaTime;
-            float timeT = Mathf.Clamp01((timeWatching - 2) / (ScoreOverviewPhase.WATCH_DURATION * 1.5f - 5));
+            float timeT = Mathf.Clamp01((timeWatching - 2) / (watchDuration - 5));
             float currentScore = maxScore * timeT;
             foreach (var clientUI in trophyRoomClientUIs.Values) {
                 clientUI.SetCurrent(currentScore);

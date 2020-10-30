@@ -53,18 +53,22 @@ public class LobbyPhase : MonoBehaviour {
     }
 
     public bool IsChoosingMiniGameInProgress() {
-        int characterThatHaveNotChosen = characters.Values.Count(character => !character.HasChosen());
-        return characters.Count == 0 || characterThatHaveNotChosen > 0;
+        // TODO: replace with correct logic again later
+        // int characterThatHaveNotChosen = characters.Values.Count(character => !character.HasChosen());
+        // return characters.Count == 0 || characterThatHaveNotChosen > 0;
+        return characters.Count == 0 || characters.Values.All(character => !character.HasChosen());
     }
 
     public string GetChosenMiniGameName() {
         Dictionary<string, int> numberOfVotesPerMiniGame = new Dictionary<string, int>();
         foreach (var character in characters) {
             string chosenMiniGame = character.Value.GetChosen();
-            if (!numberOfVotesPerMiniGame.ContainsKey(chosenMiniGame)) {
-                numberOfVotesPerMiniGame.Add(chosenMiniGame, 0);
+            if (chosenMiniGame != null) {
+                if (!numberOfVotesPerMiniGame.ContainsKey(chosenMiniGame)) {
+                    numberOfVotesPerMiniGame.Add(chosenMiniGame, 0);
+                }
+                numberOfVotesPerMiniGame[chosenMiniGame]++;
             }
-            numberOfVotesPerMiniGame[chosenMiniGame]++;
             Destroy(character.Value.gameObject);
         }
         log.Info("Votes: {0}", string.Join(", ", numberOfVotesPerMiniGame.Select(miniGameAndVotes => string.Format("{0}: {1}", miniGameAndVotes.Key, miniGameAndVotes.Value))));

@@ -5,11 +5,11 @@ using System.Linq;
 
 public class TrophyRoomStartedPacket : Packet {
 
-    public class TrophyRoomInformation {
+    public class Score {
         private readonly Guid clientId;
         private readonly int totalScore;
 
-        public TrophyRoomInformation(Guid clientId, int totalScore) {
+        public Score(Guid clientId, int totalScore) {
             this.clientId = clientId;
             this.totalScore = totalScore;
         }
@@ -22,35 +22,43 @@ public class TrophyRoomStartedPacket : Packet {
             return totalScore;
         }
     }
-    private TrophyRoomInformation[] trophyRooms;
+
+    private int duration;
+    private Score[] scores;
 
     public TrophyRoomStartedPacket(byte[] bytes) : base(bytes) {
-        List<TrophyRoomInformation> trophyRooms = new List<TrophyRoomInformation>();
+        duration = ReadInt();
+        List<Score> scores = new List<Score>();
         while (!IsDone()) {
             Guid clientId = ReadGuid();
             int totalScore = ReadInt();
-            trophyRooms.Add(new TrophyRoomInformation(clientId, totalScore));
+            scores.Add(new Score(clientId, totalScore));
         }
-        this.trophyRooms = trophyRooms.ToArray();
+        this.scores = scores.ToArray();
     }
 
-    public TrophyRoomStartedPacket(TrophyRoomInformation[] trophyRooms) : base(AsBytes(trophyRooms)) {
-        this.trophyRooms = trophyRooms;
+    public TrophyRoomStartedPacket(int duration, Score[] scores) : base(AsBytes(duration, scores)) {
+        this.duration = duration;
+        this.scores = scores;
     }
 
     public override void Validate() { }
 
-    private static byte[] AsBytes(TrophyRoomInformation[] trophyRooms) {
-        byte[][] trophyRoomsAsBytes = trophyRooms
+    private static byte[] AsBytes(int duration, Score[] scores) {
+        byte[][] scoresAsBytes = scores
             .Select(so => Bytes.Pack(
                 Bytes.Of(so.GetClientId()),
                 Bytes.Of(so.GetTotalScore())
             ))
             .ToArray();
-        return Bytes.Pack(trophyRoomsAsBytes);
+        return Bytes.Pack(Bytes.Of(duration), Bytes.Pack(scoresAsBytes));
     }
 
-    public TrophyRoomInformation[] GetTrophyRooms() {
-        return trophyRooms;
+    public int GetDuration() {
+        return duration;
+    }
+
+    public Score[] GetScores() {
+        return scores;
     }
 }
