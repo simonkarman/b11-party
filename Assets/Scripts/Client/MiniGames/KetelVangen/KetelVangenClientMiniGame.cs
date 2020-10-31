@@ -100,7 +100,6 @@ public class KetelVangenClientMiniGame : ClientMiniGame {
     protected override void OnPlayingEndedImpl() {
         root.gameObject.SetActive(false);
         me.OnHitBottle -= OnHitBottle;
-        b11PartyClient.OnOtherPacket -= OnPacket;
     }
 
     private void OnHitBottle(int bottlePoints) {

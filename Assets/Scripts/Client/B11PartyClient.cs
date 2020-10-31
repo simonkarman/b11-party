@@ -136,6 +136,7 @@ public class B11PartyClient : MonoBehaviour {
             OnMiniGamePlayingStartedCallback();
         } else if (packet is MiniGamePlayingFinishedPacket miniGamePlayingFinishedPacket) {
             OnMiniGamePlayingFinishedCallback(miniGamePlayingFinishedPacket.GetClientId());
+            OnOtherPacket(packet);
         } else if (packet is MiniGamePlayingScorePacket miniGamePlayingScorePacket) {
             OnMiniGamePlayingScoreCallback(miniGamePlayingScorePacket.GetClientId(), miniGamePlayingScorePacket.GetScore());
         } else if (packet is MiniGamePlayingEndedPacket) {

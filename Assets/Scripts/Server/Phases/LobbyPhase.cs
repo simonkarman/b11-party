@@ -53,10 +53,8 @@ public class LobbyPhase : MonoBehaviour {
     }
 
     public bool IsChoosingMiniGameInProgress() {
-        // TODO: replace with correct logic again later
-        // int characterThatHaveNotChosen = characters.Values.Count(character => !character.HasChosen());
-        // return characters.Count == 0 || characterThatHaveNotChosen > 0;
-        return characters.Count == 0 || characters.Values.All(character => !character.HasChosen());
+        int characterThatHaveNotChosen = characters.Values.Count(character => !character.HasChosen());
+        return characters.Count == 0 || characterThatHaveNotChosen > 0;
     }
 
     public string GetChosenMiniGameName() {

@@ -17,9 +17,10 @@ public class RedCupClientMiniGame : ClientMiniGame {
     private GameObject meTablePrefab = default;
     [SerializeField]
     private GameObject otherTablePrefab = default;
+    [SerializeField]
+    private int score = 0;
 
     private bool meHasFinished = false;
-    private int score = 0;
     private MeRedCupTable me;
     private readonly Dictionary<Guid, RedCupTable> tables = new Dictionary<Guid, RedCupTable>();
 
@@ -94,6 +95,10 @@ public class RedCupClientMiniGame : ClientMiniGame {
             b11PartyClient.GetMe().GetClientId(),
             cupId
         ));
+
+        if (score > 99) {
+            SetFinishedMe();
+        }
     }
 
     private void SetFinishedMe() {

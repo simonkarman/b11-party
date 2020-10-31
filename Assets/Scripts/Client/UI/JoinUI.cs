@@ -45,15 +45,13 @@ public class JoinUI : MonoBehaviour {
 
     protected void Start() {
         OnLeft();
-        connectionStringInput.text = "localhost"; // TODO: remove localhost set
         connectButton.interactable = false;
     }
 
     public void OnInputChanged() {
-        // TODO: remove 1 length hack (and change go-r to ro-g)
         connectButton.interactable = passcodeInput.text.Equals("se-rver") ||
             (
-                (passcodeInput.text.Length == 7 || passcodeInput.text.Length == 1)
+                passcodeInput.text.Length == 7
                 && connectionStringInput.text.Length > 3
                 && passcodes.Any(passcode => passcode.GetPasscode().ToLower().StartsWith(passcodeInput.text.ToLower()))
             );

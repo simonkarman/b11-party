@@ -48,6 +48,7 @@ public class MeRedCupTable : RedCupTable {
     }
 
     public void EndPlaying() {
+        ball.gameObject.SetActive(false);
         phase = RedCupTablePhase.DONE;
     }
 
