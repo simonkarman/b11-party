@@ -539,12 +539,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 222352262}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 41.854065}
-  m_SizeDelta: {x: 0, y: 80}
+  m_AnchoredPosition: {x: -242.35, y: 48.021}
+  m_SizeDelta: {x: -567.26, y: 92.33388}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &102263708
 MonoBehaviour:
@@ -559,7 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_Color: {r: 0.234, g: 0.234, b: 0.234, a: 0.6509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -581,7 +581,8 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Waiting for all players to ready up...
 
-    Press space to ready up.'
+    Press <b>space</b> to ready
+    up.'
 --- !u!222 &102263709
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1455,6 +1456,7 @@ RectTransform:
   - {fileID: 719047432}
   - {fileID: 378203671}
   - {fileID: 564048544}
+  - {fileID: 253570867}
   - {fileID: 102263707}
   m_Father: {fileID: 2061754002}
   m_RootOrder: 1
@@ -1666,6 +1668,86 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &253570866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 253570867}
+  - component: {fileID: 253570869}
+  - component: {fileID: 253570868}
+  m_Layer: 0
+  m_Name: ControlsSchema
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &253570867
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253570866}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 222352262}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 220.22, y: 48.021}
+  m_SizeDelta: {x: -517.7863, y: 92.33421}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &253570868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253570866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.22700001, g: 0.053561803, b: 0.053561803, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 16
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 100
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua and more mote word....
+--- !u!222 &253570869
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253570866}
+  m_CullTransparentMesh: 0
 --- !u!1 &258170111
 GameObject:
   m_ObjectHideFlags: 0
@@ -2291,8 +2373,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 234, y: 3.4232178}
-  m_SizeDelta: {x: 385.45026, y: -160.56982}
+  m_AnchoredPosition: {x: 234, y: 14.974}
+  m_SizeDelta: {x: 385.45026, y: -158.71576}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378203672
 MonoBehaviour:
@@ -2307,7 +2389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3490566, g: 0.08067818, b: 0.08067818, a: 1}
+  m_Color: {r: 0.22700001, g: 0.053561803, b: 0.053561803, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2316,7 +2398,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2761,6 +2843,7 @@ MonoBehaviour:
   readyUpClientUIPrefab: {fileID: 9058280415732645738, guid: 11e19adfba38b7246aee343bc6d6c7c6, type: 3}
   titleText: {fileID: 719047433}
   descriptionText: {fileID: 378203672}
+  controlSchemaText: {fileID: 253570868}
   previewImage: {fileID: 564048545}
   miniGames:
   - name: B11 Balloon
@@ -2770,8 +2853,10 @@ MonoBehaviour:
 
       Het
       doel van deze minigame is om een zo groot mogelijke ballon vol te blazen met
-      lucht. De gene die de grootste ballon heeft krijgt de meeste punten! Maar pas
-      op, want je ballon kan knappen.'
+      lucht <b>in een teug</b>. De gene die de grootste ballon heeft krijgt de meeste
+      punten! Maar pas op, want je ballon kan knappen.'
+    controlSchema: Druk op pijltje omhoog of W om te beginnen met blazen en druk
+      op het goede moment op spatie om te stoppen
     preview: {fileID: 21300000, guid: d658bafb162f4544798148b77c934fa8, type: 3}
   - name: Red Cup
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -2780,6 +2865,7 @@ MonoBehaviour:
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
+    controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Bussen
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -2788,14 +2874,19 @@ MonoBehaviour:
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
+    controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Ketel Vangen
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-      dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-      sunt in culpa qui officia deserunt mollit anim id est laborum.
+    description: 'Gedurende het bestuursjaar zijn er heel veel flessen Ketel 1 gedronken,
+      vaak de normale variant, maar soms viel ook de matuur goed in de smaak. Daarnaast
+      waren er ook flessen drank die juist ontweken moesten worden, namelijk de fless
+      Smirnoff Ice!
+
+
+      In deze minigame moet je de flessen ketel (1 punt) en
+      ketel matuur (3 punten) proberen te vangen. Maar kijk uit want elke fles Smirnoff
+      is direct 5 min punten waard! Zodra iemand 40 punten heeft, eindigt het spel.'
+    controlSchema: Gebruik de pijltjes toetsen of A en D om heen en weer te bewegen
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Kelder Racen
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -2804,6 +2895,7 @@ MonoBehaviour:
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
+    controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Stickies
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -2812,6 +2904,7 @@ MonoBehaviour:
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
+    controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Kamerdienst
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -2820,6 +2913,7 @@ MonoBehaviour:
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
+    controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Consti
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -2828,18 +2922,18 @@ MonoBehaviour:
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
+    controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Batavieren
-    description: 'Tijdens het bestuursjaar van B11 zijn heel wat hordes overwonnen.
-      Het prachtige WISO bezocht en sommige bestuurders zijn zelfs thuis gekomen,
-      de leden zijn vermaakt met het organiseren van prachtige activiteiten, en nog
-      veel meer. Maar een van de zwaarste hindernissen was wel de Batavierenrace.
+    description: 'Tijdens het bestuursjaar van B11 zijn heel wat hindernissen overwonnen
+      en een van de zwaarste hindernissen was wel de Batavierenrace.
 
 
-      In
-      deze mini game gaan we nogmaals op Batavierenrace, en hebben we onderweg nog
-      wat extra hindernissen. De gene die het het lanste volhoudt om overeind te
+      In deze
+      mini game gaan we nogmaals op Batavierenrace, en onderweg komen we nog wat
+      extra hindernissen tegen. De gene die het het lanste volhoudt om overeind te
       blijven scoort de meesten punten!'
+    controlSchema: Gebruik spatie, W, of pijltje omhoog om te springen
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Borrel
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -2848,6 +2942,7 @@ MonoBehaviour:
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
+    controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Fiets
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -2856,6 +2951,7 @@ MonoBehaviour:
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
+    controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
 --- !u!1 &488912922
 GameObject:
@@ -3162,8 +3258,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -256, y: 2.6411}
-  m_SizeDelta: {x: 435.21704, y: 281.0075}
+  m_AnchoredPosition: {x: -255.99, y: 14.974}
+  m_SizeDelta: {x: 435.21704, y: 284.42847}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &564048545
 MonoBehaviour:
@@ -3260,7 +3356,7 @@ MonoBehaviour:
   - name: Bussen
     prefab: {fileID: 0}
   - name: Ketel Vangen
-    prefab: {fileID: 0}
+    prefab: {fileID: 6807716508682326884, guid: 6cb51982005316649a0fbd56c3e96e95, type: 3}
   - name: Kelder Racen
     prefab: {fileID: 0}
   - name: Stickies
@@ -4175,8 +4271,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -38.426025}
-  m_SizeDelta: {x: 0, y: 80}
+  m_AnchoredPosition: {x: 0, y: -31.4}
+  m_SizeDelta: {x: 0, y: 65.96692}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &719047433
 MonoBehaviour:

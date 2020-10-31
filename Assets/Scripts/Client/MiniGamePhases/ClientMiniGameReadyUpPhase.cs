@@ -20,6 +20,8 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
     [SerializeField]
     private Text descriptionText = default;
     [SerializeField]
+    private Text controlSchemaText = default;
+    [SerializeField]
     private Image previewImage = default;
 
     [Serializable]
@@ -29,6 +31,8 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
         [SerializeField, TextArea(3, 10)]
         private string description = default;
         [SerializeField]
+        private string controlSchema = default;
+        [SerializeField]
         private Sprite preview = default;
 
         public string GetName() {
@@ -37,6 +41,10 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
 
         public string GetDescription() {
             return description;
+        }
+
+        public string GetControlSchema() {
+            return controlSchema;
         }
 
         public Sprite GetPreview() {
@@ -69,6 +77,7 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
         MiniGameReadyUpInformation readyUpInformation = miniGames.First(miniGame => miniGame.GetName().Equals(miniGameName));
         titleText.text = readyUpInformation.GetName();
         descriptionText.text = readyUpInformation.GetDescription();
+        controlSchemaText.text = readyUpInformation.GetControlSchema();
         previewImage.sprite = readyUpInformation.GetPreview();
         currentMiniGame.OnReadyUp();
     }

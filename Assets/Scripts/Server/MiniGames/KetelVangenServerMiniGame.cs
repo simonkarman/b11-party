@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class BatavierenServerMiniGame : ServerMiniGame {
+public class KetelVangenServerMiniGame : ServerMiniGame {
     private B11PartyServer b11PartyServer;
 
     [SerializeField]
@@ -10,13 +10,13 @@ public class BatavierenServerMiniGame : ServerMiniGame {
     [SerializeField]
     private float acceleration = 0.1f;
     [SerializeField]
-    private float airChance = 0.2f;
+    private float ketelMatuurChance = 0.2f;
     [SerializeField]
-    private float startSpawnInterval = 3f;
+    private float smirnoffIceChance = 0.2f;
+    [SerializeField]
+    private float startSpawnInterval = 0.3f;
     [SerializeField]
     private float spawnIntervalRandomness = 0.4f;
-    [SerializeField]
-    private float spawnIntervalChangeRate = -0.1f;
 
     private float currentSpeed;
     private float currentSpawnInterval;
@@ -30,7 +30,7 @@ public class BatavierenServerMiniGame : ServerMiniGame {
     }
 
     private void OnPacket(Guid clientId, Packet packet) {
-        if (packet is BatavierenCharacterUpdatedPacket) {
+        if (packet is KetelVangenCharacterUpdatedPacket) {
             b11PartyServer.GetKarmanServer().Broadcast(packet, clientId);
         }
     }
@@ -56,23 +56,26 @@ public class BatavierenServerMiniGame : ServerMiniGame {
 
     protected void Update() {
         if (isPlaying) {
-
             durationUntilNextSpawn -= Time.deltaTime;
             if (durationUntilNextSpawn < 0) {
                 durationUntilNextSpawn += currentSpawnInterval;
                 durationUntilNextSpawn += spawnIntervalRandomness * UnityEngine.Random.value;
-                BatavierenObstacleSpawnedPacket.Mode mode = UnityEngine.Random.value < airChance
-                    ? BatavierenObstacleSpawnedPacket.Mode.AIR
-                    : BatavierenObstacleSpawnedPacket.Mode.GROUND;
-                b11PartyServer.GetKarmanServer().Broadcast(new BatavierenObstacleSpawnedPacket(
-                     mode,
+                KetelVangenSpawnedPacket.SpawnType spawnType = KetelVangenSpawnedPacket.SpawnType.KETEL_1;
+                float randomValue = UnityEngine.Random.value;
+                if (randomValue > (1 - smirnoffIceChance)) {
+                    spawnType = KetelVangenSpawnedPacket.SpawnType.SMIRNOFF_ICE;
+                } else if (randomValue > (1 - smirnoffIceChance - ketelMatuurChance)) {
+                    spawnType = KetelVangenSpawnedPacket.SpawnType.KETEL_1_MATUUR;
+                }
+                b11PartyServer.GetKarmanServer().Broadcast(new KetelVangenSpawnedPacket(
+                     spawnType,
+                     UnityEngine.Random.value,
                      currentSpeed
                 ));
 
                 currentSpeed += acceleration;
-                currentSpawnInterval += spawnIntervalChangeRate;
-                if (currentSpawnInterval <= 0.7f) {
-                    currentSpawnInterval = 0.9f;
+                if (currentSpeed > 6f) {
+                    currentSpeed = 3f;
                 }
             }
         }
