@@ -1110,7 +1110,7 @@ MonoBehaviour:
   - name: B11 Balloon
     prefab: {fileID: 1999918899779883704, guid: cc7e9415e9d06ec4ba35f25ccf4b7e9d, type: 3}
   - name: Red Cup
-    prefab: {fileID: 0}
+    prefab: {fileID: 1999918899779883704, guid: 75e67f829f93cc64fabf8d33fc267d7b, type: 3}
   - name: Bussen
     prefab: {fileID: 0}
   - name: Ketel Vangen
@@ -1258,7 +1258,7 @@ MonoBehaviour:
   - name: B11 Balloon
     isCompleted: 0
   - name: Red Cup
-    isCompleted: 1
+    isCompleted: 0
   - name: Bussen
     isCompleted: 1
   - name: Ketel Vangen

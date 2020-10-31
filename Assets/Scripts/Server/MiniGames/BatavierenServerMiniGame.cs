@@ -52,6 +52,7 @@ public class BatavierenServerMiniGame : ServerMiniGame {
     }
 
     public override void OnUnload() {
+        b11PartyServer.GetKarmanServer().OnClientPackedReceivedCallback -= OnPacket;
     }
 
     protected void Update() {

@@ -76,7 +76,11 @@ public class JoinUI : MonoBehaviour {
         karmanClient.OnDisconnectedCallback += () => { };
         karmanClient.OnLeftCallback += () => {
             OnLeft();
-            SceneManager.LoadScene("Client");
+            if (Application.isEditor) {
+                Application.Quit();
+            } else {
+                SceneManager.LoadScene("Client");
+            }
         };
         karmanClient.Start(connectionStringInput.text, B11PartyServer.DEFAULT_PORT);
     }

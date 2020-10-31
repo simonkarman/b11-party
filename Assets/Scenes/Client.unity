@@ -329,7 +329,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56040923}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.52, y: -0.14, z: 0}
+  m_LocalPosition: {x: 1.15, y: 0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 406206687}
@@ -2859,13 +2859,9 @@ MonoBehaviour:
       op het goede moment op spatie om te stoppen
     preview: {fileID: 21300000, guid: d658bafb162f4544798148b77c934fa8, type: 3}
   - name: Red Cup
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-      dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-      sunt in culpa qui officia deserunt mollit anim id est laborum.
-    controlSchema: 
+    description: Red Cup .... TODO
+    controlSchema: Druk eerst op spatie om de richting te kiezen, druk weer op spatie
+      om de snelheid te kiezen
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Bussen
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -3352,7 +3348,7 @@ MonoBehaviour:
   - name: B11 Balloon
     prefab: {fileID: 1999918899779883704, guid: b9748fe09784fbf4b87da3366941c6d1, type: 3}
   - name: Red Cup
-    prefab: {fileID: 0}
+    prefab: {fileID: 246360179860330382, guid: 1240ca1c492bf294985b6ade83d4d01e, type: 3}
   - name: Bussen
     prefab: {fileID: 0}
   - name: Ketel Vangen
@@ -11595,7 +11591,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076304366}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.07, y: -0.76, z: 0}
+  m_LocalPosition: {x: 3.27, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1073158663}

@@ -87,6 +87,7 @@ public class BatavierenClientMiniGame : ClientMiniGame {
 
     protected override void OnPlayingEndedImpl() {
         root.gameObject.SetActive(false);
+        b11PartyClient.OnOtherPacket -= OnPacket;
     }
 
     protected override void Update() {

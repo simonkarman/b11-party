@@ -59,10 +59,7 @@ public class KetelVangenClientMiniGame : ClientMiniGame {
             characters[characterUpdate.GetClientId()].localPosition = characterUpdate.GetPosition();
         } else if (packet is MiniGamePlayingFinishedPacket) {
             if (!meHasFinished) {
-                b11PartyClient.GetKarmanClient().Send(new MiniGamePlayingFinishedPacket(
-                    b11PartyClient.GetMe().GetClientId()
-                ));
-                meHasFinished = true;
+                SetFinishedMe();
             }
         }
     }
@@ -103,6 +100,7 @@ public class KetelVangenClientMiniGame : ClientMiniGame {
     protected override void OnPlayingEndedImpl() {
         root.gameObject.SetActive(false);
         me.OnHitBottle -= OnHitBottle;
+        b11PartyClient.OnOtherPacket -= OnPacket;
     }
 
     private void OnHitBottle(int bottlePoints) {

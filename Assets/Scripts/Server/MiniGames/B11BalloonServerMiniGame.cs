@@ -35,5 +35,7 @@ public class B11BalloonServerMiniGame : ServerMiniGame {
 
     public override void EndPlaying() { }
 
-    public override void OnUnload() { }
+    public override void OnUnload() {
+        b11PartyServer.GetKarmanServer().OnClientPackedReceivedCallback -= OnPacket;
+    }
 }
