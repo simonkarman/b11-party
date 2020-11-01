@@ -8,7 +8,7 @@ namespace KarmanProtocol {
     public class KarmanServer {
         private static readonly Logger log = Logger.For<KarmanServer>();
 
-        public const string PROTOCOL_VERSION = "0.0.7";
+        public const string PROTOCOL_VERSION = "0.1.0";
 
         private class Client {
             private readonly Guid clientId;
