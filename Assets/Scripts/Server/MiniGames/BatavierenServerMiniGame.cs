@@ -57,7 +57,6 @@ public class BatavierenServerMiniGame : ServerMiniGame {
 
     protected void Update() {
         if (isPlaying) {
-
             durationUntilNextSpawn -= Time.deltaTime;
             if (durationUntilNextSpawn < 0) {
                 durationUntilNextSpawn += currentSpawnInterval;

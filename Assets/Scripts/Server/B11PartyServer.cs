@@ -438,6 +438,7 @@ public class B11PartyServer : MonoBehaviour {
         SaveStateToPlayerPrefs();
         if (reset) {
             PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
         }
         SceneManager.LoadScene("Server");
     }

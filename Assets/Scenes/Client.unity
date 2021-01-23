@@ -284,6 +284,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &31710318
 Canvas:
   m_ObjectHideFlags: 0
@@ -781,6 +782,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &142278556
 Canvas:
   m_ObjectHideFlags: 0
@@ -1054,7 +1056,7 @@ MonoBehaviour:
     clientId: 27217ae2-d954-4189-a3e9-bf7a462528b4
   - passcode: si-te35
     clientId: 6e6f2e4a-9447-4168-8788-0acdf76eb660
-  - passcode: ro-g7ac
+  - passcode: go-r7ac
     clientId: 1cdd21f3-cfcc-4071-b168-93489fd5b3d4
   b11PartyClient: {fileID: 1980380590}
 --- !u!1 &186882321
@@ -1093,7 +1095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 87.6}
+  m_AnchoredPosition: {x: 0, y: 87.6001}
   m_SizeDelta: {x: -30, y: 146.53473}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &186882323
@@ -1212,6 +1214,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &195010230
 Canvas:
   m_ObjectHideFlags: 0
@@ -2690,6 +2693,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &421772237
 Canvas:
   m_ObjectHideFlags: 0
@@ -3738,7 +3742,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 49.38, y: -63.22998}
+  m_AnchoredPosition: {x: 49.379883, y: -63.22998}
   m_SizeDelta: {x: 71.4436, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &633127438
@@ -4003,6 +4007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -5893,6 +5898,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1031432085
 Canvas:
   m_ObjectHideFlags: 0
@@ -7690,7 +7696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1196.4, y: -44.8}
+  m_AnchoredPosition: {x: 1196.4, y: -44.80005}
   m_SizeDelta: {x: 153.62103, y: 77.71231}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325954596
@@ -8679,7 +8685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 36.25, y: -27.37001}
+  m_AnchoredPosition: {x: 36.25, y: -27.370117}
   m_SizeDelta: {x: -98.64856, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1513275481
@@ -8696,6 +8702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -8753,7 +8760,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: home.karman.dev
+  m_Text: localhost
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -9156,7 +9163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 49.380005, y: -27.600037}
+  m_AnchoredPosition: {x: 49.379883, y: -27.600098}
   m_SizeDelta: {x: 71.443344, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1553430146
@@ -11554,6 +11561,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &2061754005
 Canvas:
   m_ObjectHideFlags: 0
@@ -11658,6 +11666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
