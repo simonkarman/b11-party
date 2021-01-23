@@ -127,4 +127,14 @@ public class KetelVangenClientMiniGame : ClientMiniGame {
         meHasFinished = true;
         me.DisableCatching();
     }
+
+    protected override void Update() {
+        base.Update();
+        if (GetMode() == Mode.PLAYING) {
+            b11PartyClient.GetKarmanClient().Send(new KetelVangenCharacterUpdatedPacket(
+                b11PartyClient.GetMe().GetClientId(),
+                me.transform.localPosition
+            ));
+        }
+    }
 }

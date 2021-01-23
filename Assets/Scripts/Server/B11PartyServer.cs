@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class B11PartyServer : MonoBehaviour {
     public static readonly int DEFAULT_PORT = 14641;
-    public static readonly Guid GAME_ID = Guid.Parse("11117d77-6145-4732-b30a-fd6f4812e251");
+    public static readonly Guid GAME_ID = Guid.Parse("11118d77-6145-4732-b30a-fd6f4812e251");
     private static readonly Logging.Logger log = Logging.Logger.For<B11PartyServer>();
 
     private bool serverStarted = false;
