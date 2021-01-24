@@ -2,9 +2,10 @@
 
 public class BussenLaneSpawnedPacket : Packet {
     public enum LaneType: int {
-        GRASS = 0,
-        ROAD = 1,
-        WATER = 2,
+        Grass = 0,
+        Road = 1,
+        Water = 2,
+        Lava = 3,
     }
 
     private readonly int index; // the index of the lane

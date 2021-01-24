@@ -2876,16 +2876,18 @@ MonoBehaviour:
       om de snelheid te kiezen
     preview: {fileID: 21300000, guid: aa8224fb4148d1b41a39fefd2b0814b2, type: 3}
   - name: Bussen
-    description: 'Er zijn heel wat potjes bussen gespeeld tijdens het bestuursjaar.
-      Het doel was natuurlijk altijd om de bus te ontwijken, en dat is de bestuurders
-      van B11 helaas niet altijd gelukt Hopelijk gaat het jullie nu beter af in deze
-      minigame.. De opdracht is namelijk om de bussen te ontwijken.
+    description: 'Er zijn heel wat potjes bussen gespeeld tijdens het bestuursjaar
+      van B11. Het doel was uiteraard om in dat spel de bus te ontwijken. Helaas
+      is de bestuurders van B11 dat niet altijd even goed gelukt. Gelukkig krijgen
+      jullie vandaag een nieuwe kans om de bus(sen) te ontwijken. Hopelijk gaat het
+      jullie op deze manier beter af.
 
 
-      Wie het
-      verste komt verdient het meeste punten.'
-    controlSchema: 
-    preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
+      Naast bussen moeten jullie ook bomen,
+      huizen, eenden, hekkies, autos, vrachtwachtens, en meer ... ontwijken. Wie
+      het verste komt verdient de meeste punten.'
+    controlSchema: Gebruik de pijltjes of WASD om te bewegen
+    preview: {fileID: 21300000, guid: a3490c42fcd4c0144adf69a9792f4151, type: 3}
   - name: Ketel Vangen
     description: 'Gedurende het bestuursjaar zijn er heel veel flessen Ketel 1 gedronken,
       vaak de normale variant, maar soms viel ook de matuur goed in de smaak. Daarnaast

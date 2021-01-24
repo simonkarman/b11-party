@@ -74,45 +74,47 @@ During the trophy overview phase the clients are presented with their total scor
 ![Trophy room phase](Docs/trophy-room-phase.png)
 
 ## Mini games
-The project was build with 11 mini games in mind. At the release of `version 1.0.0` the game contained 4 out of 11 mini games. Other mini games might be added in future releases of the project.
+The project was build with 11 mini games in mind. At the release of `version 1.0.0` the game contained 4 out of these 11 mini games. Since then, mini games haven been build, and others have not yet been build. The overview below gives an overview of the available mini games and at which point they where added to the game.
 
-### (01/11) B11 Balloon
+### (01/11) B11 Balloon (release 1.0.0)
 Make the biggest balloon and ensure it doesn't pop.
 
 ![B11 Balloon](Docs/mini-games/b11-balloon.png)
 
-### (02/11) Red Cup
+### (02/11) Red Cup (release 1.0.0)
 Clear the table of all red cups by throwing ping pong balls in them.
 
 ![Red Cup](Docs/mini-games/red-cup.png)
 
-### (03/11) Bussen
-Not yet implemented.
+### (03/11) Bussen (build - not yet released)
+Avoid all busses, trees, houses, fences, ducks, and more on your way to the other side of town.
 
-### (04/11) Ketel Vangen
+![Bussen](Docs/mini-games/bussen.png)
+
+### (04/11) Ketel Vangen (release 1.0.0)
 Catch as many bottles of Ketel One as you can. Catch Ketel One Matuur bottles for bonus points and avoid catching the Smirnoff Ice bottles.
 
 ![Ketel Vangen](Docs/mini-games/ketel-vangen.png)
 
-### (05/11) Kelder Racen
-Not yet implemented.
+### (05/11) Kelder Racen (-)
+Not implemented.
 
-### (06/11) Stickies
-Not yet implemented.
+### (06/11) Stickies (-)
+Not implemented.
 
-### (07/11) Kamerdienst
-Not yet implemented.
+### (07/11) Kamerdienst (-)
+Not implemented.
 
-### (08/11) Consti
-Not yet implemented.
+### (08/11) Consti (-)
+Not implemented.
 
-### (09/11) Batavieren
+### (09/11) Batavieren (release 1.0.0)
 Jump over the obstacles passing by and stay on your feet for the longest amount of time.
 
 ![Batavieren](Docs/mini-games/batavieren.png)
 
-### (10/11) Borrel
-Not yet implemented.
+### (10/11) Borrel (-)
+Not implemented.
 
-### (11/11) Fiets
-Not yet implemented.
+### (11/11) Fiets (-)
+Not implemented.

@@ -1,7 +1,9 @@
 using Networking;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using LaneType = BussenLaneSpawnedPacket.LaneType;
 
 public class BussenClientMiniGame : ClientMiniGame {
     [SerializeField]
@@ -15,8 +17,15 @@ public class BussenClientMiniGame : ClientMiniGame {
     private GameObject grassLanePrefab = default;
     [SerializeField]
     private GameObject roadLanePrefab = default;
+
+    public BussenLane GetLaneAt(int laneIndex) {
+        return lanes.FirstOrDefault(lane => lane.GetIndex() == laneIndex);
+    }
+
     [SerializeField]
     private GameObject waterLanePrefab = default;
+    [SerializeField]
+    private GameObject lavaLanePrefab = default;
 
     [SerializeField]
     private Transform characterParent = default;
@@ -28,7 +37,7 @@ public class BussenClientMiniGame : ClientMiniGame {
     private int lastLaneIndex = 0;
     private bool deadMessageSent = false;
     private int lastScoreSent = -1;
-    private BussenCharacter me;
+    private BussenControllableCharacter me;
     private readonly Dictionary<Guid, Transform> characters = new Dictionary<Guid, Transform>();
     private readonly LinkedList<BussenLane> lanes = new LinkedList<BussenLane>();
 
@@ -42,7 +51,8 @@ public class BussenClientMiniGame : ClientMiniGame {
             Transform characterInstance = Instantiate(prefab, characterParent).transform;
             characterInstance.localPosition = Vector3.zero;
             if (isMe) {
-                me = characterInstance.GetComponent<BussenCharacter>();
+                me = characterInstance.GetComponent<BussenControllableCharacter>();
+                me.SetBussenClientMiniGame(this);
             }
             characterInstance.GetComponent<SpriteRenderer>().sprite = client.GetSprite();
             characters.Add(client.GetClientId(), characterInstance);
@@ -56,6 +66,10 @@ public class BussenClientMiniGame : ClientMiniGame {
             characters[characterUpdate.GetClientId()].localPosition = characterUpdate.GetPosition();
         } else if (packet is BussenLastLaneUpdatedPacket lastLaneUpdate) {
             UpdateLastLaneIndex(lastLaneUpdate.GetLastLaneIndex());
+        } else if (packet is MiniGamePlayingFinishedPacket characterFinished) {
+            if (!b11PartyClient.GetMe().GetClientId().Equals(characterFinished.GetClientId())) {
+                characters[characterFinished.GetClientId()].GetComponent<BussenCharacter>().Kill();
+            }
         }
     }
 
@@ -72,15 +86,16 @@ public class BussenClientMiniGame : ClientMiniGame {
 
     private void Spawn(BussenLaneSpawnedPacket lane) {
         GameObject lanePrefab = (lane.GetLaneType()) switch {
-            BussenLaneSpawnedPacket.LaneType.ROAD => roadLanePrefab,
-            BussenLaneSpawnedPacket.LaneType.WATER => waterLanePrefab,
+            LaneType.Road => roadLanePrefab,
+            LaneType.Water => waterLanePrefab,
+            LaneType.Lava => lavaLanePrefab,
             _ => grassLanePrefab,
         };
         Transform laneInstance = Instantiate(lanePrefab, laneParent).transform;
         laneInstance.localPosition = Vector3.up * lane.GetIndex();
         laneInstance.name = $"Lane {lane.GetLaneType()} at {lane.GetIndex()}";
         BussenLane bussenLane = laneInstance.GetComponent<BussenLane>();
-        bussenLane.SetIndex(lane.GetIndex());
+        bussenLane.Initialize(lane.GetIndex());
         bussenLane.SetFrom(lane.GetSeed(), lane.GetAmount(), lane.GetMultiplier());
         lanes.AddLast(bussenLane);
         me.SetMaxLaneIndex(lane.GetIndex());
@@ -96,7 +111,6 @@ public class BussenClientMiniGame : ClientMiniGame {
     protected override void OnPlayingEndedImpl() {
         root.gameObject.SetActive(false);
         b11PartyClient.OnOtherPacket -= OnPacket;
-
     }
 
     protected override void Update() {
