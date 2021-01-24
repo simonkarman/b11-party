@@ -1112,7 +1112,7 @@ MonoBehaviour:
   - name: Red Cup
     prefab: {fileID: 1999918899779883704, guid: 75e67f829f93cc64fabf8d33fc267d7b, type: 3}
   - name: Bussen
-    prefab: {fileID: 0}
+    prefab: {fileID: 1999918899779883704, guid: 062f22c5da64ddc4b81be0f0d1bd3308, type: 3}
   - name: Ketel Vangen
     prefab: {fileID: 1999918899779883704, guid: 88bc9529ff5643a4d9dc6be7b06562c1, type: 3}
   - name: Kelder Racen
@@ -1260,7 +1260,7 @@ MonoBehaviour:
   - name: Red Cup
     isCompleted: 0
   - name: Bussen
-    isCompleted: 1
+    isCompleted: 0
   - name: Ketel Vangen
     isCompleted: 0
   - name: Kelder Racen
@@ -1575,6 +1575,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1085936619
 Canvas:
   m_ObjectHideFlags: 0

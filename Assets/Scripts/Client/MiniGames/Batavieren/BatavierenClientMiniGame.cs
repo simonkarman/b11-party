@@ -100,7 +100,7 @@ public class BatavierenClientMiniGame : ClientMiniGame {
             if (me.IsAlive()) {
                 score += Time.deltaTime * scoreSpeed;
                 int scoreAsInt = Mathf.FloorToInt(score);
-                if (lastScoreSent != score) {
+                if (lastScoreSent < scoreAsInt) {
                     b11PartyClient.GetKarmanClient().Send(new MiniGamePlayingScorePacket(
                         b11PartyClient.GetMe().GetClientId(),
                         scoreAsInt
