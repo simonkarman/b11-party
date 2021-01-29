@@ -86,8 +86,8 @@ public class B11BalloonClientMiniGame : ClientMiniGame {
         root.gameObject.SetActive(false);
         b11PartyClient.OnMiniGamePlayingFinishedCallback -= OnBalloonFinished;
         b11PartyClient.OnOtherPacket -= OnOtherPacket;
-        float scoreT = Mathf.InverseLerp(startSize, maxSize, currentSize);
-        int score = balloonPopped ? 0 : Mathf.RoundToInt(111f * scoreT);
+        float scoreT = Mathf.Clamp01(Mathf.InverseLerp(maxSize - 0.75f, maxSize, currentSize));
+        int score = balloonPopped ? 0 : Mathf.CeilToInt(111f * (scoreT * scoreT));
         b11PartyClient.GetKarmanClient().Send(new MiniGamePlayingScorePacket(
             b11PartyClient.GetMe().GetClientId(),
             score

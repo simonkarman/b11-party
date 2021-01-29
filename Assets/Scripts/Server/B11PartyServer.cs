@@ -332,6 +332,10 @@ public class B11PartyServer : MonoBehaviour {
         karmanServer.Broadcast(new TrophyRoomStartedPacket(scoreWatchDuration * 2, GetScoresForTrophyRoom()));
     }
 
+    public MiniGamePlayingPhase GetMiniGamePlayingPhase() {
+        return miniGamePlayingPhase;
+    }
+
     private ScoreOverviewStartedPacket.Score[] GetScoresForScoreOverview() {
         return clients
             .Select(client => new ScoreOverviewStartedPacket.Score(

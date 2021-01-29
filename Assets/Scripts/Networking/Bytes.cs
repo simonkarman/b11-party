@@ -59,6 +59,15 @@ namespace Networking {
             return BitConverter.GetBytes(integer);
         }
 
+        public static byte[] Of(int[] intArray) {
+            List<byte> bytes = new List<byte>();
+            bytes.AddRange(Of(intArray.Length));
+            foreach (var integer in intArray) {
+                bytes.AddRange(Of(integer));
+            }
+            return bytes.ToArray();
+        }
+
         public static byte[] Of(float value) {
             return BitConverter.GetBytes(value);
         }
@@ -125,6 +134,15 @@ namespace Networking {
 
         public static int GetInt32(byte[] bytes, int startIndex = 0) {
             return BitConverter.ToInt32(bytes, startIndex);
+        }
+
+        public static int[] GetInt32Array(byte[] bytes, int startIndex = 0) {
+            int length = GetInt32(bytes, startIndex);
+            int[] intArray = new int[length];
+            for (int i = 0; i < length; i++) {
+                intArray[i] = GetInt32(bytes, startIndex + (i + 1) * 4);
+            }
+            return intArray;
         }
 
         public static float GetFloat(byte[] bytes, int startIndex = 0) {

@@ -34,6 +34,12 @@ namespace Networking {
             return value;
         }
 
+        protected int[] ReadIntArray() {
+            int[] value = Bytes.GetInt32Array(bytes, marker);
+            marker += (value.Length + 1) * 4;
+            return value;
+        }
+
         protected float ReadFloat() {
             float value = Bytes.GetFloat(bytes, marker);
             marker += 4;

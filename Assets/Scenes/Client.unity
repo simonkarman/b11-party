@@ -2900,7 +2900,7 @@ MonoBehaviour:
       is direct 5 min punten waard! Zodra iemand 40 punten heeft, eindigt het spel.'
     controlSchema: Gebruik de pijltjes toetsen of A en D om heen en weer te bewegen
     preview: {fileID: 21300000, guid: 4aac1650fe4e694428d3f18e7e5e56bc, type: 3}
-  - name: Kelder Racen
+  - name: Arduino
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -2909,7 +2909,7 @@ MonoBehaviour:
       sunt in culpa qui officia deserunt mollit anim id est laborum.
     controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
-  - name: Stickies
+  - name: A?
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -2919,14 +2919,24 @@ MonoBehaviour:
     controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Kamerdienst
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-      dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-      sunt in culpa qui officia deserunt mollit anim id est laborum.
-    controlSchema: 
-    preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
+    description: 'Kamerdienst draaien is natuurlijk iets wat alle bestuurs van B11
+      graag doen. In deze minigame gaan we met z''n allen een kamerdienst draaien.
+      Het doel is om de spullen bij elkaar zoeken waar de leden om vragen. Zorg er
+      voor dat je precies de goede spullen pakt en <b>niet te veel</b>, anders nemen
+      de leden het niet van je aan. Voor elk lid dat je helpt krijg je punten. Als
+      iemand 77 of meer punten heeft eindigt de kamerdienst.
+
+      
+
+      Elk
+      lid kan maar door 1 bestuurder worden geholpen. Zorg dus dat je sneller bent
+      dat je mede-bestuurders. Daarnast kan het gebeuren dat je iets hebt opgepakt
+      wat je niet meer nodig hebt. Gooi het dan weg bij de prullenbak, maar kijk
+      uit je gooit dan <b>al</b> je spullen in een keer weg.'
+    controlSchema: Gebruik de pijltjes toetsen om te bewegen, en de spatie balk om
+      spullen op te pakken. Gebruik ook spatiebalk om je verzamelde spullen aan leden
+      te geven.
+    preview: {fileID: 21300000, guid: e28ab6cfc47054f40926923f4a5612e3, type: 3}
   - name: Consti
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -2947,7 +2957,7 @@ MonoBehaviour:
       blijven scoort de meesten punten!'
     controlSchema: Gebruik spatie, W, of pijltje omhoog om te springen
     preview: {fileID: 21300000, guid: 70187f49dd4c9e141899d91a29fc4c4c, type: 3}
-  - name: Borrel
+  - name: Kelder Borrel
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -2956,7 +2966,7 @@ MonoBehaviour:
       sunt in culpa qui officia deserunt mollit anim id est laborum.
     controlSchema: 
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
-  - name: Fiets
+  - name: B?
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -3369,19 +3379,19 @@ MonoBehaviour:
     prefab: {fileID: 2467857921479047498, guid: 6c8fbc4274755d0499538dc5c494718b, type: 3}
   - name: Ketel Vangen
     prefab: {fileID: 6807716508682326884, guid: 6cb51982005316649a0fbd56c3e96e95, type: 3}
-  - name: Kelder Racen
+  - name: Arduino
     prefab: {fileID: 0}
-  - name: Stickies
+  - name: A?
     prefab: {fileID: 0}
   - name: Kamerdienst
-    prefab: {fileID: 0}
+    prefab: {fileID: 7160601149516255877, guid: 06662d557f8c7c147a2bf25d8f1a6f7d, type: 3}
   - name: Consti
     prefab: {fileID: 0}
   - name: Batavieren
     prefab: {fileID: 268728378981782175, guid: a2e198feab02c4643afa9cb7a84c2e63, type: 3}
-  - name: Borrel
+  - name: Kelder Borrel
     prefab: {fileID: 0}
-  - name: Fiets
+  - name: B?
     prefab: {fileID: 0}
 --- !u!1 &602416272
 GameObject:
@@ -7545,13 +7555,13 @@ MonoBehaviour:
   - Red Cup
   - Bussen
   - Ketel Vangen
-  - Kelder Racen
-  - Stickies
+  - Arduino
+  - A?
   - Kamerdienst
   - Consti
   - Batavieren
-  - Borrel
-  - Fiets
+  - Kelder Borrel
+  - B?
 --- !u!1 &1307166135
 GameObject:
   m_ObjectHideFlags: 0

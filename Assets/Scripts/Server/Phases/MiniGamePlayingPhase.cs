@@ -61,6 +61,16 @@ public class MiniGamePlayingPhase : MonoBehaviour {
         return clientFinishedPlayingStatusses.Values.Any(status => status == false);
     }
 
+    public void SetScore(Guid clientId, int score) {
+        clientPlayingScores[clientId] = score;
+        server.Broadcast(new MiniGamePlayingScorePacket(clientId, score));
+    }
+
+    public void AddScore(Guid clientId, int amount) {
+        clientPlayingScores[clientId] += amount;
+        server.Broadcast(new MiniGamePlayingScorePacket(clientId, clientPlayingScores[clientId]));
+    }
+
     public int GetScore(Guid clientId) {
         return clientPlayingScores[clientId];
     }

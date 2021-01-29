@@ -102,8 +102,10 @@ Not implemented.
 ### (06/11) Stickies (-)
 Not implemented.
 
-### (07/11) Kamerdienst (-)
-Not implemented.
+### (07/11) Kamerdienst (build - not yet released)
+Collect and deliver all the cookies, beer, coffee, bits, and bananas to the visitors of study association Sticky.
+
+![Kamerdienst](Docs/mini-games/kamerdienst.png)
 
 ### (08/11) Consti (-)
 Not implemented.
