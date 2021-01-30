@@ -80,6 +80,15 @@ namespace Networking {
             return guid.ToByteArray();
         }
 
+        public static byte[] Of(Guid[] guidArray) {
+            List<byte> bytes = new List<byte>();
+            bytes.AddRange(Of(guidArray.Length));
+            foreach (var guid in guidArray) {
+                bytes.AddRange(Of(guid));
+            }
+            return bytes.ToArray();
+        }
+
         public static byte[] Of(UnityEngine.Vector2 vector2) {
             byte[] bytes = new byte[8];
             Array.Copy(BitConverter.GetBytes(vector2.x), 0, bytes, 0, 4);
@@ -132,6 +141,15 @@ namespace Networking {
             return new Guid(guidBytes);
         }
 
+        public static Guid[] GetGuidArray(byte[] bytes, int startIndex = 0) {
+            int length = GetInt32(bytes, startIndex);
+            Guid[] guidArray = new Guid[length];
+            for (int i = 0; i < length; i++) {
+                guidArray[i] = GetGuid(bytes, startIndex + (i * 16) + 4);
+            }
+            return guidArray;
+        }
+
         public static int GetInt32(byte[] bytes, int startIndex = 0) {
             return BitConverter.ToInt32(bytes, startIndex);
         }
@@ -140,7 +158,7 @@ namespace Networking {
             int length = GetInt32(bytes, startIndex);
             int[] intArray = new int[length];
             for (int i = 0; i < length; i++) {
-                intArray[i] = GetInt32(bytes, startIndex + (i + 1) * 4);
+                intArray[i] = GetInt32(bytes, startIndex + (i * 4) + 4);
             }
             return intArray;
         }

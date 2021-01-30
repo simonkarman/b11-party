@@ -2926,13 +2926,13 @@ MonoBehaviour:
       de leden het niet van je aan. Voor elk lid dat je helpt krijg je punten. Als
       iemand 77 of meer punten heeft eindigt de kamerdienst.
 
-      
 
-      Elk
-      lid kan maar door 1 bestuurder worden geholpen. Zorg dus dat je sneller bent
-      dat je mede-bestuurders. Daarnast kan het gebeuren dat je iets hebt opgepakt
-      wat je niet meer nodig hebt. Gooi het dan weg bij de prullenbak, maar kijk
-      uit je gooit dan <b>al</b> je spullen in een keer weg.'
+
+      Elk lid kan
+      maar door 1 bestuurder worden geholpen. Zorg dus dat je sneller bent dat je
+      mede-bestuurders. Daarnast kan het gebeuren dat je iets hebt opgepakt wat je
+      niet meer nodig hebt. Gooi het dan weg bij de prullenbak, maar kijk uit je
+      gooit dan <b>al</b> je spullen in een keer weg.'
     controlSchema: Gebruik de pijltjes toetsen om te bewegen, en de spatie balk om
       spullen op te pakken. Gebruik ook spatiebalk om je verzamelde spullen aan leden
       te geven.
@@ -2958,14 +2958,26 @@ MonoBehaviour:
     controlSchema: Gebruik spatie, W, of pijltje omhoog om te springen
     preview: {fileID: 21300000, guid: 70187f49dd4c9e141899d91a29fc4c4c, type: 3}
   - name: Kelder Borrel
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-      dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-      sunt in culpa qui officia deserunt mollit anim id est laborum.
-    controlSchema: 
-    preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
+    description: 'De mooiste borrels vinden plaats in de kelder. In deze minigame
+      gaan we kijken wie het het langste vol houdt tussen de kratjes. Elk bestuurdslid
+      moet een balletje dat heen en weer kaatst in het spel proberen te houden. Als
+      het balletje aan de onderkant het scherm verlaat dan lig je er uit. Ook als
+      een kratje het grijze gebied aanraakt lig je uit het spel.
+
+      
+
+      Elke
+      kratje moet door een X aantal personen worden geraakt met het balletje. Dit
+      kan je zien aan het getal dat op het kratje staat. Soms staan er ook specieke
+      personen op een kratje, deze kunnen dan alleen door die personen worden geraakt.
+
+      
+
+      Let
+      op: je kunt een kratje maar 1 keer raken per persoon, kratjes die je al hebt
+      geraakt worden grijs en moeten dus door iemand anders worden geraakt.'
+    controlSchema: Gebruik de pijltjes toetsen of A en D om heen en weer te bewegen.
+    preview: {fileID: 21300000, guid: d590dc5c39a6e3d4f8d25ad6eafa8aaf, type: 3}
   - name: B?
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -3390,7 +3402,7 @@ MonoBehaviour:
   - name: Batavieren
     prefab: {fileID: 268728378981782175, guid: a2e198feab02c4643afa9cb7a84c2e63, type: 3}
   - name: Kelder Borrel
-    prefab: {fileID: 0}
+    prefab: {fileID: 8015562607886715998, guid: c6d38c292b50d1744940bbaa303653be, type: 3}
   - name: B?
     prefab: {fileID: 0}
 --- !u!1 &602416272

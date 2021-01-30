@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,7 @@ public class B11PartyServer : MonoBehaviour {
     private static readonly Logging.Logger log = Logging.Logger.For<B11PartyServer>();
 
     private bool serverStarted = false;
+    private bool shouldRestartOnShutdown = false;
     private KarmanServer karmanServer;
 
     public KarmanServer GetKarmanServer() {
@@ -177,7 +179,13 @@ public class B11PartyServer : MonoBehaviour {
 
         karmanServer = new KarmanServer(GAME_ID);
         karmanServer.OnRunningCallback += () => serverStarted = true;
-        karmanServer.OnShutdownCallback += () => log.Error("Server could not start.");
+        karmanServer.OnShutdownCallback += () => {
+            log.Error("Server could not start.");
+            if (shouldRestartOnShutdown) {
+                shouldRestartOnShutdown = false;
+                SceneManager.LoadScene("Server");
+            }
+        };
         karmanServer.OnClientJoinedCallback += (Guid clientId) => { };
         karmanServer.OnClientConnectedCallback += (Guid clientId) => {
             B11Client client = clients.FirstOrDefault(c => c.GetClientId().Equals(clientId));
@@ -222,7 +230,9 @@ public class B11PartyServer : MonoBehaviour {
     }
 
     protected void OnDestroy() {
-        karmanServer.Shutdown();
+        if (karmanServer.IsRunning()) {
+            karmanServer.Shutdown();
+        }
     }
 
     private string[] GetAvailableMiniGames() {
@@ -444,7 +454,8 @@ public class B11PartyServer : MonoBehaviour {
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
         }
-        SceneManager.LoadScene("Server");
+        shouldRestartOnShutdown = true;
+        karmanServer.Shutdown();
     }
 
     private void SaveStateToPlayerPrefs() {

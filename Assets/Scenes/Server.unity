@@ -1126,7 +1126,7 @@ MonoBehaviour:
   - name: Batavieren
     prefab: {fileID: 1999918899779883704, guid: 10237257e843c4f45b3bc178432a2a64, type: 3}
   - name: Kelder Borrel
-    prefab: {fileID: 0}
+    prefab: {fileID: 1503217330694739416, guid: 11abe9dae39fa5647a8a36c1b3994e20, type: 3}
   - name: B?
     prefab: {fileID: 0}
 --- !u!1 &897166469
@@ -1274,7 +1274,7 @@ MonoBehaviour:
   - name: Batavieren
     isCompleted: 0
   - name: Kelder Borrel
-    isCompleted: 1
+    isCompleted: 0
   - name: B?
     isCompleted: 1
 --- !u!4 &906587527

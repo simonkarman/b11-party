@@ -96,10 +96,10 @@ Catch as many bottles of Ketel One as you can. Catch Ketel One Matuur bottles fo
 
 ![Ketel Vangen](Docs/mini-games/ketel-vangen.png)
 
-### (05/11) Kelder Racen (-)
+### (05/11) Arduino (-)
 Not implemented.
 
-### (06/11) Stickies (-)
+### (06/11) ?? (-)
 Not implemented.
 
 ### (07/11) Kamerdienst (build - not yet released)
@@ -115,8 +115,10 @@ Jump over the obstacles passing by and stay on your feet for the longest amount 
 
 ![Batavieren](Docs/mini-games/batavieren.png)
 
-### (10/11) Borrel (-)
-Not implemented.
+### (10/11) Kelder Borrel (build - not yet released)
+Keep the bouncing ball in the game and make sure the falling blocks don't hit the ground.
 
-### (11/11) Fiets (-)
+![Kelder Borrel](Docs/mini-games/kelder-borrel.png)
+
+### (11/11) ?? (-)
 Not implemented.

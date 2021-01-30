@@ -32,6 +32,10 @@ public class MiniGamePlayingPhase : MonoBehaviour {
         UpdateText();
     }
 
+    public bool IsClientStillPlaying(Guid clientId) {
+        return !clientFinishedPlayingStatusses[clientId];
+    }
+
     private void OnPacket(Guid clientId, Packet packet) {
         if (packet is MiniGamePlayingFinishedPacket finishedPacket) {
             if (finishedPacket.GetClientId().Equals(clientId)) {
@@ -59,6 +63,10 @@ public class MiniGamePlayingPhase : MonoBehaviour {
 
     public bool IsAClientStillPlaying() {
         return clientFinishedPlayingStatusses.Values.Any(status => status == false);
+    }
+
+    public int GetNumberOfClientsStillPlaying() {
+        return clientFinishedPlayingStatusses.Values.Count(status => status == false);
     }
 
     public void SetScore(Guid clientId, int score) {

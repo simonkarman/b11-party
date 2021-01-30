@@ -4,7 +4,7 @@ namespace Networking {
     public abstract class Packet {
 
         private int marker = 0;
-        private byte[] bytes;
+        private readonly byte[] bytes;
 
         protected Packet(byte[] bytes) {
             this.bytes = bytes;
@@ -59,6 +59,12 @@ namespace Networking {
         protected Guid ReadGuid() {
             Guid value = Bytes.GetGuid(bytes, marker);
             marker += 16;
+            return value;
+        }
+
+        protected Guid[] ReadGuidArray() {
+            Guid[] value = Bytes.GetGuidArray(bytes, marker);
+            marker += (value.Length + 16) + 4;
             return value;
         }
 
