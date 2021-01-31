@@ -9,6 +9,8 @@ public class ClientScoreOverviewPhase : MonoBehaviour {
     [SerializeField]
     private GameObject root = default;
     [SerializeField]
+    public Text titleText = default;
+    [SerializeField]
     public Text timeLeftText = default;
     [SerializeField]
     private Transform scoreOverviewClientsUIRoot = default;
@@ -28,9 +30,10 @@ public class ClientScoreOverviewPhase : MonoBehaviour {
         b11PartyClient.OnScoreOverviewEndedCallback += OnEnded;
     }
 
-    private void OnStarted(int watchDuration, ScoreOverviewStartedPacket.Score[] scoreInformation) {
+    private void OnStarted(string miniGameName, int watchDuration, ScoreOverviewStartedPacket.Score[] scoreInformation) {
         root.SetActive(true);
         timeLeftText.gameObject.SetActive(true);
+        titleText.text = $"<color=white><size=20>Results of </size></color>{miniGameName}";
         this.watchDuration = watchDuration;
         isWatching = true;
         timeWatching = 0f;

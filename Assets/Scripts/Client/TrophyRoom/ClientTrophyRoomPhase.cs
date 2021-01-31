@@ -11,6 +11,8 @@ public class ClientTrophyRoomPhase : MonoBehaviour {
     private Transform trophyRoomClientsUIRoot = default;
     [SerializeField]
     private GameObject trophyRoomClientUIPrefab = default;
+    [SerializeField]
+    private GameObject clientUI = default;
 
     private int watchDuration;
     private bool isWatching;
@@ -25,6 +27,7 @@ public class ClientTrophyRoomPhase : MonoBehaviour {
 
     private void OnStarted(int watchDuration, TrophyRoomStartedPacket.Score[] totalScoreInformation) {
         root.SetActive(true);
+        clientUI.SetActive(false);
         this.watchDuration = watchDuration;
         isWatching = true;
         timeWatching = 0f;

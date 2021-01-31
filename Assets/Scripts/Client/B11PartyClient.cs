@@ -67,7 +67,7 @@ public class B11PartyClient : MonoBehaviour {
     public Action<Guid> OnMiniGamePlayingFinishedCallback;
     public Action<Guid, int> OnMiniGamePlayingScoreCallback;
     public Action OnMiniGamePlayingEndedCallback;
-    public Action<int, ScoreOverviewStartedPacket.Score[]> OnScoreOverviewStartedCallback;
+    public Action<string, int, ScoreOverviewStartedPacket.Score[]> OnScoreOverviewStartedCallback;
     public Action OnScoreOverviewEndedCallback;
     public Action<int, TrophyRoomStartedPacket.Score[]> OnTrophyRoomStartedCallback;
     public Action<Packet> OnOtherPacket;
@@ -144,7 +144,7 @@ public class B11PartyClient : MonoBehaviour {
         }
         // Score Overview
         else if (packet is ScoreOverviewStartedPacket scoreOverviewStartedPacket) {
-            OnScoreOverviewStartedCallback(scoreOverviewStartedPacket.GetDuration(), scoreOverviewStartedPacket.GetScores());
+            OnScoreOverviewStartedCallback(scoreOverviewStartedPacket.GetMiniGameName(), scoreOverviewStartedPacket.GetDuration(), scoreOverviewStartedPacket.GetScores());
         } else if (packet is ScoreOverviewEndedPacket scoreOverviewEndedPacket) {
             OnScoreOverviewEndedCallback();
         }

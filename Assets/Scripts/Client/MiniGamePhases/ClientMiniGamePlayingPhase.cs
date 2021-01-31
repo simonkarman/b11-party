@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ClientMiniGamePlayingPhase : MonoBehaviour {
     [SerializeField]
@@ -9,8 +8,6 @@ public class ClientMiniGamePlayingPhase : MonoBehaviour {
     [SerializeField]
     private GameObject root = default;
 
-    [SerializeField]
-    private Text titleText = default;
     [SerializeField]
     private Transform playingClientsUIRoot = default;
     [SerializeField]
@@ -36,7 +33,6 @@ public class ClientMiniGamePlayingPhase : MonoBehaviour {
             playingClientUIs.Add(client.GetClientId(), playingClientUI);
         }
         ClientMiniGame currentMiniGame = b11PartyClient.GetCurrentMiniGame();
-        titleText.text = string.Format("{0} MiniGame!", currentMiniGame.GetMiniGameName());
         currentMiniGame.OnPlaying();
     }
 

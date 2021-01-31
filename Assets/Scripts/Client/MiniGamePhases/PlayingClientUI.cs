@@ -22,7 +22,7 @@ public class PlayingClientUI : MonoBehaviour {
     }
 
     public void SetFinished() {
-        scoreText.text = "??";
+        scoreText.text = "---";
         statusText.text = "Finished!";
         background.color = doneColor;
     }

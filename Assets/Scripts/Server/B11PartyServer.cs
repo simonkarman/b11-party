@@ -326,7 +326,7 @@ public class B11PartyServer : MonoBehaviour {
             OnPhaseChangedCallback(Phase.SCORE_OVERVIEW, scoreOverviewPhase);
             scoreOverviewPhase.gameObject.SetActive(true);
             scoreOverviewPhase.Begin(scoreWatchDuration, clients);
-            karmanServer.Broadcast(new ScoreOverviewStartedPacket(scoreWatchDuration, GetScoresForScoreOverview()));
+            karmanServer.Broadcast(new ScoreOverviewStartedPacket(chosenMiniGame.GetName(), scoreWatchDuration, GetScoresForScoreOverview()));
             while (scoreOverviewPhase.InProgress()) { yield return null; }
             karmanServer.Broadcast(new ScoreOverviewEndedPacket());
             yield return new WaitForSeconds(0.5f);

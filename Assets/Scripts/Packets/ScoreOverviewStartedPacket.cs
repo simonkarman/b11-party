@@ -23,10 +23,13 @@ public class ScoreOverviewStartedPacket : Packet {
         }
     }
 
-    private int duration;
-    private Score[] scores;
+    private readonly string miniGameName;
+    private readonly int duration;
+    private readonly Score[] scores;
 
     public ScoreOverviewStartedPacket(byte[] bytes) : base(bytes) {
+        int miniGameNameLength = ReadInt();
+        miniGameName = ReadString(miniGameNameLength);
         duration = ReadInt();
         List<Score> scores = new List<Score>();
         while (!IsDone()) {
@@ -37,21 +40,26 @@ public class ScoreOverviewStartedPacket : Packet {
         this.scores = scores.ToArray();
     }
 
-    public ScoreOverviewStartedPacket(int duration, Score[] scores) : base(AsBytes(duration, scores)) {
+    public ScoreOverviewStartedPacket(string miniGameName, int duration, Score[] scores) : base(AsBytes(miniGameName, duration, scores)) {
         this.duration = duration;
         this.scores = scores;
     }
 
     public override void Validate() { }
 
-    private static byte[] AsBytes(int duration, Score[] scores) {
+    private static byte[] AsBytes(string miniGameName, int duration, Score[] scores) {
         byte[][] scoresAsBytes = scores
             .Select(so => Bytes.Pack(
                 Bytes.Of(so.GetClientId()),
                 Bytes.Of(so.GetLastAddedScore())
             ))
             .ToArray();
-        return Bytes.Pack(Bytes.Of(duration), Bytes.Pack(scoresAsBytes));
+        byte[] miniGameNameBytes = Bytes.Of(miniGameName);
+        return Bytes.Pack(Bytes.Of(miniGameName.Length), miniGameNameBytes, Bytes.Of(duration), Bytes.Pack(scoresAsBytes));
+    }
+
+    public string GetMiniGameName() {
+        return miniGameName;
     }
 
     public int GetDuration() {

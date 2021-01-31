@@ -52,7 +52,7 @@ public class ClientMiniGameLoadingPhase : MonoBehaviour {
             loadingClientUI.SetFrom(client);
             loadingClientUIs.Add(client.GetClientId(), loadingClientUI);
         }
-        miniGameTitleText.text = string.Format("Waiting for all players to load...\n{0}", miniGameName);
+        miniGameTitleText.text = miniGameName;
         MiniGameLoadingInformation loadingInformation = miniGames.First(miniGame => miniGame.GetName().Equals(miniGameName));
         Transform miniGameObject = Instantiate(loadingInformation.GetPrefab()).transform;
         miniGameObject.localPosition = Vector3.zero;
