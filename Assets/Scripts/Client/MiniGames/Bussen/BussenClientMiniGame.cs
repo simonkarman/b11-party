@@ -17,11 +17,6 @@ public class BussenClientMiniGame : ClientMiniGame {
     private GameObject grassLanePrefab = default;
     [SerializeField]
     private GameObject roadLanePrefab = default;
-
-    public BussenLane GetLaneAt(int laneIndex) {
-        return lanes.FirstOrDefault(lane => lane.GetIndex() == laneIndex);
-    }
-
     [SerializeField]
     private GameObject waterLanePrefab = default;
     [SerializeField]
@@ -71,6 +66,10 @@ public class BussenClientMiniGame : ClientMiniGame {
                 characters[characterFinished.GetClientId()].GetComponent<BussenCharacter>().Kill();
             }
         }
+    }
+
+    public BussenLane GetLaneAt(int laneIndex) {
+        return lanes.FirstOrDefault(lane => lane.GetIndex() == laneIndex);
     }
 
     private void UpdateLastLaneIndex(int lastLaneIndex) {

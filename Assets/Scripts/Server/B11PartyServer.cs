@@ -313,7 +313,8 @@ public class B11PartyServer : MonoBehaviour {
                 client.AddScore(score);
                 OnClientScoreChangedCallback(client.GetClientId(), client.GetScore());
             }
-            chosenMiniGame.MarkAsCompleted();
+            // TODO: reenable for release
+            // chosenMiniGame.MarkAsCompleted();
             OnMiniGamesChangedCallback(miniGames);
             SaveStateToPlayerPrefs();
             miniGamePlayingPhase.End();

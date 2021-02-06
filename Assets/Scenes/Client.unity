@@ -1075,7 +1075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &195010227
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2104,7 +2104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.80784315, g: 0.16078432, b: 0.1254902, a: 1}
+  m_Color: {r: 0.45882356, g: 0.16078432, b: 0.14509805, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2971,13 +2971,8 @@ MonoBehaviour:
       te geven.
     preview: {fileID: 21300000, guid: e28ab6cfc47054f40926923f4a5612e3, type: 3}
   - name: Consti
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-      dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-      sunt in culpa qui officia deserunt mollit anim id est laborum.
-    controlSchema: 
+    description: TODO
+    controlSchema: Gebruik de pijltjes toetsen of WASD om te bewegen.
     preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
   - name: Batavieren
     description: 'Tijdens het bestuursjaar van B11 zijn heel wat hindernissen overwonnen
@@ -3284,7 +3279,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3431,7 +3426,7 @@ MonoBehaviour:
   - name: Kamerdienst
     prefab: {fileID: 7160601149516255877, guid: 06662d557f8c7c147a2bf25d8f1a6f7d, type: 3}
   - name: Consti
-    prefab: {fileID: 0}
+    prefab: {fileID: 3459671249183664768, guid: 83c300c13ba387448850a2712debd825, type: 3}
   - name: Batavieren
     prefab: {fileID: 268728378981782175, guid: a2e198feab02c4643afa9cb7a84c2e63, type: 3}
   - name: Kelder Borrel
@@ -7867,7 +7862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -81.1, y: -42.7}
+  m_AnchoredPosition: {x: -81.099976, y: -42.69995}
   m_SizeDelta: {x: 153.6211, y: 77.71231}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325954596
@@ -11423,7 +11418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.80784315, g: 0.16078432, b: 0.1254902, a: 1}
+  m_Color: {r: 0.45882356, g: 0.16078432, b: 0.14509805, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

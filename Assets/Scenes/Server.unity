@@ -1122,7 +1122,7 @@ MonoBehaviour:
   - name: Kamerdienst
     prefab: {fileID: 7175279854144941864, guid: 5add41510f3537b45b85bd902cebd8dd, type: 3}
   - name: Consti
-    prefab: {fileID: 0}
+    prefab: {fileID: 1003807119675123129, guid: 310ccb454b6c546409c45b806a010b4b, type: 3}
   - name: Batavieren
     prefab: {fileID: 1999918899779883704, guid: 10237257e843c4f45b3bc178432a2a64, type: 3}
   - name: Kelder Borrel
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   - name: Kamerdienst
     isCompleted: 0
   - name: Consti
-    isCompleted: 1
+    isCompleted: 0
   - name: Batavieren
     isCompleted: 0
   - name: Kelder Borrel
