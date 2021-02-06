@@ -107,8 +107,10 @@ Collect and deliver all the cookies, beer, coffee, bits, and bananas to the visi
 
 ![Kamerdienst](Docs/mini-games/kamerdienst.png)
 
-### (08/11) Consti (-)
-Not implemented.
+### (08/11) Consti (build - not yet released)
+Try to avoid the ghosts and pick up as many coins as you can along the way.
+
+![Consti](Docs/mini-games/consti.png)
 
 ### (09/11) Batavieren (release 1.0.0)
 Jump over the obstacles passing by and stay on your feet for the longest amount of time.

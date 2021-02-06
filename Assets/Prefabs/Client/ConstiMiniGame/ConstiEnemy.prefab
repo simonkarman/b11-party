@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deadSlider: {fileID: 417428478346334336}
+  moveInterval: 2
+  moveIntervalChange: 0.003
 --- !u!212 &565270161801419709
 SpriteRenderer:
   m_ObjectHideFlags: 0

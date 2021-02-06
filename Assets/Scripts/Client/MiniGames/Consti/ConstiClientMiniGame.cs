@@ -89,6 +89,9 @@ public class ConstiClientMiniGame : ClientMiniGame {
             if (!b11PartyClient.GetMe().GetClientId().Equals(characterFinished.GetClientId())) {
                 characters[characterFinished.GetClientId()].gameObject.SetActive(false);
             }
+        } else if (packet is ConstiMaxScoreReachedPacket) {
+            me.SetAlive(false);
+            me.enabled = false;
         }
     }
 

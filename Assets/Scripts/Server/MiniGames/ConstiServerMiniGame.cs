@@ -8,6 +8,8 @@ public class ConstiServerMiniGame : ServerMiniGame {
     public static readonly float ChasingDuration = 10f;
 
     [SerializeField]
+    private int maxScore = 111;
+    [SerializeField]
     private ConstiMap map;
     [SerializeField]
     private float coinInterval = 5f;
@@ -18,6 +20,7 @@ public class ConstiServerMiniGame : ServerMiniGame {
 
     private B11PartyServer b11PartyServer;
     private bool isPlaying;
+    private bool maxScoreWasReached;
 
     private LinkedList<int> coinSpawns;
     private float coinTime = 0f;
@@ -59,7 +62,7 @@ public class ConstiServerMiniGame : ServerMiniGame {
     }
 
     protected void Update() {
-        if (!isPlaying) {
+        if (!isPlaying || maxScoreWasReached) {
             return;
         }
 
@@ -84,13 +87,17 @@ public class ConstiServerMiniGame : ServerMiniGame {
             TrySpawnPowerup();
         }
 
-        // TODO: enemy updated packets (+ enemy AI)
+        // Enemies
+        foreach (Transform enemyTransform in map.GetEnemies()) {
+            b11PartyServer.GetKarmanServer().Broadcast(new ConstiEnemyUpdatedPacket(enemyTransform.GetSiblingIndex(), enemyTransform.localPosition));
+        }
     }
 
     private void TrySpawnCoin() {
         if (coinSpawns.Count > 0) {
             int coinIndex = coinSpawns.First.Value;
             coinSpawns.RemoveFirst();
+            map.GetCoins().GetChild(coinIndex).gameObject.SetActive(true);
             b11PartyServer.GetKarmanServer().Broadcast(new ConstiCoinUpdatedPacket(coinIndex, true));
         }
     }
@@ -100,6 +107,7 @@ public class ConstiServerMiniGame : ServerMiniGame {
             int blockIndex = blockSpawns.First.Value;
             int switchIndex = UnityEngine.Random.Range(0, 4);
             blockSpawns.RemoveFirst();
+            map.GetBlocks().GetChild(blockIndex).gameObject.SetActive(true);
             b11PartyServer.GetKarmanServer().Broadcast(new ConstiBlockEnabledPacket(blockIndex, switchIndex));
         }
     }
@@ -108,20 +116,27 @@ public class ConstiServerMiniGame : ServerMiniGame {
         if (powerupSpawns.Count > 0) {
             int powerupIndex = powerupSpawns.First.Value;
             powerupSpawns.RemoveFirst();
+            map.GetPowerups().GetChild(powerupIndex).gameObject.SetActive(true);
             b11PartyServer.GetKarmanServer().Broadcast(new ConstiPowerupUpdatedPacket(powerupIndex, true));
         }
     }
 
     private void OnPacket(Guid clientId, Packet packet) {
+        if (maxScoreWasReached) {
+            return;
+        }
+
         if (packet is ConstiCharacterUpdatedPacket characterUpdated) {
             if (clientId.Equals(characterUpdated.GetClientId())) {
                 b11PartyServer.GetKarmanServer().Broadcast(characterUpdated, clientId);
             }
+            return;
         } else if (packet is ConstiCoinUpdatedPacket coinUpdated) {
             int coinIndex = coinUpdated.GetCoinIndex();
             if (!coinSpawns.Contains(coinIndex)) {
                 b11PartyServer.GetMiniGamePlayingPhase().AddScore(clientId, 3);
                 coinSpawns.AddLast(coinIndex);
+                map.GetCoins().GetChild(coinIndex).gameObject.SetActive(false);
                 b11PartyServer.GetKarmanServer().Broadcast(coinUpdated);
                 if (coinSpawns.Count == 1) {
                     coinTime = 0f;
@@ -132,6 +147,7 @@ public class ConstiServerMiniGame : ServerMiniGame {
             if (!blockSpawns.Contains(blockIndex)) {
                 b11PartyServer.GetMiniGamePlayingPhase().AddScore(clientId, 1);
                 blockSpawns.AddLast(blockIndex);
+                map.GetBlocks().GetChild(blockIndex).gameObject.SetActive(false);
                 b11PartyServer.GetKarmanServer().Broadcast(blockDisabled);
                 if (blockSpawns.Count == 1) {
                     blockTime = 0f;
@@ -141,6 +157,7 @@ public class ConstiServerMiniGame : ServerMiniGame {
             int powerupIndex = powerupUpdated.GetPowerupIndex();
             if (!powerupSpawns.Contains(powerupIndex)) {
                 powerupSpawns.AddLast(powerupIndex);
+                map.GetPowerups().GetChild(powerupIndex).gameObject.SetActive(false);
                 b11PartyServer.GetKarmanServer().Broadcast(powerupUpdated);
                 b11PartyServer.GetKarmanServer().Broadcast(new ConstiCharacterChasingPacket(clientId));
                 if (powerupSpawns.Count == 1) {
@@ -148,9 +165,20 @@ public class ConstiServerMiniGame : ServerMiniGame {
                 }
             }
         } else if (packet is ConstiEnemyEatenPacket enemyEaten) {
-            // TODO: check if enemy is currently alive
-            b11PartyServer.GetMiniGamePlayingPhase().AddScore(clientId, 11);
-            b11PartyServer.GetKarmanServer().Broadcast(enemyEaten);
+            int enemyIndex = enemyEaten.GetEnemyIndex();
+            var enemy = map.GetEnemies().GetChild(enemyIndex).GetComponent<ConstiEnemy>();
+            if (!enemy.IsDead()) {
+                enemy.OnEaten();
+                b11PartyServer.GetMiniGamePlayingPhase().AddScore(clientId, 11);
+                b11PartyServer.GetKarmanServer().Broadcast(enemyEaten);
+            }
+        }
+
+        if (isPlaying) {
+            if (b11PartyServer.GetMiniGamePlayingPhase().GetScore(clientId) >= maxScore) {
+                maxScoreWasReached = true;
+                b11PartyServer.GetKarmanServer().Broadcast(new ConstiMaxScoreReachedPacket());
+            }
         }
     }
 
@@ -177,6 +205,12 @@ public class ConstiServerMiniGame : ServerMiniGame {
 
     public override void BeginPlaying() {
         isPlaying = true;
+
+        // Enemies
+        foreach (Transform enemyTransform in map.GetEnemies()) {
+            var enemy = enemyTransform.GetComponent<ConstiEnemy>();
+            enemy.RunAI();
+        }
     }
 
     public override void EndPlaying() {
@@ -187,7 +221,7 @@ public class ConstiServerMiniGame : ServerMiniGame {
         b11PartyServer.GetKarmanServer().OnClientPackedReceivedCallback -= OnPacket;
     }
 
-    protected T[] Shuffle<T>(T[] input) {
+    public static T[] Shuffle<T>(T[] input) {
         int m = input.Length;
         while (m > 0) {
             int i = UnityEngine.Random.Range(0, m--);

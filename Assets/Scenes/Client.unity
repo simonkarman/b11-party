@@ -2971,9 +2971,18 @@ MonoBehaviour:
       te geven.
     preview: {fileID: 21300000, guid: e28ab6cfc47054f40926923f4a5612e3, type: 3}
   - name: Consti
-    description: TODO
+    description: 'Bij de consitutieborrels hebben we geleerd hoe we ongezien zo veel
+      mogelijk cadeautjes konden pakken terwijl we de bewakers wisten te ontwijken.
+      In deze mini game gaan we dat weer proberen.
+
+
+      Het doel is om als eerste
+      111 punten te verdienen. Dit kan je doen door gele muntjes op te pakken (3
+      punten), gekleurde blokades uit de weg te ruimen (1 punt), en door de bewakers
+      op te eten (11 punten). Maar kijk uit dat je zelf niet op wordt gegeten door
+      een van de bewakers.'
     controlSchema: Gebruik de pijltjes toetsen of WASD om te bewegen.
-    preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
+    preview: {fileID: 21300000, guid: b1b3ba52cff7da64b96c5de0c52ea801, type: 3}
   - name: Batavieren
     description: 'Tijdens het bestuursjaar van B11 zijn heel wat hindernissen overwonnen
       en een van de zwaarste hindernissen was wel de Batavierenrace.

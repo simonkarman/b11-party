@@ -52,6 +52,10 @@ public class ConstiCharacter : MonoBehaviour {
         colorShifter.enabled = false;
     }
 
+    public void SetAlive(bool isAlive) {
+        this.isAlive = isAlive;
+    }
+
     public bool IsAlive() {
         return isAlive;
     }
