@@ -5,6 +5,7 @@ using UnityEngine;
 using CharacterSpawn = ConstiCharacterSpawnsPacket.CharacterSpawn;
 
 public class ConstiServerMiniGame : ServerMiniGame {
+    public static readonly float IntroDuration = 3.5f;
     public static readonly float ChasingDuration = 10f;
 
     [SerializeField]
@@ -20,6 +21,8 @@ public class ConstiServerMiniGame : ServerMiniGame {
 
     private B11PartyServer b11PartyServer;
     private bool isPlaying;
+    private bool isIntro = true;
+    private float introTime;
     private bool maxScoreWasReached;
 
     private LinkedList<int> coinSpawns;
@@ -90,6 +93,16 @@ public class ConstiServerMiniGame : ServerMiniGame {
         // Enemies
         foreach (Transform enemyTransform in map.GetEnemies()) {
             b11PartyServer.GetKarmanServer().Broadcast(new ConstiEnemyUpdatedPacket(enemyTransform.GetSiblingIndex(), enemyTransform.localPosition));
+        }
+
+        // Start Enemies after intro
+        introTime += Time.deltaTime;
+        if (isIntro && introTime > IntroDuration) {
+            isIntro = false;
+            foreach (Transform enemyTransform in map.GetEnemies()) {
+                var enemy = enemyTransform.GetComponent<ConstiEnemy>();
+                enemy.RunAI();
+            }
         }
     }
 
@@ -205,12 +218,6 @@ public class ConstiServerMiniGame : ServerMiniGame {
 
     public override void BeginPlaying() {
         isPlaying = true;
-
-        // Enemies
-        foreach (Transform enemyTransform in map.GetEnemies()) {
-            var enemy = enemyTransform.GetComponent<ConstiEnemy>();
-            enemy.RunAI();
-        }
     }
 
     public override void EndPlaying() {

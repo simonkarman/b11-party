@@ -41,6 +41,10 @@ public class ClientMiniGamePlayingPhase : MonoBehaviour {
     }
 
     private void OnScore(Guid clientId, int score) {
+        if (!root.activeSelf) {
+            // Ignore a score packet when not in the playing phase
+            return;
+        }
         playingClientUIs[clientId].SetScore(score);
     }
 

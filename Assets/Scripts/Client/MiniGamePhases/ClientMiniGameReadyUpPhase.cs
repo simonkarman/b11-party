@@ -74,7 +74,7 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
         }
         ClientMiniGame currentMiniGame = b11PartyClient.GetCurrentMiniGame();
         string miniGameName = currentMiniGame.GetMiniGameName();
-        MiniGameReadyUpInformation readyUpInformation = miniGames.First(miniGame => miniGame.GetName().Equals(miniGameName));
+        MiniGameReadyUpInformation readyUpInformation = GetMiniGameReadyUpInformation(miniGameName);
         titleText.text = readyUpInformation.GetName();
         descriptionText.text = readyUpInformation.GetDescription();
         controlSchemaText.text = readyUpInformation.GetControlSchema();
@@ -92,6 +92,10 @@ public class ClientMiniGameReadyUpPhase : MonoBehaviour {
             Destroy(child.gameObject);
         }
         readyUpClientUIs.Clear();
+    }
+
+    public MiniGameReadyUpInformation GetMiniGameReadyUpInformation(string miniGameName) {
+        return miniGames.First(miniGame => miniGame.GetName().Equals(miniGameName));
     }
 
 

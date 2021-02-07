@@ -108,7 +108,6 @@ public class BussenClientMiniGame : ClientMiniGame {
     }
 
     protected override void OnPlayingEndedImpl() {
-        root.gameObject.SetActive(false);
         b11PartyClient.OnOtherPacket -= OnPacket;
     }
 

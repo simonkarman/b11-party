@@ -45,6 +45,7 @@ public class KelderBorrelClientMiniGame : ClientMiniGame {
             ballInstance.localPosition = Vector3.zero;
             if (isMe) {
                 me = ballInstance.GetComponent<KelderBorrelBallMe>();
+                me.Initialize(bar.transform);
             }
             var ball = ballInstance.GetComponent<KelderBorrelBall>();
             ball.SetSprite(client.GetSprite());
@@ -72,6 +73,10 @@ public class KelderBorrelClientMiniGame : ClientMiniGame {
             if (!isMe) {
                 balls[characterFinished.GetClientId()].gameObject.SetActive(false);
             }
+        } else if (packet is KelderBorrelMaxScoreReachedPacket) {
+            if (!deadMessageSent) {
+                Die();
+            }
         }
     }
 
@@ -97,7 +102,6 @@ public class KelderBorrelClientMiniGame : ClientMiniGame {
     }
 
     protected override void OnPlayingEndedImpl() {
-        root.gameObject.SetActive(false);
         b11PartyClient.OnOtherPacket -= OnPacket;
     }
 
@@ -112,15 +116,19 @@ public class KelderBorrelClientMiniGame : ClientMiniGame {
                 me.transform.localPosition
             ));
             HideTooLowBlocksHitByMe();
-            if (!me.IsAlive() || IsAnyBlockTooLow()) {
-                deadMessageSent = true;
-                b11PartyClient.GetKarmanClient().Send(new MiniGamePlayingFinishedPacket(
-                    b11PartyClient.GetMe().GetClientId()
-                ));
-                me.gameObject.SetActive(false);
-                bar.SetActive(false);
+            if (IsAnyBlockTooLow()) {
+                Die();
             }
         }
+    }
+
+    private void Die() {
+        deadMessageSent = true;
+        b11PartyClient.GetKarmanClient().Send(new MiniGamePlayingFinishedPacket(
+            b11PartyClient.GetMe().GetClientId()
+        ));
+        me.gameObject.SetActive(false);
+        bar.SetActive(false);
     }
 
     private void HideTooLowBlocksHitByMe() {

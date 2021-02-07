@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 8015562607252785830}
   - component: {fileID: 8015562607252785831}
   m_Layer: 0
-  m_Name: Bottom - DeadZone for Balls
+  m_Name: Bottom - ResetZone for Balls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

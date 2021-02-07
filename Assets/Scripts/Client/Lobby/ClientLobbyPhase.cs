@@ -19,6 +19,8 @@ public class ClientLobbyPhase : MonoBehaviour {
     private GameObject miniGameChoosePointPrefab = default;
     [SerializeField]
     private string[] miniGameNames = default;
+    [SerializeField]
+    private ClientMiniGameReadyUpPhase readyUpPhase = default;
 
     private KarmanClient client;
     private bool inLobby = false;
@@ -63,13 +65,17 @@ public class ClientLobbyPhase : MonoBehaviour {
                 throw new Exception("The number of mini games is not the same as the number of locations for mini games.");
             } else {
                 for (int miniGameIndex = 0; miniGameIndex < miniGameRoot.childCount; miniGameIndex++) {
+                    string miniGameName = miniGameNames[miniGameIndex];
                     Transform location = miniGameRoot.GetChild(miniGameIndex);
                     Transform miniGameObject = Instantiate(miniGameChoosePointPrefab, location).transform;
                     miniGameObject.localPosition = Vector3.zero;
-                    miniGameObject.name = miniGameNames[miniGameIndex];
+                    miniGameObject.name = miniGameName;
+
                     ClientMiniGameChoosePoint miniGame = miniGameObject.GetComponent<ClientMiniGameChoosePoint>();
-                    miniGame.Setup(miniGameNames[miniGameIndex]);
-                    miniGames.Add(miniGameNames[miniGameIndex], miniGame);
+                    var miniGameReadyUpInformation = readyUpPhase.GetMiniGameReadyUpInformation(miniGameName);
+                    miniGame.Setup(miniGameName, miniGameReadyUpInformation.GetPreview());
+
+                    miniGames.Add(miniGameName, miniGame);
                 }
             }
         };

@@ -5,41 +5,53 @@ public class ClientMiniGameChoosePoint : MonoBehaviour {
     [SerializeField]
     private Text nameText = default;
     [SerializeField]
-    private SpriteRenderer spriteRenderer = default;
+    private SpriteRenderer flag = default;
     [SerializeField]
-    private Color activeColor = Color.white;
+    private SpriteRenderer preview = default;
     [SerializeField]
-    private Color deactiveColor = new Color(1, 1, 1, 0.2f);
+    private Color activeColor;
     [SerializeField]
-    private Color proximityColor = new Color(1, 0.9f, 0.8f);
+    private float activePreviewAlpha;
     [SerializeField]
-    private Color chosenColor = Color.green;
+    private Color deactiveColor;
+    [SerializeField]
+    private float deactivePreviewAlpha;
+    [SerializeField]
+    private Color proximityColor;
+    [SerializeField]
+    private float proximityPreviewAlpha;
+    [SerializeField]
+    private Color chosenColor;
+    [SerializeField]
+    private float chosenPreviewAlpha;
 
     private string miniGameName;
     private bool canBeChosen;
 
-    public void Setup(string miniGameName) {
+    public void Setup(string miniGameName, Sprite preview) {
         this.miniGameName = miniGameName;
         nameText.text = miniGameName;
+        this.preview.sprite = preview;
     }
 
-    private void SetColor(Color color) {
-        spriteRenderer.color = color;
+    private void SetColor(Color color, float previewAlpha) {
+        flag.color = color;
         nameText.color = color;
+        preview.color = new Color(1f, 1f, 1f, previewAlpha);
     }
 
     public void DisableForChoosing() {
         canBeChosen = false;
-        SetColor(deactiveColor);
+        SetColor(deactiveColor, deactivePreviewAlpha);
     }
 
     public void EnableForChoosing() {
         canBeChosen = true;
-        SetColor(activeColor);
+        SetColor(activeColor, activePreviewAlpha);
     }
 
     public void SetAsChosen() {
-        SetColor(chosenColor);
+        SetColor(chosenColor, chosenPreviewAlpha);
     }
 
     protected void OnTriggerEnter2D(Collider2D other) {
@@ -49,7 +61,7 @@ public class ClientMiniGameChoosePoint : MonoBehaviour {
         ClientLobbyCharacter character = other.GetComponent<ClientLobbyCharacter>();
         if (character != null) {
             character.SetClosestMiniGame(miniGameName);
-            SetColor(proximityColor);
+            SetColor(proximityColor, proximityPreviewAlpha);
         }
     }
 
@@ -60,7 +72,7 @@ public class ClientMiniGameChoosePoint : MonoBehaviour {
         ClientLobbyCharacter character = other.GetComponent<ClientLobbyCharacter>();
         if (character != null) {
             character.SetClosestMiniGame(null);
-            SetColor(activeColor);
+            SetColor(activeColor, activePreviewAlpha);
         }
     }
 }

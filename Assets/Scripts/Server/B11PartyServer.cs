@@ -4,13 +4,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class B11PartyServer : MonoBehaviour {
     public static readonly int DEFAULT_PORT = 14641;
-    public static readonly Guid GAME_ID = Guid.Parse("11118d77-6145-4732-b30a-fd6f4812e251");
+    public static readonly Guid GAME_ID = Guid.Parse("11119d77-6145-4732-b30a-fd6f4812e251");
     private static readonly Logging.Logger log = Logging.Logger.For<B11PartyServer>();
 
     private bool serverStarted = false;
@@ -313,8 +312,9 @@ public class B11PartyServer : MonoBehaviour {
                 client.AddScore(score);
                 OnClientScoreChangedCallback(client.GetClientId(), client.GetScore());
             }
-            // TODO: reenable for release
-            // chosenMiniGame.MarkAsCompleted();
+            if (!FeatureToggles.NeverMarkMiniGamesCompleted) {
+                chosenMiniGame.MarkAsCompleted();
+            }
             OnMiniGamesChangedCallback(miniGames);
             SaveStateToPlayerPrefs();
             miniGamePlayingPhase.End();

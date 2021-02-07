@@ -83,7 +83,6 @@ public class B11BalloonClientMiniGame : ClientMiniGame {
     }
 
     protected override void OnPlayingEndedImpl() {
-        root.gameObject.SetActive(false);
         b11PartyClient.OnMiniGamePlayingFinishedCallback -= OnBalloonFinished;
         b11PartyClient.OnOtherPacket -= OnOtherPacket;
         float scoreT = Mathf.Clamp01(Mathf.InverseLerp(maxSize - 0.75f, maxSize, currentSize));
@@ -92,7 +91,6 @@ public class B11BalloonClientMiniGame : ClientMiniGame {
             b11PartyClient.GetMe().GetClientId(),
             score
         ));
-
     }
 
     private void SendFinishedPacket() {

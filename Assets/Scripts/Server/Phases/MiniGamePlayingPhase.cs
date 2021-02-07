@@ -24,16 +24,21 @@ public class MiniGamePlayingPhase : MonoBehaviour {
             clientPlayingScores.Add(client.GetClientId(), 0);
         }
         server = b11PartyServer.GetKarmanServer();
+        server.OnClientLeftCallback += OnLeft;
         server.OnClientPackedReceivedCallback += OnPacket;
 
         this.miniGame = miniGame;
         miniGame.BeginPlaying();
-
         UpdateText();
     }
 
     public bool IsClientStillPlaying(Guid clientId) {
         return !clientFinishedPlayingStatusses[clientId];
+    }
+
+    private void OnLeft(Guid clientId) {
+        Debug.LogWarning("Client left during mini game playing phase");
+        OnPacket(clientId, new MiniGamePlayingFinishedPacket(clientId));
     }
 
     private void OnPacket(Guid clientId, Packet packet) {
@@ -90,6 +95,7 @@ public class MiniGamePlayingPhase : MonoBehaviour {
         clientFinishedPlayingStatusses.Clear();
         clientPlayingScores.Clear();
         server.OnClientPackedReceivedCallback -= OnPacket;
+        server.OnClientLeftCallback -= OnLeft;
         server = null;
     }
 }

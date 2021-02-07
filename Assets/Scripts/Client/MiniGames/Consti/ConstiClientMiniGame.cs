@@ -18,8 +18,13 @@ public class ConstiClientMiniGame : ClientMiniGame {
     [SerializeField]
     private GameObject meCharacterPrefab = default;
 
+    private bool isIntro = true;
+    private AnimationCurve introCurve = AnimationCurve.EaseInOut(0f, 0.1f, 1f, 1f);
+    private float introTime;
     private float chasingDurationLeft = -1f;
-    private bool deadMessageSent = false;
+    private bool deadMessageSent;
+    private LinkedListNode<Guid> spectating;
+    private readonly LinkedList<Guid> spectatables = new LinkedList<Guid>();
     private ConstiCharacter me;
     private readonly Dictionary<Guid, Transform> characters = new Dictionary<Guid, Transform>();
 
@@ -35,6 +40,8 @@ public class ConstiClientMiniGame : ClientMiniGame {
             if (isMe) {
                 me = characterInstance.GetComponent<ConstiCharacter>();
                 me.Initialize(b11PartyClient);
+            } else {
+                spectatables.AddFirst(client.GetClientId());
             }
             characterInstance.GetComponent<SpriteRenderer>().sprite = client.GetSprite();
             characters.Add(client.GetClientId(), characterInstance);
@@ -70,8 +77,6 @@ public class ConstiClientMiniGame : ClientMiniGame {
                     enemy.GetComponent<ConstiEnemy>().StartBeingChased();
                 }
                 chasingDurationLeft = ConstiServerMiniGame.ChasingDuration;
-            } else {
-                // TODO: decide wether we want to show that another client is chasing
             }
         } else if (packet is ConstiBlockEnabledPacket blockEnabled) {
             var block = map.GetBlocks().GetChild(blockEnabled.GetBlockIndex());
@@ -88,6 +93,11 @@ public class ConstiClientMiniGame : ClientMiniGame {
         } else if (packet is MiniGamePlayingFinishedPacket characterFinished) {
             if (!b11PartyClient.GetMe().GetClientId().Equals(characterFinished.GetClientId())) {
                 characters[characterFinished.GetClientId()].gameObject.SetActive(false);
+                var spectatable = spectatables.Find(characterFinished.GetClientId());
+                if (spectating == spectatable) {
+                    spectating = spectatable.Next ?? spectatables.First;
+                }
+                spectatables.Remove(spectatable);
             }
         } else if (packet is ConstiMaxScoreReachedPacket) {
             me.SetAlive(false);
@@ -101,13 +111,10 @@ public class ConstiClientMiniGame : ClientMiniGame {
     protected override void OnPlayingImpl() {
         root.gameObject.SetActive(true);
         me.SetMovingEnabled(false);
-        // TODO: do intro (move view camera from center to position of me spawn, and after that do:
-        me.SetMovingEnabled(true);
     }
 
     protected override void OnPlayingEndedImpl() {
         Camera.main.transform.position = Vector3.back * 10;
-        root.gameObject.SetActive(false);
         b11PartyClient.OnOtherPacket -= OnPacket;
     }
 
@@ -123,19 +130,53 @@ public class ConstiClientMiniGame : ClientMiniGame {
                 }
             }
         }
-        if (GetMode() == Mode.PLAYING && !deadMessageSent) {
-            Camera.main.transform.position = me.transform.position + new Vector3(0, -1f, -10f);
-            b11PartyClient.GetKarmanClient().Send(new ConstiCharacterUpdatedPacket(
-                b11PartyClient.GetMe().GetClientId(),
-                me.transform.localPosition
-            ));
-            if (!me.IsAlive()) {
-                b11PartyClient.GetKarmanClient().Send(new MiniGamePlayingFinishedPacket(
-                    b11PartyClient.GetMe().GetClientId()
+        if (GetMode() == Mode.PLAYING) {
+            if (!deadMessageSent) {
+                // If alive
+                introTime += Time.deltaTime;
+                if (isIntro) {
+                    if (introTime > ConstiServerMiniGame.IntroDuration) {
+                        isIntro = false;
+                        me.SetMovingEnabled(true);
+                        view.localScale = Vector3.one;
+                    } else {
+                        view.localScale = Vector3.one * introCurve.Evaluate(introTime / ConstiServerMiniGame.IntroDuration);
+                    }
+                }
+                Camera.main.transform.position = me.transform.position + new Vector3(0, -1f, -10f);
+                b11PartyClient.GetKarmanClient().Send(new ConstiCharacterUpdatedPacket(
+                    b11PartyClient.GetMe().GetClientId(),
+                    me.transform.localPosition
                 ));
-                view.transform.parent = transform;
-                me.gameObject.SetActive(false);
-                deadMessageSent = true;
+                if (!me.IsAlive()) {
+                    b11PartyClient.GetKarmanClient().Send(new MiniGamePlayingFinishedPacket(
+                        b11PartyClient.GetMe().GetClientId()
+                    ));
+                    view.transform.parent = transform;
+                    me.gameObject.SetActive(false);
+                    deadMessageSent = true;
+                }
+            } else {
+                // If dead
+                if (spectating == null) {
+                    if (spectatables.Count > 0) {
+                        spectating = spectatables.First;
+                    } else {
+                        // No one left to spectate
+                        return;
+                    }
+                }
+
+                if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+                    spectating = spectating.Next ?? spectatables.First;
+                } else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+                    spectating = spectating.Previous ?? spectatables.Last;
+                }
+
+                var spectatingCharacter = characters[spectating.Value];
+                view.parent = spectatingCharacter;
+                view.localPosition = Vector3.zero;
+                Camera.main.transform.position = spectatingCharacter.position + new Vector3(0, -1f, -10f);
             }
         }
     }

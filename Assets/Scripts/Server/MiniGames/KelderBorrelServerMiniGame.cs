@@ -26,8 +26,8 @@ public class KelderBorrelServerMiniGame : ServerMiniGame {
             this.b11PartyServer = b11PartyServer;
         }
 
-        public Guid GetNext(int depth = 10) {
-            if (depth <= 0) {
+        public Guid GetNext(List<Guid> skip, int depth = 0) {
+            if (depth >= 10) {
                 log.Error("Infinite loop occurred...");
                 return Guid.Empty;
             }
@@ -42,10 +42,10 @@ public class KelderBorrelServerMiniGame : ServerMiniGame {
                     clientIds.AddFirst(guids[i]);
                 }
             }
-            Guid id = clientIds.First.Value;
-            clientIds.RemoveFirst();
+            Guid id = clientIds.First(clientId => !skip.Contains(clientId));
+            clientIds.Remove(id);
             if (!b11PartyServer.GetMiniGamePlayingPhase().IsClientStillPlaying(id)) {
-                return GetNext(depth - 1);
+                return GetNext(skip, depth + 1);
             }
             return id;
         }
@@ -100,6 +100,10 @@ public class KelderBorrelServerMiniGame : ServerMiniGame {
 
     private B11PartyServer b11PartyServer;
     private ClientIdRandomizer clientIdRandomizer;
+    private bool maxScoreReached = false;
+
+    [SerializeField]
+    private float maxScore = 111f;
 
     private readonly Dictionary<Guid, BlockInfo> blocks = new Dictionary<Guid, BlockInfo>();
     private readonly int lineWidth = 8;
@@ -127,6 +131,10 @@ public class KelderBorrelServerMiniGame : ServerMiniGame {
                 b11PartyServer.GetKarmanServer().Broadcast(new KelderBorrelBlockUpdatedPacket(
                     blockHit.GetBlockId(), clientId, hitScore
                 ));
+                if (playingPhase.GetScore(clientId) >= maxScore) {
+                    maxScoreReached = true;
+                    b11PartyServer.GetKarmanServer().Broadcast(new KelderBorrelMaxScoreReachedPacket());
+                }
             }
         } else if (packet is MiniGamePlayingFinishedPacket finishedPacket) {
             if (finishedPacket.GetClientId() != clientId) {
@@ -135,6 +143,10 @@ public class KelderBorrelServerMiniGame : ServerMiniGame {
             // If a player is finished,
             //   then try to hit every block that that player could still hit,
             //   so that the other players can continue playing.
+            //   (but only if max score has not been reached and there are clients left playing)
+            if (maxScoreReached || b11PartyServer.GetMiniGamePlayingPhase().GetNumberOfClientsStillPlaying() == 0) {
+                return;
+            }
             foreach (var blockKvp in blocks) {
                 var block = blockKvp.Value;
                 if (block.IsDone()) {
@@ -158,7 +170,7 @@ public class KelderBorrelServerMiniGame : ServerMiniGame {
     }
 
     public override void BeginPlaying() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             SpawnLineOfBlocks();
         }
     }
@@ -177,15 +189,16 @@ public class KelderBorrelServerMiniGame : ServerMiniGame {
             KelderBorrelBlockPosition position = new KelderBorrelBlockPosition(currentLineNumber, x);
             BlockInfo blockInfo;
             KelderBorrelBlockSpawnedPacket packet;
-            if (currentLineNumber <= 3 || Random.value < 0.7f) {
+            if (currentLineNumber < 3 || Random.value < 0.7f) {
                 int hits = Mathf.Min(maxAmount, Random.Range(1, 4) + (currentLineNumber > 3 ? Random.Range(0, Mathf.Max(0, maxAmount - 2)) : 0));
                 blockInfo = new BlockInfo(hits);
                 packet = new KelderBorrelBlockSpawnedPacket(blockId, position, hits);
             } else {
-                int numberOfClients = Mathf.Min(maxAmount, Mathf.Clamp(Mathf.FloorToInt(Mathf.Pow(Random.value, 2.6f) * 4f) + 1, 1, 4));
+                int numberOfClientsRaw = Mathf.FloorToInt(Mathf.Pow(Random.value, 2.6f) * 4f) + 1;
+                int numberOfClients = Mathf.Clamp(numberOfClientsRaw, 1, maxAmount);
                 List<Guid> clients = new List<Guid>();
                 for (int i = 0; i < numberOfClients; i++) {
-                    clients.Add(clientIdRandomizer.GetNext());
+                    clients.Add(clientIdRandomizer.GetNext(/*skip*/clients));
                 }
                 blockInfo = new BlockInfo(clients);
                 packet = new KelderBorrelBlockSpawnedPacket(blockId, position, clients.ToArray());
@@ -204,6 +217,10 @@ public class KelderBorrelServerMiniGame : ServerMiniGame {
     }
 
     protected void Update() {
+        if (maxScoreReached) {
+            return;
+        }
+
         spawnTime -= Time.deltaTime;
         if (spawnTime <= 0f) {
             spawnTime += spawnDuration;

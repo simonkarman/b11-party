@@ -13,7 +13,9 @@ public abstract class KelderBorrelBlock : MonoBehaviour {
     private Sprite[] blockSprites;
     [SerializeField]
     protected SpriteRenderer blockRenderer;
-    
+    [SerializeField]
+    protected Collider2D blockCollider;
+
     public void Initialize(B11PartyClient b11PartyClient, Guid me, Guid blockId, KelderBorrelBlockPosition position) {
         this.b11PartyClient = b11PartyClient;
         this.me = me;
@@ -36,15 +38,17 @@ public abstract class KelderBorrelBlock : MonoBehaviour {
     }
 
     public void RegisterHit(Guid clientId, int hitScore) {
-        if (clientId == me) {
+        bool isMe = clientId == me;
+        if (isMe) {
             if (hitScore > 0) {
                 ShowScore(hitScore);
             }
-            blockRenderer.color = new Color(0.3f, 0.3f, 0.3f, 0.5f);
+            blockRenderer.color = new Color(1f, 1f, 1f, 0.1f);
+            blockCollider.enabled = false;
         }
-        OnRegisterHit(clientId);
+        OnRegisterHit(clientId, isMe);
     }
-    protected abstract void OnRegisterHit(Guid clientId);
+    protected abstract void OnRegisterHit(Guid clientId, bool isMe);
 
     private void ShowScore(int hitScore) {
         Debug.Log("You hit a block for a score of " + hitScore);

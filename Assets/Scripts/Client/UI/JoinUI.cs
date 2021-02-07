@@ -49,17 +49,17 @@ public class JoinUI : MonoBehaviour {
     }
 
     public void OnInputChanged() {
-        // TODO: remove 1 length hack (and change go-r to ro-g)
-        connectButton.interactable = passcodeInput.text.Equals("se-rver") ||
-            (
-                (passcodeInput.text.Length == 7 || passcodeInput.text.Length == 1)
-                && connectionStringInput.text.Length > 3
-                && passcodes.Any(passcode => passcode.GetPasscode().ToLower().StartsWith(passcodeInput.text.ToLower()))
-            );
+        bool isServer = passcodeInput.text.Equals("serv-er11");
+        bool isClient = (
+            (passcodeInput.text.Length == 9 || (FeatureToggles.SingleLetterLogin && passcodeInput.text.Length == 1))
+            && connectionStringInput.text.Length > 3
+            && passcodes.Any(passcode => passcode.GetPasscode().ToLower().StartsWith(passcodeInput.text.ToLower()))
+        );
+        connectButton.interactable = isServer || isClient;
     }
 
     public void OnConnectButtonClicked() {
-        if (passcodeInput.text.Equals("se-rver")) {
+        if (passcodeInput.text.Equals("serv-er11")) {
             SceneManager.LoadScene("Server");
         }
 

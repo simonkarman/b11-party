@@ -12,7 +12,7 @@ When starting the game you're presented with a login screen. For clients to join
 ![Join UI](Docs/join-ui.png)
 
 ### Starting a server
-The server can be run on your own machine and will start on port 14641 (aka 11^4). Make sure to setup port forwarding rules in your router accordingly. To start the server enter the `se-rver` passcode in the passcode field. When starting a server, the address will be ignored and can be left blank.
+The server can be run on your own machine and will start on port 14641 (aka 11^4). Make sure to setup port forwarding rules in your router accordingly. To start the server enter the `serv-er11` passcode in the passcode field. When starting a server, the address will be ignored and can be left blank.
 
 The server has a UI that shows the current phase the server is in, the clients that are connected, the recent logs that the server made, and the status of all the mini games.
 
@@ -25,12 +25,12 @@ The server has a UI that shows the current phase the server is in, the clients t
 ### Connecting as a client
 To setup a connection to the server as a client you need two things. First is the server adress (ip or dns name) that the person that is hosting the server can provide. Secondly you need a passcode. You have to connect as one of the members from the 11th board of study association Sticky. The following passcodes correspond to the different members:
 
-- Pablo: `pa-1x3d`
-- Thomas: `th-89f3`
-- Yorick: `yo-y3kl`
-- Robin: `ro-bn28`
-- Simon: `si-te35`
-- Rogier: `ro-g7ac`
+- Pablo: `v1pa-aff6`
+- Thomas: `s2th-1f9d`
+- Yorick: `p3yo-1a7a`
+- Robin: `i4ro-42e3`
+- Simon: `e5si-a160`
+- Rogier: `o6ro-d834`
 
 > Note: To be able to the play the game you need all six members to join and each member can connect only once.
 

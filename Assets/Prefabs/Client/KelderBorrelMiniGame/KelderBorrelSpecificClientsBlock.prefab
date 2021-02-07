@@ -691,6 +691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockSprites: []
   blockRenderer: {fileID: 8321323029495847647}
+  blockCollider: {fileID: 2831820499467067464}
   personOverlays:
   - root: {fileID: 7887367998530840929}
     spriteRenderers:
