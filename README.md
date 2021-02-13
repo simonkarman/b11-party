@@ -2,7 +2,7 @@
 
 During the COVID-19 pandamic it can be challenging to keep in touch with friends. This project is a multiplayer game based on Mario Party with minigames themed around the [11th board of study association Sticky](https://svsticky.nl/nl/besturen/11). Its goal is to be able to interact with each other in a virtual world, while competing to reach the highest score by playing minigames. This project was created by [Simon Karman](https://www.simonkarman.nl).
 
-The secondary goal of this project was to create a first demonstrative project for the [karman multiplayer library](https://www.simonkarman.nl/projects/multiplayer). The project is build using version `2020.1` of the Unity3D game engine and the networking code was build using `version 0.1.0` of the [karman multiplayer library](https://www.simonkarman.nl/projects/multiplayer).
+The secondary goal of this project was to create a first demonstrative project for the [KarmanNet framework](https://www.simonkarman.nl/projects/karmannet). The project is build using version `2020.2.1f1` of the Unity3D game engine and the networking code was build using `version 0.1.0` of the [KarmanNet framework](https://www.simonkarman.nl/projects/karmannet).
 
 ## Playing the game
 The game was build for windows and linux and the binaries can be downloaded here: [https://karman.dev/b11-party](https://karman.dev/b11-party).
