@@ -2824,7 +2824,7 @@ MonoBehaviour:
       punten! Maar pas op, want je ballon kan knappen.'
     controlSchema: Druk op pijltje omhoog of W om te beginnen met blazen en druk
       op het goede moment op spatie om te stoppen
-    preview: {fileID: 21300000, guid: d658bafb162f4544798148b77c934fa8, type: 3}
+    preview: {fileID: 0}
   - name: Red Cup
     description: 'Balletjes in red cups gooien in het echt kan B11 goed. Maar bakken
       ze er ook wat van als er een dimentie uit het spel wordt wegegehaald en het
@@ -3351,7 +3351,7 @@ MonoBehaviour:
   miniGameTitleText: {fileID: 1236574639}
   miniGames:
   - name: B11 Balloon
-    prefab: {fileID: 1999918899779883704, guid: b9748fe09784fbf4b87da3366941c6d1, type: 3}
+    prefab: {fileID: 0}
   - name: Red Cup
     prefab: {fileID: 246360179860330382, guid: 1240ca1c492bf294985b6ade83d4d01e, type: 3}
   - name: Bussen
@@ -7614,7 +7614,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -81.099976, y: -42.69995}
+  m_AnchoredPosition: {x: -81.1001, y: -42.69995}
   m_SizeDelta: {x: 153.6211, y: 77.71231}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325954596
@@ -11177,7 +11177,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
-  m_Color: {r: 0.09411765, g: 0.12941177, b: 0.20784314, a: 1}
+  m_Color: {r: 0.319, g: 0.319, b: 0.319, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

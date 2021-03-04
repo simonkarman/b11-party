@@ -1256,7 +1256,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: f97441bae1557de49b6541358a55fac9, type: 3}
   miniGames:
   - name: B11 Balloon
-    isCompleted: 0
+    isCompleted: 1
   - name: Red Cup
     isCompleted: 0
   - name: Bussen

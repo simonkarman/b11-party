@@ -9,6 +9,8 @@ public class ClientMiniGameChoosePoint : MonoBehaviour {
     [SerializeField]
     private SpriteRenderer preview = default;
     [SerializeField]
+    private SpriteMask previewMask = default;
+    [SerializeField]
     private Color activeColor;
     [SerializeField]
     private float activePreviewAlpha;
@@ -28,10 +30,13 @@ public class ClientMiniGameChoosePoint : MonoBehaviour {
     private string miniGameName;
     private bool canBeChosen;
 
-    public void Setup(string miniGameName, Sprite preview) {
+    public void Setup(string miniGameName, Sprite preview, int miniGameIndex) {
         this.miniGameName = miniGameName;
         nameText.text = miniGameName;
         this.preview.sprite = preview;
+        this.preview.sortingOrder = -10 - miniGameIndex;
+        previewMask.frontSortingOrder = -10 - miniGameIndex;
+        previewMask.backSortingOrder = -11 - miniGameIndex;
     }
 
     private void SetColor(Color color, float previewAlpha) {

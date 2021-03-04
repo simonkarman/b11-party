@@ -73,7 +73,7 @@ public class ClientLobbyPhase : MonoBehaviour {
 
                     ClientMiniGameChoosePoint miniGame = miniGameObject.GetComponent<ClientMiniGameChoosePoint>();
                     var miniGameReadyUpInformation = readyUpPhase.GetMiniGameReadyUpInformation(miniGameName);
-                    miniGame.Setup(miniGameName, miniGameReadyUpInformation.GetPreview());
+                    miniGame.Setup(miniGameName, miniGameReadyUpInformation.GetPreview(), miniGameIndex);
 
                     miniGames.Add(miniGameName, miniGame);
                 }

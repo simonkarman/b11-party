@@ -51,14 +51,15 @@ MonoBehaviour:
   nameText: {fileID: 9018250262870867038}
   flag: {fileID: 884630001292267695}
   preview: {fileID: 5599309727460251060}
+  previewMask: {fileID: 6674070758569074467}
   activeColor: {r: 0.745, g: 0.745, b: 0.745, a: 0.8}
-  activePreviewAlpha: 0.2
-  deactiveColor: {r: 0.59599996, g: 0.59599996, b: 0.59599996, a: 0.101960786}
-  deactivePreviewAlpha: 0
-  proximityColor: {r: 0.95, g: 0.95, b: 0.95, a: 0.9019608}
-  proximityPreviewAlpha: 0.25
-  chosenColor: {r: 0.80784315, g: 0.16078432, b: 0.1254902, a: 0.9019608}
-  chosenPreviewAlpha: 0.3
+  activePreviewAlpha: 0.4
+  deactiveColor: {r: 0.59599996, g: 0.59599996, b: 0.59599996, a: 0.14901961}
+  deactivePreviewAlpha: 0.05
+  proximityColor: {r: 0.85, g: 0.85, b: 0.85, a: 0.9019608}
+  proximityPreviewAlpha: 0.75
+  chosenColor: {r: 1, g: 0.89446807, b: 0.6179246, a: 0.9490196}
+  chosenPreviewAlpha: 0.9
 --- !u!212 &884630001292267695
 SpriteRenderer:
   m_ObjectHideFlags: 0
