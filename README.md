@@ -76,7 +76,7 @@ During the trophy overview phase the clients are presented with their total scor
 ## Mini games
 The project was build with 11 mini games in mind. At the release of `version 1.0.0` the game contained 4 out of these 11 mini games. Since then, new mini games haven been build, mini games have been reworked, and others have not yet been build. The overview below shows the available mini games and at which point they where added to the game.
 
-### (01/11) B11 Balloon (build - not yet released)
+### (01/11) B11 Balloon (release 1.1.0)
 Try to inflate the balloon as big as possible, but don't let it pop!
 
 ![B11 Balloon](Docs/mini-games/b11-balloon.png)
@@ -86,8 +86,8 @@ Clear the table of all red cups by throwing ping pong balls in them.
 
 ![Red Cup](Docs/mini-games/red-cup.png)
 
-### (03/11) Bussen (build - not yet released)
-Avoid all busses, trees, houses, fences, ducks, and more on your way to the other side of town.
+### (03/11) Bussen (release 1.1.0)
+Avoid all buses, trees, houses, fences, ducks, and more on your way to the other side of town.
 
 ![Bussen](Docs/mini-games/bussen.png)
 
@@ -96,18 +96,18 @@ Catch as many bottles of Ketel One as you can. Catch Ketel One Matuur bottles fo
 
 ![Ketel Vangen](Docs/mini-games/ketel-vangen.png)
 
-### (05/11) Arduino (-)
+### (05/11) ?? (-)
 Not implemented.
 
 ### (06/11) ?? (-)
 Not implemented.
 
-### (07/11) Kamerdienst (build - not yet released)
+### (07/11) Kamerdienst (release 1.1.0)
 Collect and deliver all the cookies, beer, coffee, bits, and bananas to the visitors of study association Sticky.
 
 ![Kamerdienst](Docs/mini-games/kamerdienst.png)
 
-### (08/11) Consti (build - not yet released)
+### (08/11) Consti (release 1.1.0)
 Try to avoid the ghosts and pick up as many coins as you can along the way.
 
 ![Consti](Docs/mini-games/consti.png)
@@ -117,8 +117,8 @@ Jump over the obstacles passing by and stay on your feet for the longest amount 
 
 ![Batavieren](Docs/mini-games/batavieren.png)
 
-### (10/11) Kelder Borrel (build - not yet released)
-Keep the bouncing ball in the game and make sure the falling blocks don't hit the ground.
+### (10/11) Kelder Borrel (release 1.1.0)
+Keep the ball bouncing and make sure the falling beers does not hit the ground.
 
 ![Kelder Borrel](Docs/mini-games/kelder-borrel.png)
 

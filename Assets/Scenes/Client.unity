@@ -2819,19 +2819,19 @@ MonoBehaviour:
       doel van deze minigame is om een zo groot mogelijke ballon vol te blazen met
       lucht.
 
-      
 
-      Om de beurt gaan jullie naar de ballon toe. De rest
-      staat veilig achter een glazen wand. Als je bij de ballon staat en je blaast
-      er lucht in krijg je 3 punten. Alle andere spelers die nog in het spel zitten
-      krijgen ook 1 punt voor elke keer dat er wordt geblazen. Maar kijkt uit, want
-      de ballon kan knappen. Als de ballon knapt lig je uit het spel, de rest gaat
-      verder met een nieuwe ballon.
 
-      
+      Om de beurt gaan jullie naar de ballon toe. De rest staat veilig
+      achter een glazen wand. Als je bij de ballon staat en je blaast er lucht in
+      krijg je 3 punten. Alle andere spelers die nog in het spel zitten krijgen ook
+      1 punt voor elke keer dat er wordt geblazen. Maar kijkt uit, want de ballon
+      kan knappen. Als de ballon knapt lig je uit het spel, de rest gaat verder met
+      een nieuwe ballon.
 
-      De speler die als laatste over
-      is krijgt 11 bonus punten.'
+
+
+      De speler die als laatste over is krijgt 11 bonus
+      punten.'
     controlSchema: Druk op A, spatie of pijltje naar links om lucht in de ballon
       te blazen. Druk op D of pijltje naar rechts om de volgende aan de beurt te
       laten.
@@ -2865,13 +2865,13 @@ MonoBehaviour:
   - name: Ketel Vangen
     description: 'Gedurende het bestuursjaar zijn er heel veel flessen Ketel 1 gedronken,
       vaak de normale variant, maar soms viel ook de matuur goed in de smaak. Daarnaast
-      waren er ook flessen drank die juist ontweken moesten worden, namelijk de fless
-      Smirnoff Ice!
+      waren er ook flessen drank die juist ontweken moesten worden, namelijk Smirnoff
+      Ice!
 
 
-      In deze minigame moet je de flessen ketel (1 punt) en
-      ketel matuur (3 punten) proberen te vangen. Maar kijk uit want elke fles Smirnoff
-      is direct 5 min punten waard! Zodra iemand 40 punten heeft, eindigt het spel.'
+      In deze minigame moet je de flessen ketel (1 punt) en ketel matuur
+      (3 punten) proberen te vangen. Maar kijk uit want elke fles Smirnoff is direct
+      5 min punten waard! Zodra iemand 40 punten heeft, eindigt het spel.'
     controlSchema: Gebruik de pijltjes toetsen of A en D om heen en weer te bewegen
     preview: {fileID: 21300000, guid: 4aac1650fe4e694428d3f18e7e5e56bc, type: 3}
   - name: C?
@@ -2895,18 +2895,18 @@ MonoBehaviour:
   - name: Kamerdienst
     description: 'Kamerdienst draaien is natuurlijk iets wat alle bestuurs van B11
       graag doen. In deze minigame gaan we met z''n allen een kamerdienst draaien.
-      Het doel is om de spullen bij elkaar zoeken waar de leden om vragen. Zorg er
-      voor dat je precies de goede spullen pakt en <b>niet te veel</b>, anders nemen
-      de leden het niet van je aan. Voor elk lid dat je helpt krijg je punten. Als
-      iemand 77 of meer punten heeft eindigt de kamerdienst.
+      Het doel is om de spullen bij elkaar te zoeken waar de leden om vragen. Zorg
+      er voor dat je precies de goede spullen pakt en <b>niet te veel</b>, anders
+      nemen de leden het niet van je aan. Voor elk lid dat je helpt krijg je punten.
+      Als iemand 77 of meer punten heeft eindigt de kamerdienst.
 
 
 
-      Elk lid kan
-      maar door 1 bestuurder worden geholpen. Zorg dus dat je sneller bent dat je
-      mede-bestuurders. Daarnast kan het gebeuren dat je iets hebt opgepakt wat je
-      niet meer nodig hebt. Gooi het dan weg bij de prullenbak, maar kijk uit je
-      gooit dan <b>al</b> je spullen in een keer weg.'
+      Elk lid
+      kan maar door 1 bestuurder worden geholpen. Zorg dus dat je sneller bent dat
+      je mede-bestuurders. Daarnast kan het gebeuren dat je iets hebt opgepakt wat
+      je niet meer nodig hebt. Gooi het dan weg bij de prullenbak, maar kijk uit
+      je gooit dan <b>al</b> je spullen in een keer weg.'
     controlSchema: Gebruik de pijltjes toetsen om te bewegen, en de spatie balk om
       spullen op te pakken. Gebruik ook spatiebalk om je verzamelde spullen aan leden
       te geven.
@@ -2938,23 +2938,30 @@ MonoBehaviour:
   - name: Kelder Borrel
     description: 'De mooiste borrels vinden plaats in de kelder. In deze minigame
       gaan we kijken wie het het langste vol houdt tussen de kratjes. Elk bestuurdslid
-      moet een balletje dat heen en weer kaatst in het spel proberen te houden. Als
-      het balletje aan de onderkant het scherm verlaat dan lig je er uit. Ook als
-      een kratje het grijze gebied aanraakt lig je uit het spel.
+      moet een balletje dat heen en weer kaatst in het spel proberen te houden.
 
+      
 
+      Elke
+      kratje moet door een X aantal personen worden geraakt met het balletje. Dit
+      kan je zien aan het getal dat op het kratje staat. Soms staan er ook specieke
+      personen op een kratje, deze kunnen dan alleen door die personen worden geraakt.
 
-      Elke kratje
-      moet door een X aantal personen worden geraakt met het balletje. Dit kan je
-      zien aan het getal dat op het kratje staat. Soms staan er ook specieke personen
-      op een kratje, deze kunnen dan alleen door die personen worden geraakt.
+      
 
+      Zorg
+      dat je alle kratjes wegspeeld, want als een kratje het grijze gebied onderaan
+      het scherm aanraakt, dan lig je uit het spel. Zodra iedereen uit het spel ligt,
+      of er iemand 111 punten heeft gescoord eindigt het spel.
 
+      
 
       Let
-      op: je kunt een kratje maar 1 keer raken per persoon, kratjes die je al hebt
-      geraakt worden grijs en moeten dus door iemand anders worden geraakt.'
+      op: je krijgt net zoveel punten als het aantal personen dat het kratje nog
+      moeten raken, dus hoe eerder je bent, hoe meer punten je scoort.'
     controlSchema: Gebruik de pijltjes toetsen of A en D om heen en weer te bewegen.
+      Valt het balletje uit het scherm, druk dan op spatie of W om het balletje weer
+      weg te schieten. Je kunt ook op S drukken om het balletje zelf te resetten.
     preview: {fileID: 21300000, guid: d590dc5c39a6e3d4f8d25ad6eafa8aaf, type: 3}
   - name: B?
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -8614,7 +8621,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: localhost
+  m_Text: home.karman.dev
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
