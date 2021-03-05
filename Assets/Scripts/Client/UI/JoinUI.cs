@@ -61,6 +61,7 @@ public class JoinUI : MonoBehaviour {
     public void OnConnectButtonClicked() {
         if (passcodeInput.text.Equals("serv-er11")) {
             SceneManager.LoadScene("Server");
+            return;
         }
 
         passcodeInput.interactable = false;

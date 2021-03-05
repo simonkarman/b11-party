@@ -74,10 +74,12 @@ During the trophy overview phase the clients are presented with their total scor
 ![Trophy room phase](Docs/trophy-room-phase.png)
 
 ## Mini games
-The project was build with 11 mini games in mind. At the release of `version 1.0.0` the game contained 4 out of these 11 mini games. Since then, mini games haven been build, and others have not yet been build. The overview below gives an overview of the available mini games and at which point they where added to the game.
+The project was build with 11 mini games in mind. At the release of `version 1.0.0` the game contained 4 out of these 11 mini games. Since then, new mini games haven been build, mini games have been reworked, and others have not yet been build. The overview below shows the available mini games and at which point they where added to the game.
 
-### (01/11) B11 Balloon (-)
-Not implemented.
+### (01/11) B11 Balloon (build - not yet released)
+Try to inflate the balloon as big as possible, but don't let it pop!
+
+![B11 Balloon](Docs/mini-games/b11-balloon.png)
 
 ### (02/11) Red Cup (release 1.0.0)
 Clear the table of all red cups by throwing ping pong balls in them.

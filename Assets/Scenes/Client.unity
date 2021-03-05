@@ -1075,7 +1075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &195010227
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2815,16 +2815,27 @@ MonoBehaviour:
   miniGames:
   - name: B11 Balloon
     description: 'B11 is erg goed in het zuigen aan rietjes om zo snel mogelijk de
-      meeste hoeveelheid alcohol te claimen. Maar kunnen ze het ook andersom?
-
-
-      Het
+      meeste hoeveelheid alcohol te claimen. Maar kunnen ze het ook andersom? Het
       doel van deze minigame is om een zo groot mogelijke ballon vol te blazen met
-      lucht <b>in een teug</b>. De gene die de grootste ballon heeft krijgt de meeste
-      punten! Maar pas op, want je ballon kan knappen.'
-    controlSchema: Druk op pijltje omhoog of W om te beginnen met blazen en druk
-      op het goede moment op spatie om te stoppen
-    preview: {fileID: 0}
+      lucht.
+
+      
+
+      Om de beurt gaan jullie naar de ballon toe. De rest
+      staat veilig achter een glazen wand. Als je bij de ballon staat en je blaast
+      er lucht in krijg je 3 punten. Alle andere spelers die nog in het spel zitten
+      krijgen ook 1 punt voor elke keer dat er wordt geblazen. Maar kijkt uit, want
+      de ballon kan knappen. Als de ballon knapt lig je uit het spel, de rest gaat
+      verder met een nieuwe ballon.
+
+      
+
+      De speler die als laatste over
+      is krijgt 11 bonus punten.'
+    controlSchema: Druk op A, spatie of pijltje naar links om lucht in de ballon
+      te blazen. Druk op D of pijltje naar rechts om de volgende aan de beurt te
+      laten.
+    preview: {fileID: 21300000, guid: 95d12d75740f70a4d976718ca9bde098, type: 3}
   - name: Red Cup
     description: 'Balletjes in red cups gooien in het echt kan B11 goed. Maar bakken
       ze er ook wat van als er een dimentie uit het spel wordt wegegehaald en het
@@ -2863,7 +2874,7 @@ MonoBehaviour:
       is direct 5 min punten waard! Zodra iemand 40 punten heeft, eindigt het spel.'
     controlSchema: Gebruik de pijltjes toetsen of A en D om heen en weer te bewegen
     preview: {fileID: 21300000, guid: 4aac1650fe4e694428d3f18e7e5e56bc, type: 3}
-  - name: Arduino
+  - name: C?
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -2871,7 +2882,7 @@ MonoBehaviour:
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
     controlSchema: 
-    preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
+    preview: {fileID: 21300000, guid: bcfc3ed7950f07444a6432eb8ba36d92, type: 3}
   - name: A?
     description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -2880,7 +2891,7 @@ MonoBehaviour:
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
     controlSchema: 
-    preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
+    preview: {fileID: 21300000, guid: bcfc3ed7950f07444a6432eb8ba36d92, type: 3}
   - name: Kamerdienst
     description: 'Kamerdienst draaien is natuurlijk iets wat alle bestuurs van B11
       graag doen. In deze minigame gaan we met z''n allen een kamerdienst draaien.
@@ -2953,7 +2964,7 @@ MonoBehaviour:
       dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
       sunt in culpa qui officia deserunt mollit anim id est laborum.
     controlSchema: 
-    preview: {fileID: 21300000, guid: 7588080abc452c64480736430e3fa7c3, type: 3}
+    preview: {fileID: 21300000, guid: bcfc3ed7950f07444a6432eb8ba36d92, type: 3}
 --- !u!1 &488912922
 GameObject:
   m_ObjectHideFlags: 0
@@ -3351,14 +3362,14 @@ MonoBehaviour:
   miniGameTitleText: {fileID: 1236574639}
   miniGames:
   - name: B11 Balloon
-    prefab: {fileID: 0}
+    prefab: {fileID: 5878241033503750228, guid: ba555d28897148249a6db8ef7da86504, type: 3}
   - name: Red Cup
     prefab: {fileID: 246360179860330382, guid: 1240ca1c492bf294985b6ade83d4d01e, type: 3}
   - name: Bussen
     prefab: {fileID: 2467857921479047498, guid: 6c8fbc4274755d0499538dc5c494718b, type: 3}
   - name: Ketel Vangen
     prefab: {fileID: 6807716508682326884, guid: 6cb51982005316649a0fbd56c3e96e95, type: 3}
-  - name: Arduino
+  - name: C?
     prefab: {fileID: 0}
   - name: A?
     prefab: {fileID: 0}
@@ -7459,7 +7470,7 @@ MonoBehaviour:
   - Red Cup
   - Bussen
   - Ketel Vangen
-  - Arduino
+  - C?
   - A?
   - Kamerdienst
   - Consti
